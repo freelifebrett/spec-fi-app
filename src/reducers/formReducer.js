@@ -44,12 +44,14 @@ const initialState = {
   const formReducer = (state = initialState, action) => {
     switch (action.type) {
       case UPDATE_FORM:
-        const { step, data } = action.payload;
+        const { fieldName, value } = action.payload;
+        console.info(fieldName, value);
+        console.info(action)
         return {
           ...state,
-          [step]: {
-            ...state[step],
-            ...data
+          step1: {
+            ...state.step1,
+            [fieldName]: value
           }
         };
       // ... other cases
@@ -59,11 +61,12 @@ const initialState = {
   };
   
   
-  // Action Creators
-  export const updateForm = (step, data) => ({
-    type: UPDATE_FORM,
-    payload: { step, data },
-  });
   
+  // Action Creators
+  export const updateForm = (data) => ({
+    type: UPDATE_FORM,
+    payload: data,
+  });
+
   export default formReducer;
   

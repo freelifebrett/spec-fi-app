@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateForm } from '../../../../redux/actions/formActions';
+import { updateForm } from '../../../../reducers/formReducer';
 import states from '../../../../constants/states';
 
 const StepTwo = () => {

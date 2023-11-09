@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateForm } from '../../../../redux/actions/formActions';
+import { updateForm } from '../../../../reducers/formReducer';
 
 const StepOne = () => {
   const dispatch = useDispatch();
-  const step1 = useSelector(state => state.step1);
+  const step1 = useSelector(state => state.form.step1);
   const [errors, setErrors] = useState({});
 
   // Validation function
@@ -20,6 +20,7 @@ const StepOne = () => {
   // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
+    console.info(name, value);
     dispatch(updateForm({ [name]: value }));
     const error = validate(name, value);
     setErrors({ ...errors, [name]: error });
