@@ -51,7 +51,7 @@ const initialState = {
           ...state,
           step1: {
             ...state.step1,
-            [fieldName]: value
+            ...action.payload
           }
         };
       // ... other cases
