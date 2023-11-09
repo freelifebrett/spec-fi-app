@@ -4,7 +4,7 @@ import { updateForm } from '../../../../redux/actions/formActions';
 
 const StepOne = () => {
   const dispatch = useDispatch();
-  const formData = useSelector(state => state.formData);
+  const step1 = useSelector(state => state.step1);
   const [errors, setErrors] = useState({});
 
   // Validation function
@@ -26,7 +26,7 @@ const StepOne = () => {
   };
 
   // Check if the form can proceed to the next step
-  const canProceed = !errors.firstName && !errors.lastName && formData.firstName && formData.lastName;
+  const canProceed = !errors.firstName && !errors.lastName && step1.firstName && step1.lastName;
 
   return (
     <div>
@@ -37,7 +37,7 @@ const StepOne = () => {
           type="text"
           id="firstName"
           name="firstName"
-          value={formData.firstName || ''}
+          value={step1.firstName || ''}
           onChange={handleChange}
           required
         />
@@ -48,7 +48,7 @@ const StepOne = () => {
           type="text"
           id="middleName"
           name="middleName"
-          value={formData.middleName || ''}
+          value={step1.middleName || ''}
           onChange={handleChange}
         />
 
@@ -57,7 +57,7 @@ const StepOne = () => {
           type="text"
           id="lastName"
           name="lastName"
-          value={formData.lastName || ''}
+          value={step1.lastName || ''}
           onChange={handleChange}
           required
         />

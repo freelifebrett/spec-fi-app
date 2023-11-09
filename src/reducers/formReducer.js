@@ -1,4 +1,4 @@
-import { UPDATE_STEP_ONE, UPDATE_FORM } from "../redux/actions/actionTypes";
+import { UPDATE_FORM } from "../redux/actions/actionTypes";
 
 const initialState = {
     step1: {
@@ -43,25 +43,21 @@ const initialState = {
   // Reducer
   const formReducer = (state = initialState, action) => {
     switch (action.type) {
-      case UPDATE_STEP_ONE:
-        // This is where you would update the fields for step 1 of the form.
-        // The action.payload contains the new values for form fields that have changed.
+      case UPDATE_FORM:
+        const { step, data } = action.payload;
         return {
-          ...state, // spread the existing state
-          step1: {
-            ...state.step1, // spread the existing fields of step1
-            ...action.payload // overwrite specific fields of step1 with new values from action.payload
+          ...state,
+          [step]: {
+            ...state[step],
+            ...data
           }
         };
-        // action.payload might look like this: { firstName: 'John', lastName: 'Doe' }
-        // after this case runs, state.step1 will be updated with these values.
-  
-      // cases for other actions...
-      
+      // ... other cases
       default:
         return state;
     }
   };
+  
   
   // Action Creators
   export const updateForm = (step, data) => ({
