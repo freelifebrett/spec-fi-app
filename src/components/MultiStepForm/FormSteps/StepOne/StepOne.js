@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateForm } from '../../../../reducers/formReducer';
+import { updateField } from '../redux/form/formSlice';
 
 const StepOne = () => {
   const dispatch = useDispatch();
+  const formData = useSelector((state) => state.form); // Adjust the path according to your store setup
+
   const step1 = useSelector(state => state.form.step1);
   const [errors, setErrors] = useState({});
 
@@ -18,13 +20,17 @@ const StepOne = () => {
   };
 
   // Handle input changes
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    console.info(name, value);
-    dispatch(updateForm({ [name]: value }));
-    const error = validate(name, value);
-    setErrors({ ...errors, [name]: error });
+  const handleFieldChange = (e) => {
+    dispatch(updateField({ fieldName: e.target.name, value: e.target.value }));
   };
+  
+
+  const handleSubmit = () => {
+    // Validate form data, etc.
+    // If validation passes, go to the next step
+    dispatch(updateCurrentStep(2));
+  };
+
 
   // Check if the form can proceed to the next step
   const canProceed = !errors.firstName && !errors.lastName && step1.firstName && step1.lastName;
@@ -39,7 +45,7 @@ const StepOne = () => {
           id="firstName"
           name="firstName"
           value={step1.firstName || ''}
-          onChange={handleChange}
+          onChange={handleFieldChange}
           required
         />
         {errors.firstName && <p className="error">{errors.firstName}</p>}
@@ -50,7 +56,7 @@ const StepOne = () => {
           id="middleName"
           name="middleName"
           value={step1.middleName || ''}
-          onChange={handleChange}
+          onChange={handleFieldChange}
         />
 
         <label htmlFor="lastName">Last Name (Required):</label>
@@ -59,13 +65,13 @@ const StepOne = () => {
           id="lastName"
           name="lastName"
           value={step1.lastName || ''}
-          onChange={handleChange}
+          onChange={handleFieldChange}
           required
         />
         {errors.lastName && <p className="error">{errors.lastName}</p>}
 
         {/* Navigation buttons or links to move between steps */}
-        <button type="button" disabled={!canProceed}>Next</button>
+        <button type="button" onClick={handleSubmit} disabled={!canProceed}>Next</button>
       </form>
     </div>
   );

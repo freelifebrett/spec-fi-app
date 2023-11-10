@@ -1,22 +1,20 @@
-// src/redux/form/formSlice.js
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  // ...
+  // your initial state
 };
 
 const formSlice = createSlice({
   name: 'form',
   initialState,
   reducers: {
-    // Auto-generated action creators...
-  },
-  extraReducers: {
-    ['form/updateFirstName']: (state, action) => {
-      state.stepOneData.firstName = action.payload;
+    // define reducers as methods
+    updateField(state, action) {
+      // logic to update field
     },
-    // Handle other actions...
+    // more reducers...
   },
 });
 
+export const { updateField } = formSlice.actions;
 export default formSlice.reducer;

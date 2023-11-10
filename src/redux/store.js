@@ -1,30 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { combineReducers } from 'redux';
-import { persistStore, persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
-import formReducer from '../reducers/formReducer'; // Import your form reducer
+import formReducer from './formSlice';
 
-const rootReducer = combineReducers({
-  // Add your reducers here
-  form: formReducer,
+const store = configureStore({
+  reducer: {
+    form: formReducer,
+    // add other reducers here
+  },
 });
 
-const persistConfig = {
-  key: 'root',
-  storage,
-};
-
-const persistedReducer = persistReducer(persistConfig, rootReducer);
-
-export const store = configureStore({
-  reducer: persistedReducer,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: {
-        // Ignore these action types
-        ignoredActions: ['persist/PERSIST'],
-      },
-    }),
-});
-
-export const persistor = persistStore(store);
+export default store;
