@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateField } from '../../../../redux/form/formSlice';
+import { updateField, updateCurrentStep } from '../../../../redux/form/formSlice';
 
 const StepOne = () => {
   const dispatch = useDispatch();
   const formData = useSelector((state) => state.form); // Adjust the path according to your store setup
 
-  const step1 = useSelector(state => state.form.step1);
   const [errors, setErrors] = useState({});
 
   // Validation function
@@ -21,7 +20,10 @@ const StepOne = () => {
 
   // Handle input changes
   const handleFieldChange = (e) => {
-    dispatch(updateField({ fieldName: e.target.name, value: e.target.value }));
+    const { name, value } = e.target;
+    const errorMessage = validate(name, value);
+    setErrors({ ...errors, [name]: errorMessage });
+    dispatch(updateField({ fieldName: name, value }));
   };
   
 
@@ -33,7 +35,7 @@ const StepOne = () => {
 
 
   // Check if the form can proceed to the next step
-  const canProceed = !errors.firstName && !errors.lastName && step1.firstName && step1.lastName;
+  const canProceed = !errors.firstName && !errors.lastName && formData.firstName && formData.lastName;
 
   return (
     <div>
@@ -44,7 +46,7 @@ const StepOne = () => {
           type="text"
           id="firstName"
           name="firstName"
-          value={step1.firstName || ''}
+          value={formData.firstName || ''}
           onChange={handleFieldChange}
           required
         />
@@ -55,7 +57,7 @@ const StepOne = () => {
           type="text"
           id="middleName"
           name="middleName"
-          value={step1.middleName || ''}
+          value={formData.middleName || ''}
           onChange={handleFieldChange}
         />
 
@@ -64,7 +66,7 @@ const StepOne = () => {
           type="text"
           id="lastName"
           name="lastName"
-          value={step1.lastName || ''}
+          value={formData.lastName || ''}
           onChange={handleFieldChange}
           required
         />

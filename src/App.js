@@ -1,7 +1,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { store } from './redux/store';
+import store from './redux/store';
 import MultiStepForm from './components/MultiStepForm/MultiStepForm.js';
 import './App.css';
 

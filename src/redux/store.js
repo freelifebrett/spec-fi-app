@@ -1,10 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
-import formReducer from '../reducers/formReducer';
+import formReducer from './form/formSlice';
 
 const store = configureStore({
   reducer: {
-    form: formReducer,
-    // add other reducers here
+    form: formReducer, // Add your form slice reducer
   },
 });
 
