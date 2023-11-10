@@ -1,5 +1,3 @@
-import { UPDATE_FORM, UPDATE_CURRENT_STEP } from "../redux/actions/actionTypes";
-
 const initialState = {
     currentStep: 1,
     step1: {
@@ -41,42 +39,42 @@ const initialState = {
     }
 };
 
-// Reducer
-const formReducer = (state = initialState, action) => {
-    switch (action.type) {
-        case UPDATE_FORM:
-            const { fieldName, value } = action.payload;
-            console.info(fieldName, value);
-            console.info(action)
-            return {
-                ...state,
-                step1: {
-                    ...state.step1,
-                    ...action.payload
-                }
-            };
-        case UPDATE_CURRENT_STEP:
-            return {
-                ...state,
-                currentStep: action.payload,
-            };
-        // ... other cases
-        default:
-            return state;
-    }
-};
+// // Reducer
+// const formReducer = (state = initialState, action) => {
+//     switch (action.type) {
+//         case UPDATE_FORM:
+//             const { fieldName, value } = action.payload;
+//             console.info(fieldName, value);
+//             console.info(action)
+//             return {
+//                 ...state,
+//                 step1: {
+//                     ...state.step1,
+//                     ...action.payload
+//                 }
+//             };
+//         case UPDATE_CURRENT_STEP:
+//             return {
+//                 ...state,
+//                 currentStep: action.payload,
+//             };
+//         // ... other cases
+//         default:
+//             return state;
+//     }
+// };
 
 
 
-// Action Creators
-export const updateForm = (data) => ({
-    type: UPDATE_FORM,
-    payload: data,
-});
+// // Action Creators
+// export const updateForm = (data) => ({
+//     type: UPDATE_FORM,
+//     payload: data,
+// });
 
-export const updateCurrentStep = (step) => ({
-    type: UPDATE_CURRENT_STEP,
-    payload: step,
-});
+// export const updateCurrentStep = (step) => ({
+//     type: UPDATE_CURRENT_STEP,
+//     payload: step,
+// });
 
-export default formReducer;
+// export default formReducer;

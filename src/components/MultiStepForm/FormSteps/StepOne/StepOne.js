@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateField } from '../redux/form/formSlice';
+import { updateField } from '../../../../redux/form/formSlice';
 
 const StepOne = () => {
   const dispatch = useDispatch();
