@@ -16,9 +16,10 @@ const StepThree = () => {
 
   // Existing validation logic from your original StepThree.js
   const validateDOB = (dob) => {
-    const regex = /^(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])\/(19|20)\d{2}$/;
+    const regex = /^(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/;
     return regex.test(dob) && new Date(dob) <= new Date();
   };
+  
 
   const validateSSN = (ssn) => {
     const regex = /^\d{3}-\d{2}-\d{4}$/;
@@ -81,6 +82,7 @@ const StepThree = () => {
             onChange={handleInputChange}
             error={!!errors.dob}
             helperText={errors.dob}
+            type="date"
           />
           <TextField
             margin="normal"
@@ -99,6 +101,7 @@ const StepThree = () => {
             type="submit"
             fullWidth
             variant="contained"
+            onClick={handleSubmit}
             sx={{ mt: 3, mb: 2 }}
           >
             Next
