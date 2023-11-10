@@ -29,7 +29,8 @@ const StepOne = () => {
     dispatch(updateField({ fieldName: name, fieldValue: value }));
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     // Validate form data, etc.
     // If validation passes, go to the next step
     dispatch(updateCurrentStep(2)); // Assuming '2' represents StepTwo

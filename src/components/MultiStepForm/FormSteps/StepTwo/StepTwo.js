@@ -82,7 +82,7 @@ const StepTwo = () => {
     dispatch(updateCurrentStep(3)); // Assuming you have an action to update the step
 
     // Navigate to StepThree
-    navigate('/step-three'); // Replace '/step-three' with your actual route
+    navigate('/step-3');
   };
 
   // Check if the form can proceed to the next step
@@ -163,6 +163,7 @@ const StepTwo = () => {
             value={formData.timeAtAddress}
             label="Time at Address"
             onChange={handleFieldChange}
+            required
           >
             <MenuItem value="0">0 years</MenuItem>
             <MenuItem value="1">1 year</MenuItem>
@@ -187,6 +188,7 @@ const StepTwo = () => {
             value={formData.ownOrRent}
             label="Own or Rent"
             onChange={handleFieldChange}
+            required
           >
             <MenuItem value="Own">Own</MenuItem>
             <MenuItem value="Rent">Rent</MenuItem>
@@ -200,14 +202,16 @@ const StepTwo = () => {
           value={formData.housingPayment}
           onChange={handleFieldChange}
           fullWidth
+          required
           margin="normal"
+          error={!!errors.housingPayment}
+          helperText={errors.housingPayment || ''}
         />
-
 
         <Button
           variant="contained"
           color="primary"
-          onClick={() => handleSubmit}
+          onClick={handleSubmit}
           disabled={!canProceed}
           sx={{ mt: 2 }}
         >

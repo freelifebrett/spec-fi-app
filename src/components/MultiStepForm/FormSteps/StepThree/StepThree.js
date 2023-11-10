@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateField, updateCurrentStep } from '../redux/actions'; // Replace with your actual action file path
+import { updateField, updateCurrentStep } from '../../../../redux/form/formSlice';
 import { TextField, Button, Container, Typography, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
@@ -24,7 +24,7 @@ const StepThree = () => {
     const regex = /^\d{3}-\d{2}-\d{4}$/;
     return regex.test(ssn);
   };
-  
+
   const handleSubmit = (e) => {
     e.preventDefault();
     let formIsValid = true;
