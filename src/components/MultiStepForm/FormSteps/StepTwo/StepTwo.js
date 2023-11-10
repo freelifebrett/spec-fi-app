@@ -3,9 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateField, updateCurrentStep } from '../../../../redux/form/formSlice';
 import states from '../../../../constants/states';
 import { TextField, Button, Container, Typography, Box, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+
 
 const StepTwo = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const formData = useSelector(state => state.form);
   const [errors, setErrors] = useState({});
 
@@ -13,7 +16,7 @@ const StepTwo = () => {
   const validate = (name, value) => {
     let error = '';
     const trimmedValue = value.trim();
-  
+
     switch (name) {
       case 'address':
         if (!trimmedValue) {
@@ -71,8 +74,19 @@ const StepTwo = () => {
     dispatch(updateField({ fieldName: name, fieldValue: value }));
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Perform your validation and other logic here
+
+    // Update Redux state if neededs
+    dispatch(updateCurrentStep(3)); // Assuming you have an action to update the step
+
+    // Navigate to StepThree
+    navigate('/step-three'); // Replace '/step-three' with your actual route
+  };
+
   // Check if the form can proceed to the next step
-  const canProceed = Object.values(errors).every(x => x === '') && 
+  const canProceed = Object.values(errors).every(x => x === '') &&
     ['address', 'city', 'state', 'zipCode', 'ownOrRent', 'timeAtAddress', 'housingPayment']
       .every(field => formData[field] && formData[field].trim() !== '');
 
@@ -140,12 +154,60 @@ const StepTwo = () => {
           required
         />
 
-        {/* Other fields like 'ownOrRent', 'timeAtAddress', 'housingPayment' can be added similarly using TextField or Select components */}
+        <FormControl fullWidth margin="normal">
+          <InputLabel id="time-at-address-label">Time at Address</InputLabel>
+          <Select
+            labelId="time-at-address-label"
+            id="timeAtAddress"
+            name="timeAtAddress"
+            value={formData.timeAtAddress}
+            label="Time at Address"
+            onChange={handleFieldChange}
+          >
+            <MenuItem value="0">0 years</MenuItem>
+            <MenuItem value="1">1 year</MenuItem>
+            <MenuItem value="2">2 years</MenuItem>
+            <MenuItem value="3">3 years</MenuItem>
+            <MenuItem value="4">4 years</MenuItem>
+            <MenuItem value="5">5 years</MenuItem>
+            <MenuItem value="6">6 years</MenuItem>
+            <MenuItem value="7">7 years</MenuItem>
+            <MenuItem value="8">8 years</MenuItem>
+            <MenuItem value="9">9 years</MenuItem>
+            <MenuItem value="10+">10+ years</MenuItem>
+          </Select>
+        </FormControl>
+
+        <FormControl fullWidth margin="normal">
+          <InputLabel id="own-or-rent-label">Own or Rent</InputLabel>
+          <Select
+            labelId="own-or-rent-label"
+            id="ownOrRent"
+            name="ownOrRent"
+            value={formData.ownOrRent}
+            label="Own or Rent"
+            onChange={handleFieldChange}
+          >
+            <MenuItem value="Own">Own</MenuItem>
+            <MenuItem value="Rent">Rent</MenuItem>
+          </Select>
+        </FormControl>
+
+        <TextField
+          label="Housing Payment"
+          variant="outlined"
+          name="housingPayment"
+          value={formData.housingPayment}
+          onChange={handleFieldChange}
+          fullWidth
+          margin="normal"
+        />
+
 
         <Button
           variant="contained"
           color="primary"
-          onClick={() => {} /* Add your next step logic here */}
+          onClick={() => handleSubmit}
           disabled={!canProceed}
           sx={{ mt: 2 }}
         >

@@ -12,6 +12,9 @@ const initialState = {
   city: '',
   state: '', // consider using an abbreviation for states
   zipCode: '',
+  timeAtAddress: '', 
+  housingPayment: '',
+  ownOrRent: '',   
   country: 'United States', // Default value set to United States
   bankName: '',
   accountNumber: '',
