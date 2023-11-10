@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import StepOne from '../FormSteps/StepOne';
 import StepTwo from '../FormSteps/StepTwo';
 import StepThree from '../FormSteps/StepThree';
+import StepFour from '../FormSteps/StepFour';
 // ... import all other step components
 
 const MultiStepForm = () => {
@@ -14,7 +15,7 @@ const MultiStepForm = () => {
         <Route path="step-1" element={<StepOne />} />
         <Route path="step-2" element={<StepTwo />} />
         <Route path="step-3" element={<StepThree />} />
-        {/* Add Route components for additional steps */}
+        <Route path="step-4" element={<StepFour />} />
       </Routes>
       {/* Navigation buttons are typically not needed here as each step would have its own navigation. */}
     </div>
