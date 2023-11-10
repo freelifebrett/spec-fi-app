@@ -11,7 +11,7 @@ const MultiStepForm = () => {
       <Routes>
         <Route path="/" element={<StepOne />} />
         <Route path="step-1" element={<StepOne />} />
-        {/* <Route path="step-2" element={<StepTwo />} /> */}
+        <Route path="step-2" element={<StepTwo />} />
         {/* Add Route components for additional steps */}
       </Routes>
       {/* Navigation buttons are typically not needed here as each step would have its own navigation. */}

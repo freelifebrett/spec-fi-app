@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateField, updateCurrentStep } from '../../../../redux/form/formSlice';
 import { TextField, Button, Container, Typography, Box } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 const StepOne = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const formData = useSelector((state) => state.form); // Adjust the path according to your store setup
 
   const [errors, setErrors] = useState({});
@@ -30,7 +32,10 @@ const StepOne = () => {
   const handleSubmit = () => {
     // Validate form data, etc.
     // If validation passes, go to the next step
-    dispatch(updateCurrentStep(2));
+    dispatch(updateCurrentStep(2)); // Assuming '2' represents StepTwo
+
+    // Navigate to StepTwo
+    navigate('/step-2');
   };
 
   // Check if the form can proceed to the next step

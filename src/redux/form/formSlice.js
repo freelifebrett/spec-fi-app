@@ -8,8 +8,7 @@ const initialState = {
   password: '',
   confirmPassword: '',
   phoneNumber: '',
-  address1: '',
-  address2: '',
+  address: '',
   city: '',
   state: '', // consider using an abbreviation for states
   zipCode: '',
