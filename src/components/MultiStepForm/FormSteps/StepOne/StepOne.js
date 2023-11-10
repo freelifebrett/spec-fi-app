@@ -23,7 +23,7 @@ const StepOne = () => {
     const { name, value } = e.target;
     const errorMessage = validate(name, value);
     setErrors({ ...errors, [name]: errorMessage });
-    dispatch(updateField({ fieldName: name, value }));
+    dispatch(updateField({ fieldName: name, fieldValue: value }));
   };
   
 
