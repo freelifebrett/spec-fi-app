@@ -6,7 +6,7 @@ import { TextField, Button, Container, Typography, Box, Select, MenuItem, FormCo
 
 const StepTwo = () => {
   const dispatch = useDispatch();
-  const formData = useSelector(state => state.formData);
+  const formData = useSelector(state => state.form);
   const [errors, setErrors] = useState({});
 
   // Validation function
@@ -64,11 +64,11 @@ const StepTwo = () => {
   };
 
   // Handle input changes
-  const handleChange = (e) => {
+  const handleFieldChange = (e) => {
     const { name, value } = e.target;
-    dispatch(updateField({ [name]: value }));
-    const error = validate(name, value);
-    setErrors({ ...errors, [name]: error });
+    const errorMessage = validate(name, value);
+    setErrors({ ...errors, [name]: errorMessage });
+    dispatch(updateField({ fieldName: name, fieldValue: value }));
   };
 
   // Check if the form can proceed to the next step
@@ -88,7 +88,7 @@ const StepTwo = () => {
           name="address"
           label="Address (Required)"
           value={formData.address || ''}
-          onChange={handleChange}
+          onChange={handleFieldChange}
           error={!!errors.address}
           helperText={errors.address}
           margin="normal"
@@ -101,7 +101,7 @@ const StepTwo = () => {
           name="city"
           label="City (Required)"
           value={formData.city || ''}
-          onChange={handleChange}
+          onChange={handleFieldChange}
           error={!!errors.city}
           helperText={errors.city}
           margin="normal"
@@ -115,7 +115,7 @@ const StepTwo = () => {
             id="state"
             name="state"
             value={formData.state || ''}
-            onChange={handleChange}
+            onChange={handleFieldChange}
             label="State (Required)"
             required
           >
@@ -133,7 +133,7 @@ const StepTwo = () => {
           name="zipCode"
           label="Zip Code (Required)"
           value={formData.zipCode || ''}
-          onChange={handleChange}
+          onChange={handleFieldChange}
           error={!!errors.zipCode}
           helperText={errors.zipCode}
           margin="normal"
