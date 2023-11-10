@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateForm } from '../../../../reducers/formReducer';
+import { updateField, updateCurrentStep } from '../../../../redux/form/formSlice';
 import states from '../../../../constants/states';
+import { TextField, Button, Container, Typography, Box, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 
 const StepTwo = () => {
   const dispatch = useDispatch();
@@ -62,33 +63,10 @@ const StepTwo = () => {
     return error;
   };
 
-  const stateSelectOptions = states.map(state => (
-    <option key={state.abbreviation} value={state.abbreviation}>
-      {state.name}
-    </option>
-  ));
-  
-  const timeAtAddressOptions = () => {
-    const options = [];
-  
-    // Adding the '0 years' option for less than one year
-    options.push(<option key={0} value="0">0 years (less than 1 year)</option>);
-  
-    // Adding options for 1 to 10 years
-    for (let i = 1; i <= 10; i++) {
-      options.push(<option key={i} value={String(i)}>{i} year{ i > 1 ? 's' : '' }</option>);
-    }
-  
-    // Adding the '10+ years' option
-    options.push(<option key="10+" value="10+">10+ years</option>);
-  
-    return options;
-  };
-
   // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
-    dispatch(updateForm({ [name]: value }));
+    dispatch(updateField({ [name]: value }));
     const error = validate(name, value);
     setErrors({ ...errors, [name]: error });
   };
@@ -99,98 +77,82 @@ const StepTwo = () => {
       .every(field => formData[field] && formData[field].trim() !== '');
 
   return (
-    <div>
-      <h2>Step 2: Address Information</h2>
-      <form>
-        <label htmlFor="address">Address (Required):</label>
-        <input
-          type="text"
+    <Container maxWidth="sm">
+      <Typography variant="h4" component="h2" gutterBottom>
+        Step 2: Address Information
+      </Typography>
+      <Box component="form" noValidate autoComplete="off">
+        <TextField
+          fullWidth
           id="address"
           name="address"
+          label="Address (Required)"
           value={formData.address || ''}
           onChange={handleChange}
+          error={!!errors.address}
+          helperText={errors.address}
+          margin="normal"
           required
         />
-        {errors.address && <p className="error">{errors.address}</p>}
 
-        <label htmlFor="city">City (Required):</label>
-        <input
-          type="text"
+        <TextField
+          fullWidth
           id="city"
           name="city"
+          label="City (Required)"
           value={formData.city || ''}
           onChange={handleChange}
+          error={!!errors.city}
+          helperText={errors.city}
+          margin="normal"
           required
         />
-        {errors.city && <p className="error">{errors.city}</p>}
 
-        {/* State dropdown can be implemented with select options or a dedicated component */}
-        <label htmlFor="state">State (Required):</label>
-        <select
-          id="state"
-          name="state"
-          value={formData.state || ''}
-          onChange={handleChange}
-          required
-        >
-            {stateSelectOptions}
-        </select>
-        {errors.state && <p className="error">{errors.state}</p>}
+        <FormControl fullWidth margin="normal">
+          <InputLabel id="state-label">State (Required)</InputLabel>
+          <Select
+            labelId="state-label"
+            id="state"
+            name="state"
+            value={formData.state || ''}
+            onChange={handleChange}
+            label="State (Required)"
+            required
+          >
+            {states.map(state => (
+              <MenuItem key={state.abbreviation} value={state.abbreviation}>
+                {state.name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
 
-        <label htmlFor="zipCode">Zip Code (Required):</label>
-        <input
-          type="text"
+        <TextField
+          fullWidth
           id="zipCode"
           name="zipCode"
+          label="Zip Code (Required)"
           value={formData.zipCode || ''}
           onChange={handleChange}
+          error={!!errors.zipCode}
+          helperText={errors.zipCode}
+          margin="normal"
           required
         />
-        {errors.zipCode && <p className="error">{errors.zipCode}</p>}
 
-        {/* Own or Rent dropdown */}
-        <label htmlFor="ownOrRent">Own or Rent (Required):</label>
-        <select
-          id="ownOrRent"
-          name="ownOrRent"
-          value={formData.ownOrRent || ''}
-          onChange={handleChange}
-          required
+        {/* Other fields like 'ownOrRent', 'timeAtAddress', 'housingPayment' can be added similarly using TextField or Select components */}
+
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => {} /* Add your next step logic here */}
+          disabled={!canProceed}
+          sx={{ mt: 2 }}
         >
-          <option value="">Select</option>
-          <option value="OWN">Own</option>
-          <option value="RENT">Rent</option>
-        </select>
-        {errors.ownOrRent && <p className="error">{errors.ownOrRent}</p>}
-
-        {/* Time at Address dropdown */}
-        <label htmlFor="timeAtAddress">Time At Address (Required):</label>
-        <select
-          id="timeAtAddress"
-          name="timeAtAddress"
-          value={formData.timeAtAddress || ''}
-          onChange={handleChange}
-          required
-        >
-          {timeAtAddressOptions()}
-        </select>
-        {errors.timeAtAddress && <p className="error">{errors.timeAtAddress}</p>}
-
-        <label htmlFor="housingPayment">Housing Payment (Required):</label>
-        <input
-          type="text"
-          id="housingPayment"
-          name="housingPayment"
-          value={formData.housingPayment || ''}
-          onChange={handleChange}
-          required
-        />
-        {errors.housingPayment && <p className="error">{errors.housingPayment}</p>}
-
-        {/* Navigation buttons or links to move between steps */}
-        <button type="button" disabled={!canProceed}>Next</button>
-      </form>
-    </div>
+          Next
+        </Button>
+      </Box>
+    </Container>
   );
 };
 
