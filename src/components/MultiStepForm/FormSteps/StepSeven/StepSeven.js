@@ -26,7 +26,8 @@ const StepSeven = () => {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault(); 
     console.info(formData);
   }
 
@@ -92,7 +93,7 @@ const StepSeven = () => {
           <Button variant="contained" color="primary" onClick={() => {/* dispatch previous step action */}} sx={{ mr: 1 }}>
             Previous
           </Button>
-          <Button type="submit" variant="contained" color="primary" disabled={!canProceed} onClick={() => handleSubmit}>
+          <Button type="submit" variant="contained" color="primary" disabled={!canProceed} onClick={handleSubmit}>
             Next
           </Button>
         </Box>

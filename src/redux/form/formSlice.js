@@ -1,40 +1,48 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  currentStep: 1,
-  firstName: '',
-  lastName: '',
-  email: '',
-  password: '',
-  confirmPassword: '',
-  phoneNumber: '',
-  address: '',
-  city: '',
-  state: '', // consider using an abbreviation for states
-  zipCode: '',
-  timeAtAddress: '', 
-  housingPayment: '',
-  ownOrRent: '',   
-  country: 'United States', // Default value set to United States
-  employerName: '',
-  bankName: '',
-  accountNumber: '',
-  routingNumber: '',
-  accountType: '', // 'Checking' or 'Savings'
-  cardNumber: '',
-  cardBrand: '', // 'Visa', 'MasterCard', etc.
-  cardExpiryMonth: '',
-  cardExpiryYear: '',
-  cardCVV: '',
-  reference1FirstName: '',
-  reference1LastName: '',
-  reference1Phone: '',
-  reference1Relationship: '',
-  reference2FirstName: '',
-  reference2LastName: '',
-  reference2Phone: '',
-  reference2Relationship: '',
-};
+    accountNumber: '',
+    accountType: '', // 'Checking' or 'Savings'
+    address: '',
+    averageIncome: '',
+    bankName: '',
+    cardBrand: '', // 'Visa', 'MasterCard', etc.
+    cardCVV: '',
+    cardExpiryMonth: '',
+    cardExpiryYear: '',
+    cardNumber: '',
+    city: '',
+    confirmPassword: '',
+    country: 'United States', // Default value set to United States
+    currentStep: 1,
+    dob: '',
+    email: '',
+    employerAddress: '',
+    employerName: '',
+    employmentLength: '',
+    firstName: '',
+    housingPayment: '',
+    incomePeriod: '',
+    lastName: '',
+    middleName: '',
+    occupation: '',
+    ownOrRent: '',
+    password: '',
+    phoneNumber: '',
+    reference1FirstName: '',
+    reference1LastName: '',
+    reference1Phone: '',
+    reference1Relationship: '',
+    reference2FirstName: '',
+    reference2LastName: '',
+    reference2Phone: '',
+    reference2Relationship: '',
+    routingNumber: '',
+    state: '', // consider using an abbreviation for states
+    timeAtAddress: '',
+    zipCode: '',
+  };
+  
 
 const formSlice = createSlice({
   name: 'form',
