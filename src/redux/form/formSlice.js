@@ -38,10 +38,11 @@ const initialState = {
     reference2Phone: '',
     reference2Relationship: '',
     routingNumber: '',
+    ssn: '',
     state: '', // consider using an abbreviation for states
     timeAtAddress: '',
     zipCode: '',
-  };
+};
   
 
 const formSlice = createSlice({
