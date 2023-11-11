@@ -44,11 +44,11 @@ const StepFour = () => {
 
   // Navigation functions
   const goToPreviousStep = () => {
-    navigate('/step-three'); // Update with your actual route
+    navigate('/step-3'); // Update with your actual route
   };
 
   const goToNextStep = () => {
-    navigate('/step-five'); // Update with your actual route
+    navigate('/step-5'); // Update with your actual route
   };
 
   return (

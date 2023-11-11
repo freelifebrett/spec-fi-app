@@ -16,6 +16,7 @@ const initialState = {
   housingPayment: '',
   ownOrRent: '',   
   country: 'United States', // Default value set to United States
+  employerName: '',
   bankName: '',
   accountNumber: '',
   routingNumber: '',

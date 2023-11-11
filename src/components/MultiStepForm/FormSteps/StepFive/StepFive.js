@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateField, updateCurrentStep } from '../../../../redux/form/formSlice';
 import { TextField, Button, Container, Typography, Box } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
-const StepFive = ({ handleNext, handleBack }) => {
+const StepFive = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const { formData, errors } = useSelector(state => state.form);
     const [localErrors, setLocalErrors] = useState({ ...errors });
 
