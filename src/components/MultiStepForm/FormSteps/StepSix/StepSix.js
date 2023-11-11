@@ -1,12 +1,12 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { TextField, Button, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import { TextField, Button, FormControl, InputLabel, Select, MenuItem, Container, Typography, Box } from '@mui/material';
 import { updateField } from '../../../../redux/form/formSlice';
 
 const StepSix = () => {
   const dispatch = useDispatch();
-  const formData = useSelector(state => state.form.data);
-  const errors = useSelector(state => state.form.errors);
+  const formData = useSelector(state => state.form);
+  const [errors, setErrors] = React.useState({});
 
   const validate = (name, value) => {
     let error = '';
@@ -35,7 +35,7 @@ const StepSix = () => {
       default:
         break;
     }
-    
+
     return error;
   };
 
@@ -53,89 +53,104 @@ const StepSix = () => {
       .every(field => formData[field] && formData[field].trim() !== '');
 
   return (
-    <div className="step-six-form">
-      <h2>Step 6: Payment Details</h2>
-      <form>
-        <TextField
-          label="Bank Name"
-          name="bankName"
-          value={formData.bankName || ''}
-          onChange={handleFieldChange}
-          error={!!errors.bankName}
-          helperText={errors.bankName}
-        />
-        <TextField
-          label="Account Number"
-          name="accountNumber"
-          value={formData.accountNumber || ''}
-          onChange={handleFieldChange}
-          error={!!errors.accountNumber}
-          helperText={errors.accountNumber}
-        />
-        <TextField
-          label="Routing Number"
-          name="routingNumber"
-          value={formData.routingNumber || ''}
-          onChange={handleFieldChange}
-          error={!!errors.routingNumber}
-          helperText={errors.routingNumber}
-        />
-        <TextField
-          label="Card Number"
-          name="cardNumber"
-          value={formData.cardNumber || ''}
-          onChange={handleFieldChange}
-          error={!!errors.cardNumber}
-          helperText={errors.cardNumber}
-        />
-        <TextField
-          label="Card CVV"
-          name="cardCVV"
-          value={formData.cardCVV || ''}
-          onChange={handleFieldChange}
-          error={!!errors.cardCVV}
-          helperText={errors.cardCVV}
-        />
-        <FormControl>
-          <InputLabel>Expiration Month</InputLabel>
-          <Select
-            name="cardExpMonth"
-            value={formData.cardExpMonth || ''}
+    <Container component="main" maxWidth="sm">
+      <Box sx={{ marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <h2>Step 6: Payment Details</h2>
+        <Box component="form" noValidate sx={{ mt: 1 }}>
+          <TextField
+            fullWidth
+            label="Bank Name"
+            name="bankName"
+            value={formData.bankName || ''}
             onChange={handleFieldChange}
-            error={!!errors.cardExpMonth}
-          >
-            {[...Array(12)].map((_, i) => (
-              <MenuItem key={i} value={i + 1}>
-                {`${i + 1}`.padStart(2, '0')}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-        <FormControl>
-          <InputLabel>Expiration Year</InputLabel>
-          <Select
-            name="cardExpYear"
-            value={formData.cardExpYear || ''}
+            error={!!errors.bankName}
+            helperText={errors.bankName}
+            margin="normal"
+          />
+          <TextField
+            fullWidth
+            label="Account Number"
+            name="accountNumber"
+            value={formData.accountNumber || ''}
             onChange={handleFieldChange}
-            error={!!errors.cardExpYear}
+            error={!!errors.accountNumber}
+            helperText={errors.accountNumber}
+            margin="normal"
+          />
+          <TextField
+            fullWidth
+            label="Routing Number"
+            name="routingNumber"
+            value={formData.routingNumber || ''}
+            onChange={handleFieldChange}
+            error={!!errors.routingNumber}
+            helperText={errors.routingNumber}
+            margin="normal"
+          />
+          <TextField
+            fullWidth
+            label="Card Number"
+            name="cardNumber"
+            value={formData.cardNumber || ''}
+            onChange={handleFieldChange}
+            error={!!errors.cardNumber}
+            helperText={errors.cardNumber}
+            margin="normal"
+          />
+          <TextField
+            fullWidth
+            label="Card CVV"
+            name="cardCVV"
+            value={formData.cardCVV || ''}
+            onChange={handleFieldChange}
+            error={!!errors.cardCVV}
+            helperText={errors.cardCVV}
+            margin="normal"
+          />
+          <FormControl fullWidth margin="normal">
+            <InputLabel>Expiration Month</InputLabel>
+            <Select
+              name="cardExpMonth"
+              value={formData.cardExpMonth || ''}
+              onChange={handleFieldChange}
+              error={!!errors.cardExpMonth}
+            >
+              {[...Array(12)].map((_, i) => (
+                <MenuItem key={i} value={i + 1}>
+                  {`${i + 1}`.padStart(2, '0')}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl fullWidth margin="normal">
+            <InputLabel>Expiration Year</InputLabel>
+            <Select
+              name="cardExpYear"
+              value={formData.cardExpYear || ''}
+              onChange={handleFieldChange}
+              error={!!errors.cardExpYear}
+            >
+              {[...Array(20)].map((_, i) => (
+                <MenuItem key={i} value={new Date().getFullYear() + i}>
+                  {new Date().getFullYear() + i}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            disabled={!canProceed}
+            onClick={() => {/* handle next step */}}
+            sx={{ mt: 3, mb: 2 }}
           >
-            {[...Array(20)].map((_, i) => (
-              <MenuItem key={i} value={new Date().getFullYear() + i}>
-                {new Date().getFullYear() + i}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-        <Button
-          variant="contained"
-          color="primary"
-          disabled={!canProceed}
-          onClick={() => {/* handle next step */}}
-        >
-          Next
-        </Button>
-      </form>
-    </div>
+            Next
+          </Button>
+        </Box>
+      </Box>
+    </Container>
   );
 };
 
