@@ -24,10 +24,10 @@ const StepFour = () => {
   // Handle field change
   const handleFieldChange = (e) => {
     const { name, value } = e.target;
-  
+
     // Update the field value in the Redux store
     dispatch(updateField({ fieldName: name, fieldValue: value }));
-  
+
     // Validate fields and set errors
     if (name === 'phoneNumber') {
       const isValid = validatePhoneNumber(value);
@@ -37,7 +37,10 @@ const StepFour = () => {
       setErrors({ ...errors, email: isValid ? '' : 'Invalid email address.' });
     }
   };
-  
+
+  const canProceed = Object.values(errors).every(x => x === '') &&
+    ['phoneNumber', 'email'] // Add other fields if necessary
+      .every(field => formData[field] && formData[field].trim() !== '');
 
   // Navigation functions
   const goToPreviousStep = () => {
@@ -79,7 +82,13 @@ const StepFour = () => {
             <Button variant="contained" color="primary" onClick={goToPreviousStep}>
               Previous
             </Button>
-            <Button variant="contained" color="primary" onClick={goToNextStep} style={{ marginLeft: '10px' }}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={goToNextStep}
+              style={{ marginLeft: '10px' }}
+              disabled={!canProceed}  // Disable the button if canProceed is false
+            >
               Next
             </Button>
           </Box>
