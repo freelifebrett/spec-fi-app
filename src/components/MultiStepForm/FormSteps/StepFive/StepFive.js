@@ -14,12 +14,12 @@ const StepFive = () => {
     const handleFieldChange = (e) => {
         const { name, value } = e.target;
         dispatch(updateField({ fieldName: name, fieldValue: value }));
-    
+
         // Call validate and handle the error
         const error = validate(name, value);
         setErrors(prevErrors => ({ ...prevErrors, [name]: error }));
     };
-    
+
 
     // Add validation logic here
     const validate = (name, value) => {
@@ -64,6 +64,15 @@ const StepFive = () => {
     useEffect(() => {
         validate();
     }, [formData]);
+
+    // Navigation functions
+    const goToPreviousStep = () => {
+        navigate('/step-4'); // Update with your actual route
+    };
+
+    const goToNextStep = () => {
+        navigate('/step-6'); // Update with your actual route
+    };
 
 
     const canProceed = Object.values(errors).every(x => x === '') &&
@@ -153,13 +162,16 @@ const StepFive = () => {
                     error={!!errors.averageIncome}
                     helperText={errors.averageIncome}
                 />
-                {/* Navigation buttons */}
                 <Box mt={2}>
+                    <Button variant="contained" color="primary" onClick={goToPreviousStep}>
+                        Previous
+                    </Button>
                     <Button
                         variant="contained"
                         color="primary"
-                        disabled={!canProceed}
-                        onClick={() => {/* Handle next step */ }}
+                        onClick={goToNextStep}
+                        style={{ marginLeft: '10px' }}
+                        disabled={!canProceed}  // Disable the button if canProceed is false
                     >
                         Next
                     </Button>

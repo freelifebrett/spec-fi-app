@@ -1,131 +1,139 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { updatePaymentDetails } from './formSlice'; // Update with your actual actions
+import { TextField, Button, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import { updateField } from '../../../../redux/form/formSlice';
 
 const StepSix = () => {
   const dispatch = useDispatch();
-  const paymentDetails = useSelector(state => state.form.paymentDetails);
-  const [errors, setErrors] = useState({});
+  const formData = useSelector(state => state.form.data);
+  const errors = useSelector(state => state.form.errors);
 
-  // Example validations
-  const validateBankName = (name) => name.length > 0;
-  const validateAccountNumber = (number) => /^\d{8,12}$/.test(number);
-  const validateRoutingNumber = (number) => /^\d{9}$/.test(number);
-  const validateCardNumber = (number) => /^\d{16}$/.test(number);
-  const validateCardCVV = (cvv) => /^\d{3,4}$/.test(cvv);
-  const validateExpirationDate = (month, year) => {
-    const currentDate = new Date();
-    const currentYear = currentDate.getFullYear();
-    const currentMonth = currentDate.getMonth() + 1; // JavaScript months are 0-indexed
-    const expYear = parseInt(year, 10);
-    const expMonth = parseInt(month, 10);
-    // Check if the expiration year is greater or if it's the same year but a later month
-    return expYear > currentYear || (expYear === currentYear && expMonth >= currentMonth);
-  };
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    let isValid = false;
-
+  const validate = (name, value) => {
+    let error = '';
     switch (name) {
       case 'bankName':
-        isValid = validateBankName(value);
+        if (!value.trim()) error = 'Bank name is required';
         break;
       case 'accountNumber':
-        isValid = validateAccountNumber(value);
+        if (!/^\d+$/.test(value)) error = 'Account number must be numeric';
         break;
       case 'routingNumber':
-        isValid = validateRoutingNumber(value);
+        if (!/^\d+$/.test(value)) error = 'Routing number must be numeric';
         break;
       case 'cardNumber':
-        isValid = validateCardNumber(value);
+        if (!/^\d+$/.test(value)) error = 'Card number must be numeric';
         break;
       case 'cardCVV':
-        isValid = validateCardCVV(value);
+        if (!/^\d+$/.test(value)) error = 'CVV must be numeric';
         break;
       case 'cardExpMonth':
+        if (!value) error = 'Expiration month is required';
+        break;
       case 'cardExpYear':
-        // When updating month/year, revalidate them together
-        const { cardExpMonth, cardExpYear } = paymentDetails;
-        const monthToValidate = name === 'cardExpMonth' ? value : cardExpMonth;
-        const yearToValidate = name === 'cardExpYear' ? value : cardExpYear;
-        isValid = validateExpirationDate(monthToValidate, yearToValidate);
+        if (!value) error = 'Expiration year is required';
         break;
       default:
         break;
     }
-
-    if (isValid) {
-      dispatch(updatePaymentDetails({ ...paymentDetails, [name]: value }));
-      setErrors(prevErrors => ({ ...prevErrors, [name]: '' }));
-    } else {
-      setErrors(prevErrors => ({ ...prevErrors, [name]: `Invalid ${name.replace('cardExp', '').replace('Month', ' month').replace('Year', ' year')}.` }));
-    }
+    
+    return error;
   };
+
+  const handleFieldChange = (e) => {
+    const { name, value } = e.target;
+    dispatch(updateField({ fieldName: name, fieldValue: value }));
+
+    // Call validate and handle the error
+    const error = validate(name, value);
+    setErrors(prevErrors => ({ ...prevErrors, [name]: error }));
+  };
+
+  const canProceed = Object.values(errors).every(x => x === '') &&
+    ['bankName', 'accountNumber', 'routingNumber', 'cardNumber', 'cardCVV', 'cardExpMonth', 'cardExpYear']
+      .every(field => formData[field] && formData[field].trim() !== '');
 
   return (
     <div className="step-six-form">
       <h2>Step 6: Payment Details</h2>
       <form>
-        {/* Bank Payment Information */}
-        {/* ... same as before ... */}
-
-        {/* Credit/Debit Card Information */}
-        <h3>Payment Information (Card)</h3>
-        {/* ... other card fields ... */}
-        
-        <div className="form-group">
-          <label htmlFor="cardExpMonth">Expiration Month</label>
-          <select
-            id="cardExpMonth"
+        <TextField
+          label="Bank Name"
+          name="bankName"
+          value={formData.bankName || ''}
+          onChange={handleFieldChange}
+          error={!!errors.bankName}
+          helperText={errors.bankName}
+        />
+        <TextField
+          label="Account Number"
+          name="accountNumber"
+          value={formData.accountNumber || ''}
+          onChange={handleFieldChange}
+          error={!!errors.accountNumber}
+          helperText={errors.accountNumber}
+        />
+        <TextField
+          label="Routing Number"
+          name="routingNumber"
+          value={formData.routingNumber || ''}
+          onChange={handleFieldChange}
+          error={!!errors.routingNumber}
+          helperText={errors.routingNumber}
+        />
+        <TextField
+          label="Card Number"
+          name="cardNumber"
+          value={formData.cardNumber || ''}
+          onChange={handleFieldChange}
+          error={!!errors.cardNumber}
+          helperText={errors.cardNumber}
+        />
+        <TextField
+          label="Card CVV"
+          name="cardCVV"
+          value={formData.cardCVV || ''}
+          onChange={handleFieldChange}
+          error={!!errors.cardCVV}
+          helperText={errors.cardCVV}
+        />
+        <FormControl>
+          <InputLabel>Expiration Month</InputLabel>
+          <Select
             name="cardExpMonth"
-            value={paymentDetails.cardExpMonth}
-            onChange={handleInputChange}
+            value={formData.cardExpMonth || ''}
+            onChange={handleFieldChange}
+            error={!!errors.cardExpMonth}
           >
-            {/* Generate month options */}
             {[...Array(12)].map((_, i) => (
-              <option key={i} value={i + 1}>
+              <MenuItem key={i} value={i + 1}>
                 {`${i + 1}`.padStart(2, '0')}
-              </option>
+              </MenuItem>
             ))}
-          </select>
-          {errors.cardExpMonth && <p className="error">{errors.cardExpMonth}</p>}
-        </div>
-        <div className="form-group">
-          <label htmlFor="cardExpYear">Expiration Year</label>
-          <select
-            id="cardExpYear"
+          </Select>
+        </FormControl>
+        <FormControl>
+          <InputLabel>Expiration Year</InputLabel>
+          <Select
             name="cardExpYear"
-            value={paymentDetails.cardExpYear}
-            onChange={handleInputChange}
+            value={formData.cardExpYear || ''}
+            onChange={handleFieldChange}
+            error={!!errors.cardExpYear}
           >
-            {/* Generate year options */}
-            {Array.from({ length: 10 }, (_, i) => {
-              const year = new Date().getFullYear() + i;
-              return (
-                <option key={year} value={year}>
-                  {year}
-                </option>
-              );
-            })}
-          </select>
-          {errors.cardExpYear && <p className="error">{errors.cardExpYear}</p>}
-        </div>
-        <div className="form-group">
-          <label htmlFor="cardCVV">CVV</label>
-          <input
-            type="text"
-            id="cardCVV"
-            name="cardCVV"
-            maxLength="4"
-            value={paymentDetails.cardCVV}
-            onChange={handleInputChange}
-            placeholder="CVV"
-          />
-          {errors.cardCVV && <p className="error">{errors.cardCVV}</p>}
-        </div>
-
-        {/* Additional form elements or navigation buttons */}
+            {[...Array(20)].map((_, i) => (
+              <MenuItem key={i} value={new Date().getFullYear() + i}>
+                {new Date().getFullYear() + i}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        <Button
+          variant="contained"
+          color="primary"
+          disabled={!canProceed}
+          onClick={() => {/* handle next step */}}
+        >
+          Next
+        </Button>
       </form>
     </div>
   );
