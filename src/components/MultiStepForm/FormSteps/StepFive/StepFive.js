@@ -14,8 +14,12 @@ const StepFive = () => {
     const handleFieldChange = (e) => {
         const { name, value } = e.target;
         dispatch(updateField({ fieldName: name, fieldValue: value }));
-        dispatch(validate(name, value));
+    
+        // Call validate and handle the error
+        const error = validate(name, value);
+        setErrors(prevErrors => ({ ...prevErrors, [name]: error }));
     };
+    
 
     // Add validation logic here
     const validate = (name, value) => {
