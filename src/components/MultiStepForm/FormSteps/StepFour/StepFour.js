@@ -24,21 +24,20 @@ const StepFour = () => {
   // Handle field change
   const handleFieldChange = (e) => {
     const { name, value } = e.target;
-    let isValid = true;
-
-    // Validate fields
+  
+    // Update the field value in the Redux store
+    dispatch(updateField({ fieldName: name, fieldValue: value }));
+  
+    // Validate fields and set errors
     if (name === 'phoneNumber') {
-      isValid = validatePhoneNumber(value);
+      const isValid = validatePhoneNumber(value);
       setErrors({ ...errors, phoneNumber: isValid ? '' : 'Invalid phone number.' });
     } else if (name === 'email') {
-      isValid = validateEmail(value);
+      const isValid = validateEmail(value);
       setErrors({ ...errors, email: isValid ? '' : 'Invalid email address.' });
     }
-
-    if (isValid) {
-      dispatch(updateField({ [name]: value }));
-    }
   };
+  
 
   // Navigation functions
   const goToPreviousStep = () => {
