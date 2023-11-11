@@ -42,11 +42,8 @@ const formSlice = createSlice({
   reducers: {
     updateField(state, action) {
       // You can update a specific field based on the action payload
-      console.info(action)
       const { fieldName, fieldValue } = action.payload;
-      console.info(fieldName, fieldValue);
       state[fieldName] = fieldValue;
-      console.info(state[fieldName])
     },
     updateCurrentStep(state, action) {
       // Update the currentStep based on the action payload

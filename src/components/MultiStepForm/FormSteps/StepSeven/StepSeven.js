@@ -1,102 +1,103 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateReferences } from './formSlice'; // Update with your actual path
+import { TextField, Button, FormControl, InputLabel, Select, MenuItem, Box, Container } from '@mui/material';
+import { updateField } from '../../../../redux/form/formSlice'; // Update with your actual path
 
 const StepSeven = () => {
   const dispatch = useDispatch();
-  const references = useSelector((state) => state.form.references);
+  const formData = useSelector((state) => state.form);
   const [errors, setErrors] = useState({});
 
-  const validatePhoneNumber = (number) => {
+  const validatePhoneNumber = (phoneNumber) => {
     const regex = /^\d{10}$/;
-    return regex.test(number.replace(/[\s-()]/g, ''));
+    return regex.test(phoneNumber.replace(/[\s-()]/g, ''));
   };
 
-  const handleChange = (index, field, value) => {
-    const updatedReferences = [...references];
-    updatedReferences[index] = { ...updatedReferences[index], [field]: value };
-    dispatch(updateReferences(updatedReferences));
+  const handleChange = (fieldName, value) => {
+    dispatch(updateField({ fieldName, fieldValue: value }));
 
-    // Validate phone number format for reference
-    if (field === 'phoneNumber' && !validatePhoneNumber(value)) {
+    if (fieldName.includes('Phone') && !validatePhoneNumber(value)) {
       setErrors(prevErrors => ({
         ...prevErrors,
-        [`reference${index + 1}PhoneNumber`]: 'Invalid phone number format. Use 5551234567.',
+        [fieldName]: 'Invalid phone number format. Use 5551234567.',
       }));
     } else {
-      setErrors(prevErrors => ({ ...prevErrors, [`reference${index + 1}PhoneNumber`]: '' }));
+      setErrors(prevErrors => ({ ...prevErrors, [fieldName]: '' }));
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Here you would typically handle the submission of the form data.
-  };
+  const handleSubmit = () => {
+    console.info(formData);
+  }
+
+  // Example check to enable the 'Next' button
+  const canProceed = ['reference1FirstName', 'reference1LastName', 'reference1Phone', 'reference1Relationship',
+                      'reference2FirstName', 'reference2LastName', 'reference2Phone', 'reference2Relationship']
+                      .every(field => formData[field] && String(formData[field]).trim() !== '');
 
   return (
-    <div className="step-seven-form">
-      <h2>Step 7: References</h2>
-      <form onSubmit={handleSubmit}>
-        {references.map((reference, index) => (
-          <div key={`reference-${index}`}>
-            <h3>Reference #{index + 1}</h3>
-            <div className="form-group">
-              <label htmlFor={`first-name-${index}`}>First Name (Required)</label>
-              <input
-                type="text"
-                id={`first-name-${index}`}
-                value={reference.firstName}
-                onChange={(e) => handleChange(index, 'firstName', e.target.value)}
+    <Container component="main" maxWidth="sm">
+      <Box sx={{ marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <h2>Step 7: References</h2>
+        <Box component="form" noValidate sx={{ mt: 1 }}>
+          {[1, 2].map((refNumber) => (
+            <Box key={`reference-${refNumber}`} sx={{ mb: 2 }}>
+              <h3>Reference #{refNumber}</h3>
+              <TextField
+                fullWidth
+                label="First Name"
+                name={`reference${refNumber}FirstName`}
+                value={formData[`reference${refNumber}FirstName`] || ''}
+                onChange={(e) => handleChange(`reference${refNumber}FirstName`, e.target.value)}
                 required
+                margin="normal"
               />
-            </div>
-            <div className="form-group">
-              <label htmlFor={`last-name-${index}`}>Last Name (Required)</label>
-              <input
-                type="text"
-                id={`last-name-${index}`}
-                value={reference.lastName}
-                onChange={(e) => handleChange(index, 'lastName', e.target.value)}
+              <TextField
+                fullWidth
+                label="Last Name"
+                name={`reference${refNumber}LastName`}
+                value={formData[`reference${refNumber}LastName`] || ''}
+                onChange={(e) => handleChange(`reference${refNumber}LastName`, e.target.value)}
                 required
+                margin="normal"
               />
-            </div>
-            <div className="form-group">
-              <label htmlFor={`phone-number-${index}`}>Phone Number (Required)</label>
-              <input
-                type="text"
-                id={`phone-number-${index}`}
-                value={reference.phoneNumber}
-                onChange={(e) => handleChange(index, 'phoneNumber', e.target.value)}
+              <TextField
+                fullWidth
+                label="Phone Number"
+                name={`reference${refNumber}Phone`}
+                value={formData[`reference${refNumber}Phone`] || ''}
+                onChange={(e) => handleChange(`reference${refNumber}Phone`, e.target.value)}
                 required
-                placeholder="5551234567 (No Dashes)"
+                margin="normal"
+                error={!!errors[`reference${refNumber}Phone`]}
+                helperText={errors[`reference${refNumber}Phone`]}
               />
-              {errors[`reference${index + 1}PhoneNumber`] && (
-                <p className="error">{errors[`reference${index + 1}PhoneNumber`]}</p>
-              )}
-            </div>
-            <div className="form-group">
-              <label htmlFor={`relationship-${index}`}>Relationship (Required)</label>
-              <select
-                id={`relationship-${index}`}
-                value={reference.relationship}
-                onChange={(e) => handleChange(index, 'relationship', e.target.value)}
-                required
-              >
-                <option value="parent">Parent</option>
-                <option value="sibling">Sibling</option>
-                <option value="friend">Friend</option>
-                <option value="colleague">Colleague</option>
-                <option value="other">Other</option>
-              </select>
-            </div>
-          </div>
-        ))}
-        <button type="button" onClick={() => dispatch(/* dispatch previous step action */)}>
-          Previous
-        </button>
-        <button type="submit">Submit</button>
-      </form>
-    </div>
+              <FormControl fullWidth margin="normal">
+                <InputLabel>Relationship</InputLabel>
+                <Select
+                  name={`reference${refNumber}Relationship`}
+                  value={formData[`reference${refNumber}Relationship`] || ''}
+                  onChange={(e) => handleChange(`reference${refNumber}Relationship`, e.target.value)}
+                  required
+                >
+                  <MenuItem value="parent">Parent</MenuItem>
+                  <MenuItem value="sibling">Sibling</MenuItem>
+                  <MenuItem value="friend">Friend</MenuItem>
+                  <MenuItem value="colleague">Colleague</MenuItem>
+                  <MenuItem value="other">Other</MenuItem>
+                </Select>
+              </FormControl>
+            </Box>
+          ))}
+          <Button variant="contained" color="primary" onClick={() => {/* dispatch previous step action */}} sx={{ mr: 1 }}>
+            Previous
+          </Button>
+          <Button type="submit" variant="contained" color="primary" disabled={!canProceed} onClick={() => handleSubmit}>
+            Next
+          </Button>
+        </Box>
+      </Box>
+    </Container>
   );
 };
 

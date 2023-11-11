@@ -2,9 +2,11 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { TextField, Button, FormControl, InputLabel, Select, MenuItem, Container, Typography, Box } from '@mui/material';
 import { updateField } from '../../../../redux/form/formSlice';
+import { useNavigate } from 'react-router-dom';
 
 const StepSix = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const formData = useSelector(state => state.form);
   const [errors, setErrors] = React.useState({});
 
@@ -48,9 +50,18 @@ const StepSix = () => {
     setErrors(prevErrors => ({ ...prevErrors, [name]: error }));
   };
 
+  // Navigation functions
+  const goToPreviousStep = () => {
+    navigate('/step-5'); // Update with your actual route
+  };
+
+  const goToNextStep = () => {
+    navigate('/step-7'); // Update with your actual route
+  };
+
   const canProceed = Object.values(errors).every(x => x === '') &&
     ['bankName', 'accountNumber', 'routingNumber', 'cardNumber', 'cardCVV', 'cardExpMonth', 'cardExpYear']
-      .every(field => formData[field] && formData[field].trim() !== '');
+      .every(field => formData[field] && String(formData[field]).trim() !== '');
 
   return (
     <Container component="main" maxWidth="sm">
@@ -137,17 +148,20 @@ const StepSix = () => {
               ))}
             </Select>
           </FormControl>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            disabled={!canProceed}
-            onClick={() => {/* handle next step */}}
-            sx={{ mt: 3, mb: 2 }}
-          >
-            Next
-          </Button>
+          <Box mt={2}>
+            <Button variant="contained" color="primary" onClick={goToPreviousStep}>
+              Previous
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={goToNextStep}
+              style={{ marginLeft: '10px' }}
+              disabled={!canProceed}  // Disable the button if canProceed is false
+            >
+              Next
+            </Button>
+          </Box>
         </Box>
       </Box>
     </Container>
