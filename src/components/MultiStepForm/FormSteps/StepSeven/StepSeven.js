@@ -26,10 +26,31 @@ const StepSeven = () => {
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault(); 
-    console.info(formData);
-  }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+  
+    try {
+      const response = await fetch(' http://localhost:4000/functions/submitFormData', { // Use the correct URL of your Firebase function
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+  
+      if (response.ok) {
+        console.log('Form data submitted successfully');
+        // Handle successful submission here, e.g., navigate to the next step
+      } else {
+        console.error('Failed to submit form data');
+        // Handle errors here
+      }
+    } catch (error) {
+      console.error('Error submitting form data:', error);
+      // Handle network errors here
+    }
+  };
+  
 
   // Example check to enable the 'Next' button
   const canProceed = ['reference1FirstName', 'reference1LastName', 'reference1Phone', 'reference1Relationship',
