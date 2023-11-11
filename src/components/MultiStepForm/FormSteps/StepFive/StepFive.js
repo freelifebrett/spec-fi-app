@@ -1,13 +1,26 @@
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { updateEmploymentInfo } from './formSlice'; // Update with your actual path
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { updateField, updateCurrentStep } from '../../../../redux/form/formSlice';
+import { TextField, Button, Container, Typography, Box } from '@mui/material';
 
-const StepFive = () => {
+const StepFive = ({ handleNext, handleBack }) => {
     const dispatch = useDispatch();
-    const employmentInfo = useSelector(state => state.form.employmentInfo);
-    const [errors, setErrors] = useState({});
+    const { formData, errors } = useSelector(state => state.form);
+    const [localErrors, setLocalErrors] = useState({ ...errors });
 
-    const validateField = (name, value) => {
+    // Update local errors when Redux store errors change
+    useEffect(() => {
+        setLocalErrors(errors);
+    }, [errors]);
+
+    const handleFieldChange = (e) => {
+        const { name, value } = e.target;
+        dispatch(updateField({ fieldName: name, fieldValue: value }));
+        dispatch(validate(name, value));
+    };
+
+    // Add validation logic here
+    const validate = (name, value) => {
         let error = '';
 
         switch (name) {
@@ -40,130 +53,117 @@ const StepFive = () => {
             default:
                 break;
         }
+
+        return error;
     };
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        const error = validateField(name, value);
-        if (!error) {
-            dispatch(updateEmploymentInfo({ [name]: value }));
-        }
-        setErrors(prevErrors => ({ ...prevErrors, [name]: error }));
-    };
+
+    // Call validate function when form data changes
+    useEffect(() => {
+        validate();
+    }, [formData]);
+
+
+    const canProceed = Object.values(localErrors).every(x => x === '') &&
+        ['employerName', 'occupation', 'employerPhone', 'employerAddress', 'city', 'state', 'zipCode', 'averageIncome']
+            .every(field => formData[field] && formData[field].trim() !== '');
 
     return (
-        <div className="step-five-form">
-            <h2>Step 5: Income/Employment Information</h2>
-            <form>
-                <div className="form-group">
-                    <label htmlFor="employerName">Employer Name (Required)</label>
-                    <input
-                        type="text"
-                        id="employerName"
-                        name="employerName"
-                        value={employmentInfo.employerName || ''}
-                        onChange={handleChange}
-                        placeholder="Enter your employer's name"
-                    />
-                    {errors.employerName && <p className="error">{errors.employerName}</p>}
-                </div>
-
-                <div className="form-group">
-                    <label htmlFor="occupation">Occupation / Title (Required)</label>
-                    <input
-                        type="text"
-                        id="occupation"
-                        name="occupation"
-                        value={employmentInfo.occupation || ''}
-                        onChange={handleChange}
-                        placeholder="Enter your occupation or title"
-                    />
-                    {errors.occupation && <p className="error">{errors.occupation}</p>}
-                </div>
-
-                <div className="form-group">
-                    <label htmlFor="employerPhone">Phone Number (Required)</label>
-                    <input
-                        type="text"
-                        id="employerPhone"
-                        name="employerPhone"
-                        value={employmentInfo.employerPhone || ''}
-                        onChange={handleChange}
-                        maxLength="10"
-                        placeholder="Enter your employer's phone number"
-                    />
-                    {errors.employerPhone && <p className="error">{errors.employerPhone}</p>}
-                </div>
-
-                <div className="form-group">
-                    <label htmlFor="employerAddress">Employer Address (Required)</label>
-                    <input
-                        type="text"
-                        id="employerAddress"
-                        name="employerAddress"
-                        value={employmentInfo.employerAddress || ''}
-                        onChange={handleChange}
-                        placeholder="Enter your employer's address"
-                    />
-                    {errors.employerAddress && <p className="error">{errors.employerAddress}</p>}
-                </div>
-
-                <div className="form-group">
-                    <label htmlFor="city">City (Required)</label>
-                    <input
-                        type="text"
-                        id="city"
-                        name="city"
-                        value={employmentInfo.city || ''}
-                        onChange={handleChange}
-                        placeholder="Enter city"
-                    />
-                    {errors.city && <p className="error">{errors.city}</p>}
-                </div>
-
-                <div className="form-group">
-                    <label htmlFor="state">State (Required)</label>
-                    <input
-                        type="text"
-                        id="state"
-                        name="state"
-                        value={employmentInfo.state || ''}
-                        onChange={handleChange}
-                        maxLength="2"
-                        placeholder="Enter state abbreviation (e.g., CA)"
-                    />
-                    {errors.state && <p className="error">{errors.state}</p>}
-                </div>
-
-                <div className="form-group">
-                    <label htmlFor="zipCode">Zip Code (Required)</label>
-                    <input
-                        type="text"
-                        id="zipCode"
-                        name="zipCode"
-                        value={employmentInfo.zipCode || ''}
-                        onChange={handleChange}
-                        placeholder="Enter zip code"
-                    />
-                    {errors.zipCode && <p className="error">{errors.zipCode}</p>}
-                </div>
-
-                <div className="form-group">
-                    <label htmlFor="averageIncome">Average Income (Required)</label>
-                    <input
-                        type="text"
-                        id="averageIncome"
-                        name="averageIncome"
-                        value={employmentInfo.averageIncome || ''}
-                        onChange={handleChange}
-                        placeholder="Enter your average income"
-                    />
-                    {errors.averageIncome && <p className="error">{errors.averageIncome}</p>}
-                </div>
-
-                {/* Additional form elements or navigation buttons */}
-            </form>
-        </div>
+        <Container maxWidth="sm">
+            <Box my={4}>
+                <TextField
+                    fullWidth
+                    margin="normal"
+                    label="Employer Name"
+                    name="employerName"
+                    value={formData.employerName || ''}
+                    onChange={handleFieldChange}
+                    error={!!localErrors.employerName}
+                    helperText={localErrors.employerName}
+                />
+                <TextField
+                    fullWidth
+                    margin="normal"
+                    label="Occupation/Title"
+                    name="occupation"
+                    value={formData.occupation || ''}
+                    onChange={handleFieldChange}
+                    error={!!localErrors.occupation}
+                    helperText={localErrors.occupation}
+                />
+                <TextField
+                    fullWidth
+                    margin="normal"
+                    label="Employer Phone"
+                    name="employerPhone"
+                    value={formData.employerPhone || ''}
+                    onChange={handleFieldChange}
+                    error={!!localErrors.employerPhone}
+                    helperText={localErrors.employerPhone}
+                />
+                <TextField
+                    fullWidth
+                    margin="normal"
+                    label="Employer Address"
+                    name="employerAddress"
+                    value={formData.employerAddress || ''}
+                    onChange={handleFieldChange}
+                    error={!!localErrors.employerAddress}
+                    helperText={localErrors.employerAddress}
+                />
+                <TextField
+                    fullWidth
+                    margin="normal"
+                    label="City"
+                    name="city"
+                    value={formData.city || ''}
+                    onChange={handleFieldChange}
+                    error={!!localErrors.city}
+                    helperText={localErrors.city}
+                />
+                <TextField
+                    fullWidth
+                    margin="normal"
+                    label="State"
+                    name="state"
+                    value={formData.state || ''}
+                    onChange={handleFieldChange}
+                    error={!!localErrors.state}
+                    helperText={localErrors.state}
+                />
+                <TextField
+                    fullWidth
+                    margin="normal"
+                    label="Zip Code"
+                    name="zipCode"
+                    value={formData.zipCode || ''}
+                    onChange={handleFieldChange}
+                    error={!!localErrors.zipCode}
+                    helperText={localErrors.zipCode}
+                />
+                <TextField
+                    fullWidth
+                    margin="normal"
+                    label="Average Income"
+                    name="averageIncome"
+                    value={formData.averageIncome || ''}
+                    onChange={handleFieldChange}
+                    error={!!localErrors.averageIncome}
+                    helperText={localErrors.averageIncome}
+                />
+                {/* Navigation buttons */}
+                <Box mt={2}>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        disabled={!canProceed}
+                        onClick={() => {/* Handle next step */ }}
+                    >
+                        Next
+                    </Button>
+                </Box>
+            </Box>
+        </Container>
     );
 };
 
