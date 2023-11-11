@@ -7,13 +7,9 @@ import { useNavigate } from 'react-router-dom';
 const StepFive = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { formData, errors } = useSelector(state => state.form);
-    const [localErrors, setLocalErrors] = useState({ ...errors });
+    const formData = useSelector(state => state.form);
+    const [errors, setErrors] = React.useState({});
 
-    // Update local errors when Redux store errors change
-    useEffect(() => {
-        setLocalErrors(errors);
-    }, [errors]);
 
     const handleFieldChange = (e) => {
         const { name, value } = e.target;
@@ -66,7 +62,7 @@ const StepFive = () => {
     }, [formData]);
 
 
-    const canProceed = Object.values(localErrors).every(x => x === '') &&
+    const canProceed = Object.values(errors).every(x => x === '') &&
         ['employerName', 'occupation', 'employerPhone', 'employerAddress', 'city', 'state', 'zipCode', 'averageIncome']
             .every(field => formData[field] && formData[field].trim() !== '');
 
@@ -80,8 +76,8 @@ const StepFive = () => {
                     name="employerName"
                     value={formData.employerName || ''}
                     onChange={handleFieldChange}
-                    error={!!localErrors.employerName}
-                    helperText={localErrors.employerName}
+                    error={!!errors.employerName}
+                    helperText={errors.employerName}
                 />
                 <TextField
                     fullWidth
@@ -90,8 +86,8 @@ const StepFive = () => {
                     name="occupation"
                     value={formData.occupation || ''}
                     onChange={handleFieldChange}
-                    error={!!localErrors.occupation}
-                    helperText={localErrors.occupation}
+                    error={!!errors.occupation}
+                    helperText={errors.occupation}
                 />
                 <TextField
                     fullWidth
@@ -100,8 +96,8 @@ const StepFive = () => {
                     name="employerPhone"
                     value={formData.employerPhone || ''}
                     onChange={handleFieldChange}
-                    error={!!localErrors.employerPhone}
-                    helperText={localErrors.employerPhone}
+                    error={!!errors.employerPhone}
+                    helperText={errors.employerPhone}
                 />
                 <TextField
                     fullWidth
@@ -110,8 +106,8 @@ const StepFive = () => {
                     name="employerAddress"
                     value={formData.employerAddress || ''}
                     onChange={handleFieldChange}
-                    error={!!localErrors.employerAddress}
-                    helperText={localErrors.employerAddress}
+                    error={!!errors.employerAddress}
+                    helperText={errors.employerAddress}
                 />
                 <TextField
                     fullWidth
@@ -120,8 +116,8 @@ const StepFive = () => {
                     name="city"
                     value={formData.city || ''}
                     onChange={handleFieldChange}
-                    error={!!localErrors.city}
-                    helperText={localErrors.city}
+                    error={!!errors.city}
+                    helperText={errors.city}
                 />
                 <TextField
                     fullWidth
@@ -130,8 +126,8 @@ const StepFive = () => {
                     name="state"
                     value={formData.state || ''}
                     onChange={handleFieldChange}
-                    error={!!localErrors.state}
-                    helperText={localErrors.state}
+                    error={!!errors.state}
+                    helperText={errors.state}
                 />
                 <TextField
                     fullWidth
@@ -140,8 +136,8 @@ const StepFive = () => {
                     name="zipCode"
                     value={formData.zipCode || ''}
                     onChange={handleFieldChange}
-                    error={!!localErrors.zipCode}
-                    helperText={localErrors.zipCode}
+                    error={!!errors.zipCode}
+                    helperText={errors.zipCode}
                 />
                 <TextField
                     fullWidth
@@ -150,8 +146,8 @@ const StepFive = () => {
                     name="averageIncome"
                     value={formData.averageIncome || ''}
                     onChange={handleFieldChange}
-                    error={!!localErrors.averageIncome}
-                    helperText={localErrors.averageIncome}
+                    error={!!errors.averageIncome}
+                    helperText={errors.averageIncome}
                 />
                 {/* Navigation buttons */}
                 <Box mt={2}>
