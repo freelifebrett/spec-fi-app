@@ -31,8 +31,7 @@ const StepSeven = () => {
   
     try {
       const response = await fetch('http://localhost:5001/spec-fi-app/us-central1/submitFormData', { // Use the correct URL of your Firebase function
-        method: 'POST',
-        mode: 'no-cors',
+        method: 'POST',      
         headers: {
           'Content-Type': 'application/json',
         },
