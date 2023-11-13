@@ -59,6 +59,9 @@ const StepThree = () => {
     setLocalData({ ...localData, [id]: value });
   };
 
+  const canProceed = Object.values(errors).every(error => error === '') &&
+    ['dob', 'ssn'].every(field => localData[field] && localData[field].trim() !== '');
+
   return (
     <Container component="main" maxWidth="xs">
       <Box
@@ -101,18 +104,20 @@ const StepThree = () => {
             error={!!errors.ssn}
             helperText={errors.ssn}
           />
-          <Button variant="contained" color="primary" onClick={goToPreviousStep}>
-            Previous
-          </Button>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            onClick={handleSubmit}
-            sx={{ mt: 3, mb: 2 }}
-          >
-            Next
-          </Button>
+          <Box mt={2}>
+            <Button variant="contained" color="primary" onClick={goToPreviousStep}>
+              Previous
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleSubmit}
+              style={{ marginLeft: '10px' }}
+              disabled={!canProceed}  // Disable the button if canProceed is false
+            >
+              Next
+            </Button>
+          </Box>
         </Box>
       </Box>
     </Container>

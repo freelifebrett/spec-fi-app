@@ -211,18 +211,20 @@ const StepTwo = () => {
           error={!!errors.housingPayment}
           helperText={errors.housingPayment || ''}
         />
-        <Button variant="contained" color="primary" onClick={goToPreviousStep}>
-          Previous
-        </Button>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={handleSubmit}
-          disabled={!canProceed}
-          sx={{ mt: 2 }}
-        >
-          Next
-        </Button>
+        <Box mt={2}>
+            <Button variant="contained" color="primary" onClick={goToPreviousStep}>
+              Previous
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleSubmit}
+              style={{ marginLeft: '10px' }}
+              disabled={!canProceed}  // Disable the button if canProceed is false
+            >
+              Next
+            </Button>
+          </Box>
       </Box>
     </Container>
   );
