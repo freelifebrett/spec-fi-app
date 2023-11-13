@@ -7,30 +7,8 @@ import StepFour from '../FormSteps/StepFour';
 import StepFive from '../FormSteps/StepFive';
 import StepSix from '../FormSteps/StepSix';
 import StepSeven from '../FormSteps/StepSeven';
-import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
-import { styled } from '@mui/material/styles';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
 import { useSelector } from 'react-redux';
-
-const BorderLinearProgress = styled(LinearProgressWithLabel)(({ theme }) => ({
-    height: 20,
-    borderRadius: 10,
-  }));
-
-function LinearProgressWithLabel(props) {
-    return (
-      <Box display="flex" alignItems="center">
-        <Box width="100%" mr={1}>
-          <LinearProgress variant="determinate" {...props} />
-        </Box>
-        <Box minWidth={35}>
-          <Typography variant="body2" color="textSecondary">{`${Math.round(props.value)}%`}</Typography>
-        </Box>
-      </Box>
-    );
-  }
-
+import LinearProgressBar from '../../LinearProgressBar';
 
 const MultiStepForm = () => {
     const formData = useSelector((state) => state.form); // Adjust the path according to your store setup
@@ -40,7 +18,7 @@ const MultiStepForm = () => {
 
     return (
         <div className="multi-step-form">
-            <BorderLinearProgress value={progress}/>
+            <LinearProgressBar value={progress}/>
 
             <Routes>
                 <Route path="/" element={<StepOne />} />

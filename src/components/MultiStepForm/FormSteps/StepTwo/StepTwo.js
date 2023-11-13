@@ -98,9 +98,7 @@ const StepTwo = () => {
 
   return (
     <Container maxWidth="sm">
-      <Typography variant="h4" component="h2" gutterBottom>
-        Step 2: Address Information
-      </Typography>
+      <h2>Address</h2>
       <Box component="form" noValidate autoComplete="off">
         <TextField
           fullWidth

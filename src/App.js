@@ -35,7 +35,7 @@ function App() {
         <div className="App">
           <header className="App-header">
             <img className='App-logo' src={FlipSecretsLogo} alt="Flip Secrets Logo" />
-            <h1>The Flip Secrets Application</h1>
+            <h1>Financing Application</h1>
           </header>
           <Routes>
             <Route path="/*" element={<MultiStepForm />} />

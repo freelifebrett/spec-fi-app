@@ -71,69 +71,67 @@ const StepSeven = () => {
 
   return (
     <Container component="main" maxWidth="sm">
-      <Box sx={{ marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <h2>Step 7: References</h2>
-        <Box component="form" noValidate sx={{ mt: 1 }}>
-          {[1, 2].map((refNumber) => (
-            <Box key={`reference-${refNumber}`} sx={{ mb: 2 }}>
-              <h3>Reference #{refNumber}</h3>
-              <TextField
-                fullWidth
-                label="First Name"
-                name={`reference${refNumber}FirstName`}
-                value={formData[`reference${refNumber}FirstName`] || ''}
-                onChange={(e) => handleChange(`reference${refNumber}FirstName`, e.target.value)}
+      <h2>References</h2>
+      <Box component="form" noValidate sx={{ mt: 1 }}>
+        {[1, 2].map((refNumber) => (
+          <Box key={`reference-${refNumber}`} sx={{ mb: 2 }}>
+            <h3>Reference #{refNumber}</h3>
+            <TextField
+              fullWidth
+              label="First Name"
+              name={`reference${refNumber}FirstName`}
+              value={formData[`reference${refNumber}FirstName`] || ''}
+              onChange={(e) => handleChange(`reference${refNumber}FirstName`, e.target.value)}
+              required
+              margin="normal"
+            />
+            <TextField
+              fullWidth
+              label="Last Name"
+              name={`reference${refNumber}LastName`}
+              value={formData[`reference${refNumber}LastName`] || ''}
+              onChange={(e) => handleChange(`reference${refNumber}LastName`, e.target.value)}
+              required
+              margin="normal"
+            />
+            <TextField
+              fullWidth
+              label="Phone Number"
+              name={`reference${refNumber}Phone`}
+              value={formData[`reference${refNumber}Phone`] || ''}
+              onChange={(e) => handleChange(`reference${refNumber}Phone`, e.target.value)}
+              required
+              margin="normal"
+              error={!!errors[`reference${refNumber}Phone`]}
+              helperText={errors[`reference${refNumber}Phone`]}
+            />
+            <FormControl fullWidth margin="normal">
+              <InputLabel>Relationship</InputLabel>
+              <Select
+                name={`reference${refNumber}Relationship`}
+                value={formData[`reference${refNumber}Relationship`] || ''}
+                onChange={(e) => handleChange(`reference${refNumber}Relationship`, e.target.value)}
                 required
-                margin="normal"
-              />
-              <TextField
-                fullWidth
-                label="Last Name"
-                name={`reference${refNumber}LastName`}
-                value={formData[`reference${refNumber}LastName`] || ''}
-                onChange={(e) => handleChange(`reference${refNumber}LastName`, e.target.value)}
-                required
-                margin="normal"
-              />
-              <TextField
-                fullWidth
-                label="Phone Number"
-                name={`reference${refNumber}Phone`}
-                value={formData[`reference${refNumber}Phone`] || ''}
-                onChange={(e) => handleChange(`reference${refNumber}Phone`, e.target.value)}
-                required
-                margin="normal"
-                error={!!errors[`reference${refNumber}Phone`]}
-                helperText={errors[`reference${refNumber}Phone`]}
-              />
-              <FormControl fullWidth margin="normal">
-                <InputLabel>Relationship</InputLabel>
-                <Select
-                  name={`reference${refNumber}Relationship`}
-                  value={formData[`reference${refNumber}Relationship`] || ''}
-                  onChange={(e) => handleChange(`reference${refNumber}Relationship`, e.target.value)}
-                  required
-                >
-                  <MenuItem value="parent">Parent</MenuItem>
-                  <MenuItem value="sibling">Sibling</MenuItem>
-                  <MenuItem value="friend">Friend</MenuItem>
-                  <MenuItem value="colleague">Colleague</MenuItem>
-                  <MenuItem value="other">Other</MenuItem>
-                </Select>
-              </FormControl>
-            </Box>
-          ))}
-          <Box mt={2}>
-            <FormButton
-              onClick={goToPreviousStep}
-              text="Back">
-            </FormButton>
-            <FormButton
-              onClick={handleSubmit}
-              text="Next"
-              disabled={!canProceed}>
-            </FormButton>
+              >
+                <MenuItem value="parent">Parent</MenuItem>
+                <MenuItem value="sibling">Sibling</MenuItem>
+                <MenuItem value="friend">Friend</MenuItem>
+                <MenuItem value="colleague">Colleague</MenuItem>
+                <MenuItem value="other">Other</MenuItem>
+              </Select>
+            </FormControl>
           </Box>
+        ))}
+        <Box mt={2}>
+          <FormButton
+            onClick={goToPreviousStep}
+            text="Back">
+          </FormButton>
+          <FormButton
+            onClick={handleSubmit}
+            text="Submit"
+            disabled={!canProceed}>
+          </FormButton>
         </Box>
       </Box>
     </Container>

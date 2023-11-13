@@ -68,8 +68,7 @@ const StepSix = () => {
 
   return (
     <Container component="main" maxWidth="sm">
-      <Box sx={{ marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <h2>Step 6: Payment Details</h2>
+        <h2>Payment</h2>
         <Box component="form" noValidate sx={{ mt: 1 }}>
           <TextField
             fullWidth
@@ -163,7 +162,6 @@ const StepSix = () => {
             </FormButton>
           </Box>
         </Box>
-      </Box>
     </Container>
   );
 };

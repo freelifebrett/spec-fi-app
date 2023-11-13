@@ -66,9 +66,7 @@ const StepThree = () => {
   return (
     <Container component="main" maxWidth="sm">
       <Box my={4}>
-        <Typography component="h1" variant="h5">
-          Step 3
-        </Typography>
+      <h2>Identity</h2>
         <TextField
           margin="normal"
           required
