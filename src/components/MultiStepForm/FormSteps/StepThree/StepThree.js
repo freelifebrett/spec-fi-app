@@ -19,11 +19,15 @@ const StepThree = () => {
     const regex = /^(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/;
     return regex.test(dob) && new Date(dob) <= new Date();
   };
-  
+
 
   const validateSSN = (ssn) => {
     const regex = /^\d{3}-\d{2}-\d{4}$/;
     return regex.test(ssn);
+  };
+
+  const goToPreviousStep = () => {
+    navigate('/step-2');
   };
 
   const handleSubmit = (e) => {
@@ -97,6 +101,9 @@ const StepThree = () => {
             error={!!errors.ssn}
             helperText={errors.ssn}
           />
+          <Button variant="contained" color="primary" onClick={goToPreviousStep}>
+            Previous
+          </Button>
           <Button
             type="submit"
             fullWidth

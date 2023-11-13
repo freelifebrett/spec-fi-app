@@ -34,7 +34,7 @@ function App() {
       <Router>
         <div className="App">
           <header className="App-header">
-            <img src={FlipSecretsLogo} alt="Flip Secrets Logo" />
+            <img className='App-logo' src={FlipSecretsLogo} alt="Flip Secrets Logo" />
             <h1>The Flip Secrets Application</h1>
           </header>
           <Routes>

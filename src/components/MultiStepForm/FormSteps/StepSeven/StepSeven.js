@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { TextField, Button, FormControl, InputLabel, Select, MenuItem, Box, Container } from '@mui/material';
 import { updateField } from '../../../../redux/form/formSlice'; // Update with your actual path
+import { useNavigate } from 'react-router-dom';
+
 
 const StepSeven = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const formData = useSelector((state) => state.form);
   const [errors, setErrors] = useState({});
 
@@ -24,6 +27,10 @@ const StepSeven = () => {
     } else {
       setErrors(prevErrors => ({ ...prevErrors, [fieldName]: '' }));
     }
+  };
+
+  const goToPreviousStep = () => {
+    navigate('/step-6'); // Update with your actual route
   };
 
   const handleSubmit = async (e) => { 
@@ -114,7 +121,7 @@ const StepSeven = () => {
               </FormControl>
             </Box>
           ))}
-          <Button variant="contained" color="primary" onClick={() => {/* dispatch previous step action */}} sx={{ mr: 1 }}>
+          <Button variant="contained" color="primary" onClick={goToPreviousStep} sx={{ mr: 1 }}>
             Previous
           </Button>
           <Button type="submit" variant="contained" color="primary" disabled={!canProceed} onClick={handleSubmit}>

@@ -74,6 +74,10 @@ const StepTwo = () => {
     dispatch(updateField({ fieldName: name, fieldValue: value }));
   };
 
+  const goToPreviousStep = () => {
+    navigate('/step-1'); // Update with your actual route
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     // Perform your validation and other logic here
@@ -207,7 +211,9 @@ const StepTwo = () => {
           error={!!errors.housingPayment}
           helperText={errors.housingPayment || ''}
         />
-
+        <Button variant="contained" color="primary" onClick={goToPreviousStep}>
+          Previous
+        </Button>
         <Button
           variant="contained"
           color="primary"
