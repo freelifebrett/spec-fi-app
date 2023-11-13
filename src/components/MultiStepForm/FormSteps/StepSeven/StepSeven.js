@@ -33,9 +33,9 @@ const StepSeven = () => {
     navigate('/step-6'); // Update with your actual route
   };
 
-  const handleSubmit = async (e) => { 
+  const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     try {
       console.info(formData, formData);
 
@@ -47,7 +47,7 @@ const StepSeven = () => {
         },
         body: JSON.stringify(formData),
       });
-  
+
       if (response.ok) {
         console.log('Form data submitted successfully');
         // Handle successful submission here, e.g., navigate to the next step
@@ -60,12 +60,12 @@ const StepSeven = () => {
       // Handle network errors here
     }
   };
-  
+
 
   // Example check to enable the 'Next' button
   const canProceed = ['reference1FirstName', 'reference1LastName', 'reference1Phone', 'reference1Relationship',
-                      'reference2FirstName', 'reference2LastName', 'reference2Phone', 'reference2Relationship']
-                      .every(field => formData[field] && String(formData[field]).trim() !== '');
+    'reference2FirstName', 'reference2LastName', 'reference2Phone', 'reference2Relationship']
+    .every(field => formData[field] && String(formData[field]).trim() !== '');
 
   return (
     <Container component="main" maxWidth="sm">
@@ -121,12 +121,14 @@ const StepSeven = () => {
               </FormControl>
             </Box>
           ))}
-          <Button variant="contained" color="primary" onClick={goToPreviousStep} sx={{ mr: 1 }}>
-            Previous
-          </Button>
-          <Button type="submit" variant="contained" color="primary" disabled={!canProceed} onClick={handleSubmit}>
-            Next
-          </Button>
+          <Box mt={2}>
+            <Button variant="contained" color="primary" onClick={goToPreviousStep} sx={{ mr: 1 }}>
+              Previous
+            </Button>
+            <Button type="submit" variant="contained" color="primary" disabled={!canProceed} onClick={handleSubmit}>
+              Next
+            </Button>
+          </Box>
         </Box>
       </Box>
     </Container>
