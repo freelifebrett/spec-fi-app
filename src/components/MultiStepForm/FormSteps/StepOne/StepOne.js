@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateField, updateCurrentStep } from '../../../../redux/form/formSlice';
 import { TextField, Button, Container, Typography, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import FormButton from '../../../Buttons/FormButton';
 
 const StepOne = () => {
   const dispatch = useDispatch();
@@ -83,16 +84,13 @@ const StepOne = () => {
           margin="normal"
           required
         />
-
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={handleSubmit}
-          disabled={!canProceed}
-          sx={{ mt: 2 }}
-        >
-          Next
-        </Button>
+        <Box mt={2}>        
+          <FormButton
+            onClick={handleSubmit}
+            text="Next"
+            disabled={!canProceed}>
+          </FormButton>
+        </Box>
       </Box>
     </Container>
   );

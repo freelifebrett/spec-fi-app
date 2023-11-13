@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { updateField, updateCurrentStep } from '../../../../redux/form/formSlice';
 import { TextField, Button, Container, Typography, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import FormButton from '../../../Buttons/FormButton';
 
 const StepFive = () => {
     const dispatch = useDispatch();
@@ -163,18 +164,15 @@ const StepFive = () => {
                     helperText={errors.averageIncome}
                 />
                 <Box mt={2}>
-                    <Button variant="contained" color="primary" onClick={goToPreviousStep}>
-                        Previous
-                    </Button>
-                    <Button
-                        variant="contained"
-                        color="primary"
+                    <FormButton
+                        onClick={goToPreviousStep}
+                        text="Back">
+                    </FormButton>
+                    <FormButton
                         onClick={goToNextStep}
-                        style={{ marginLeft: '10px' }}
-                        disabled={!canProceed}  // Disable the button if canProceed is false
-                    >
-                        Next
-                    </Button>
+                        text="Next"
+                        disabled={!canProceed}>
+                    </FormButton>
                 </Box>
             </Box>
         </Container>

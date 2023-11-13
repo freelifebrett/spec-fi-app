@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { TextField, Button, FormControl, InputLabel, Select, MenuItem, Box, Container } from '@mui/material';
 import { updateField } from '../../../../redux/form/formSlice'; // Update with your actual path
 import { useNavigate } from 'react-router-dom';
+import FormButton from '../../../Buttons/FormButton';
 
 
 const StepSeven = () => {
@@ -122,12 +123,15 @@ const StepSeven = () => {
             </Box>
           ))}
           <Box mt={2}>
-            <Button variant="contained" color="primary" onClick={goToPreviousStep} sx={{ mr: 1 }}>
-              Previous
-            </Button>
-            <Button type="submit" variant="contained" color="primary" disabled={!canProceed} onClick={handleSubmit}>
-              Next
-            </Button>
+            <FormButton
+              onClick={goToPreviousStep}
+              text="Back">
+            </FormButton>
+            <FormButton
+              onClick={handleSubmit}
+              text="Next"
+              disabled={!canProceed}>
+            </FormButton>
           </Box>
         </Box>
       </Box>

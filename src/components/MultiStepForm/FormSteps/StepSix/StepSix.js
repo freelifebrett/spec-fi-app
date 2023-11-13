@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { TextField, Button, FormControl, InputLabel, Select, MenuItem, Container, Typography, Box } from '@mui/material';
 import { updateField } from '../../../../redux/form/formSlice';
 import { useNavigate } from 'react-router-dom';
+import FormButton from '../../../Buttons/FormButton';
 
 const StepSix = () => {
   const dispatch = useDispatch();
@@ -149,18 +150,15 @@ const StepSix = () => {
             </Select>
           </FormControl>
           <Box mt={2}>
-            <Button variant="contained" color="primary" onClick={goToPreviousStep}>
-              Previous
-            </Button>
-            <Button
-              variant="contained"
-              color="primary"
+            <FormButton
+              onClick={goToPreviousStep}
+              text="Back">
+            </FormButton>
+            <FormButton
               onClick={goToNextStep}
-              style={{ marginLeft: '10px' }}
-              disabled={!canProceed}  // Disable the button if canProceed is false
-            >
-              Next
-            </Button>
+              text="Next"
+              disabled={!canProceed}>
+            </FormButton>
           </Box>
         </Box>
       </Box>

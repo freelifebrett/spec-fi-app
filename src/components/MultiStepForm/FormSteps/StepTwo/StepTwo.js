@@ -4,6 +4,7 @@ import { updateField, updateCurrentStep } from '../../../../redux/form/formSlice
 import states from '../../../../constants/states';
 import { TextField, Button, Container, Typography, Box, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import FormButton from '../../../Buttons/FormButton';
 
 
 const StepTwo = () => {
@@ -212,19 +213,16 @@ const StepTwo = () => {
           helperText={errors.housingPayment || ''}
         />
         <Box mt={2}>
-            <Button variant="contained" color="primary" onClick={goToPreviousStep}>
-              Previous
-            </Button>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleSubmit}
-              style={{ marginLeft: '10px' }}
-              disabled={!canProceed}  // Disable the button if canProceed is false
-            >
-              Next
-            </Button>
-          </Box>
+          <FormButton
+            onClick={goToPreviousStep}
+            text="Back">
+          </FormButton>
+          <FormButton
+            onClick={handleSubmit}
+            text="Next"
+            disabled={!canProceed}>
+          </FormButton>
+        </Box>
       </Box>
     </Container>
   );

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { TextField, Button, Container, Typography, Box } from '@mui/material';
 import { updateField, updateCurrentStep } from '../../../../redux/form/formSlice';
 import { useNavigate } from 'react-router-dom';
+import FormButton from '../../../Buttons/FormButton';
 
 const StepFour = () => {
   const dispatch = useDispatch();
@@ -55,7 +56,6 @@ const StepFour = () => {
     <Container maxWidth="sm">
       <Box my={4}>
         <h2>Step 4: Contact Information</h2>
-        <form>
           <TextField
             fullWidth
             margin="normal"
@@ -79,20 +79,16 @@ const StepFour = () => {
             helperText={errors.email}
           />
           <Box mt={2}>
-            <Button variant="contained" color="primary" onClick={goToPreviousStep}>
-              Previous
-            </Button>
-            <Button
-              variant="contained"
-              color="primary"
+            <FormButton
+              onClick={goToPreviousStep}
+              text="Back">
+            </FormButton>
+            <FormButton
               onClick={goToNextStep}
-              style={{ marginLeft: '10px' }}
-              disabled={!canProceed}  // Disable the button if canProceed is false
-            >
-              Next
-            </Button>
+              text="Next"
+              disabled={!canProceed}>
+            </FormButton>
           </Box>
-        </form>
       </Box>
     </Container>
   );
