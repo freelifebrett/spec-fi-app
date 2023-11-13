@@ -45,10 +45,12 @@ const StepFour = () => {
 
   // Navigation functions
   const goToPreviousStep = () => {
+    dispatch(updateCurrentStep(3));
     navigate('/step-3'); // Update with your actual route
   };
 
   const goToNextStep = () => {
+    dispatch(updateCurrentStep(5));
     navigate('/step-5'); // Update with your actual route
   };
 

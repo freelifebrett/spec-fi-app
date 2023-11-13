@@ -68,10 +68,12 @@ const StepFive = () => {
 
     // Navigation functions
     const goToPreviousStep = () => {
+        dispatch(updateCurrentStep(4));
         navigate('/step-4'); // Update with your actual route
     };
 
     const goToNextStep = () => {
+        dispatch(updateCurrentStep(6));
         navigate('/step-6'); // Update with your actual route
     };
 

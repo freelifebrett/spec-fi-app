@@ -28,6 +28,7 @@ const StepThree = () => {
   };
 
   const goToPreviousStep = () => {
+    dispatch(updateCurrentStep(2));
     navigate('/step-2');
   };
 
@@ -47,7 +48,6 @@ const StepThree = () => {
     }
 
     setErrors(newErrors);
-
     if (formIsValid) {
       dispatch(updateField({ dob: localData.dob, ssn: localData.ssn }));
       dispatch(updateCurrentStep(4)); // Assuming the next step is 4

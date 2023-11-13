@@ -76,6 +76,7 @@ const StepTwo = () => {
   };
 
   const goToPreviousStep = () => {
+    dispatch(updateCurrentStep(1));
     navigate('/step-1'); // Update with your actual route
   };
 
@@ -84,7 +85,7 @@ const StepTwo = () => {
     // Perform your validation and other logic here
 
     // Update Redux state if neededs
-    dispatch(updateCurrentStep(3)); // Assuming you have an action to update the step
+    dispatch(updateCurrentStep(3));
 
     // Navigate to StepThree
     navigate('/step-3');

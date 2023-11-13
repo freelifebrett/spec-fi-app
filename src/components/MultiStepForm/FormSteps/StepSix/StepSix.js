@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { TextField, Button, FormControl, InputLabel, Select, MenuItem, Container, Typography, Box } from '@mui/material';
-import { updateField } from '../../../../redux/form/formSlice';
+import { updateField, updateCurrentStep } from '../../../../redux/form/formSlice';
 import { useNavigate } from 'react-router-dom';
 import FormButton from '../../../Buttons/FormButton';
 
@@ -53,10 +53,12 @@ const StepSix = () => {
 
   // Navigation functions
   const goToPreviousStep = () => {
+    dispatch(updateCurrentStep(5));
     navigate('/step-5'); // Update with your actual route
   };
 
   const goToNextStep = () => {
+    dispatch(updateCurrentStep(7));
     navigate('/step-7'); // Update with your actual route
   };
 
