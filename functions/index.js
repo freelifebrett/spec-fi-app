@@ -20,6 +20,8 @@ exports.submitFormData = functions.https.onRequest((request, response) => {
 
 
         try {
+            const formData = request.body;
+            
             if (request.method !== 'POST') {
                 return response.status(405).send('Method Not Allowed');
             }
@@ -36,6 +38,7 @@ exports.submitFormData = functions.https.onRequest((request, response) => {
             });
     
             // Step 5 and 6: Process and return the response
+            console.info(response.data);
             return response.data;
         } catch (error) {
             console.error('Error submitting form data:', error);

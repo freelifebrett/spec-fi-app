@@ -65,7 +65,8 @@ const initialState = {
     employerName: 'Example Employer',
     employerCity: 'Example City', // Updated field
     employerState: 'CA', // Updated field
-    employerZip: '12345', // Updated field
+    employerZipCode: '12345', // Updated field
+    employerPhone: "893-893-8999",
     employmentLength: '2 years',
     firstName: 'John',
     housingPayment: '1500',
