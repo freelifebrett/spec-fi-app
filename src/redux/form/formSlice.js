@@ -59,7 +59,7 @@ const initialState = {
     confirmPassword: 'Password123!',
     country: 'United States', // Default value set to United States
     currentStep: 1,
-    dob: '01/01/1990',
+    dob: '1990-05-17',
     email: 'example@email.com',
     employerAddress: '456 Business Rd',
     employerName: 'Example Employer',
@@ -84,7 +84,7 @@ const initialState = {
     routingNumber: '987654321',
     ssn: '123-45-6789',
     state: 'CA', // consider using an abbreviation for states
-    timeAtAddress: '3 years',
+    timeAtAddress: '3',
     zipCode: '12345',
 };
 

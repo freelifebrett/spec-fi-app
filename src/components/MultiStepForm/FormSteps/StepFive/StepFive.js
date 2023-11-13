@@ -38,13 +38,13 @@ const StepFive = () => {
             case 'employerAddress':
                 if (!value.trim()) error = 'Employer address is required.';
                 break;
-            case 'city':
+            case 'employerCity':
                 if (!value.trim()) error = 'City is required.';
                 break;
-            case 'state':
+            case 'employerState':
                 if (!/^[A-Za-z]{2}$/.test(value)) error = 'Invalid state abbreviation. It must be 2 characters.';
                 break;
-            case 'zipCode':
+            case 'employerZipCode':
                 if (!/^\d{5}$/.test(value)) error = 'Invalid zip code. It must be 5 digits.';
                 break;
             case 'averageIncome':
@@ -125,32 +125,32 @@ const StepFive = () => {
                 <TextField
                     fullWidth
                     margin="normal"
-                    label="City"
-                    name="city"
-                    value={formData.city || ''}
+                    label="Employer City"
+                    name="employerCity"
+                    value={formData.employerCity || ''}
                     onChange={handleFieldChange}
-                    error={!!errors.city}
-                    helperText={errors.city}
+                    error={!!errors.employerCity}
+                    helperText={errors.employerCity}
                 />
                 <TextField
                     fullWidth
                     margin="normal"
-                    label="State"
-                    name="state"
-                    value={formData.state || ''}
+                    label="Employer State"
+                    name="employerState"
+                    value={formData.employerState || ''}
                     onChange={handleFieldChange}
-                    error={!!errors.state}
-                    helperText={errors.state}
+                    error={!!errors.employerState}
+                    helperText={errors.employerState}
                 />
                 <TextField
                     fullWidth
                     margin="normal"
-                    label="Zip Code"
-                    name="zipCode"
-                    value={formData.zipCode || ''}
+                    label="Employer Zip Code"
+                    name="employerZipCode"
+                    value={formData.employerZipCode || ''}
                     onChange={handleFieldChange}
-                    error={!!errors.zipCode}
-                    helperText={errors.zipCode}
+                    error={!!errors.employerZipCode}
+                    helperText={errors.employerZipCode}
                 />
                 <TextField
                     fullWidth
