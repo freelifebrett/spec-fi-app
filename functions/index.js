@@ -20,8 +20,8 @@ exports.submitFormData = functions.https.onRequest((request, response) => {
 
 
         try {
-            const formData = request.body;
-            
+            const formData = JSON.parse(request.body);    
+
             if (request.method !== 'POST') {
                 return response.status(405).send('Method Not Allowed');
             }
