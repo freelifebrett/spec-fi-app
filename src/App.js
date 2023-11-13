@@ -3,6 +3,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import store from './redux/store';
 import MultiStepForm from './components/MultiStepForm/MultiStepForm.js';
+import FlipSecretsLogo from './images/flip_secrets_logo.png';
 import './App.css';
 
 // Import the functions you need from the SDKs you need
@@ -33,7 +34,8 @@ function App() {
       <Router>
         <div className="App">
           <header className="App-header">
-            <h1>Flip Secrets Application</h1>
+            <img src={FlipSecretsLogo} alt="Flip Secrets Logo" />
+            <h1>The Flip Secrets Application</h1>
           </header>
           <Routes>
             <Route path="/*" element={<MultiStepForm />} />

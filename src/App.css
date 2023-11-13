@@ -25,6 +25,11 @@
   margin-bottom: 40px;
 }
 
+header img {
+  height: 100px; /* Adjust the size as needed */
+  margin-top: 20px; /* Add some margin if needed */
+}
+
 .App-link {
   color: #61dafb;
 }
