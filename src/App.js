@@ -33,7 +33,7 @@ function App() {
       <Router>
         <div className="App">
           <header className="App-header">
-            <h1>Multi-Step Form</h1>
+            <h1>Flip Secrets Application</h1>
           </header>
           <Routes>
             <Route path="/*" element={<MultiStepForm />} />

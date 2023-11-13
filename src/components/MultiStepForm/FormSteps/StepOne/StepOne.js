@@ -45,7 +45,7 @@ const StepOne = () => {
   return (
     <Container maxWidth="sm">
       <Typography variant="h4" component="h2" gutterBottom>
-        Step 1: Personal Information
+        Step 1: Name
       </Typography>
       <Box component="form" noValidate autoComplete="off">
         <TextField

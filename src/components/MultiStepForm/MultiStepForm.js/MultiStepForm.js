@@ -11,8 +11,7 @@ import StepSeven from '../FormSteps/StepSeven';
 
 const MultiStepForm = () => {
   return (
-    <div className="multi-step-form">
-      <h2>Form Overview</h2>
+    <div className="multi-step-form">      
       <Routes>
         <Route path="/" element={<StepOne />} />
         <Route path="step-1" element={<StepOne />} />
