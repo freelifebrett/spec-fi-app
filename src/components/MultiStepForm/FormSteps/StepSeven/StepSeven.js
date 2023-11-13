@@ -30,8 +30,9 @@ const StepSeven = () => {
     e.preventDefault();
   
     try {
-      const response = await fetch(' http://localhost:4000/functions/submitFormData', { // Use the correct URL of your Firebase function
+      const response = await fetch('http://localhost:5001/spec-fi-app/us-central1/submitFormData', { // Use the correct URL of your Firebase function
         method: 'POST',
+        mode: 'no-cors',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -42,7 +43,7 @@ const StepSeven = () => {
         console.log('Form data submitted successfully');
         // Handle successful submission here, e.g., navigate to the next step
       } else {
-        console.error('Failed to submit form data');
+        console.error('Failed to submit form data', response);
         // Handle errors here
       }
     } catch (error) {
