@@ -63,6 +63,9 @@ const initialState = {
     email: 'example@email.com',
     employerAddress: '456 Business Rd',
     employerName: 'Example Employer',
+    employerCity: 'Example City', // Updated field
+    employerState: 'CA', // Updated field
+    employerZip: '12345', // Updated field
     employmentLength: '2 years',
     firstName: 'John',
     housingPayment: '1500',
