@@ -64,58 +64,49 @@ const StepThree = () => {
     ['dob', 'ssn'].every(field => localData[field] && localData[field].trim() !== '');
 
   return (
-    <Container component="main" maxWidth="xs">
-      <Box
-        sx={{
-          marginTop: 8,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}
-      >
+    <Container component="main" maxWidth="sm">
+      <Box my={4}>
         <Typography component="h1" variant="h5">
           Step 3
         </Typography>
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="dob"
-            label="Date of Birth"
-            name="dob"
-            autoComplete="dob"
-            autoFocus
-            value={localData.dob}
-            onChange={handleInputChange}
-            error={!!errors.dob}
-            helperText={errors.dob}
-            type="date"
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="ssn"
-            label="Social Security Number"
-            name="ssn"
-            autoComplete="ssn"
-            value={localData.ssn}
-            onChange={handleInputChange}
-            error={!!errors.ssn}
-            helperText={errors.ssn}
-          />
-          <Box mt={2}>
-            <FormButton
-              onClick={goToPreviousStep}
-              text="Back">
-            </FormButton>
-            <FormButton
-              onClick={handleSubmit}
-              text="Next"
-              disabled={!canProceed}>
-            </FormButton>
-          </Box>
+        <TextField
+          margin="normal"
+          required
+          fullWidth
+          id="dob"
+          label="Date of Birth"
+          name="dob"
+          autoComplete="dob"
+          autoFocus
+          value={localData.dob}
+          onChange={handleInputChange}
+          error={!!errors.dob}
+          helperText={errors.dob}
+          type="date"
+        />
+        <TextField
+          margin="normal"
+          required
+          fullWidth
+          id="ssn"
+          label="Social Security Number"
+          name="ssn"
+          autoComplete="ssn"
+          value={localData.ssn}
+          onChange={handleInputChange}
+          error={!!errors.ssn}
+          helperText={errors.ssn}
+        />
+        <Box mt={2}>
+          <FormButton
+            onClick={goToPreviousStep}
+            text="Back">
+          </FormButton>
+          <FormButton
+            onClick={handleSubmit}
+            text="Next"
+            disabled={!canProceed}>
+          </FormButton>
         </Box>
       </Box>
     </Container>
