@@ -65,7 +65,7 @@ function mapFormDataToXML(formData) {
                 midName: formData.middleName,
                 lastName: formData.lastName,
                 ssn: formData.ssn.replace(/-/g, ''),
-                dob: formData.dob,
+                dob: formatDate(formData.dob),
                 address: formData.address,
                 city: formData.city,
                 state: formData.state,
@@ -106,4 +106,11 @@ function mapFormDataToXML(formData) {
         }
     };
 }
+
+function formatDate(dob) {
+    const date = new Date(dob);
+    const formattedDate = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
+    return formattedDate;
+}
+
 
