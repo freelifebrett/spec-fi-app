@@ -1,23 +1,19 @@
+// src/components/Footer.js
 import React from 'react';
-import { Box, Typography, Container } from '@mui/material';
+import { Box, Typography, Container, AppBar, Toolbar } from '@mui/material';
+import FlipSecretsLogo from '../images/flip_secrets_logo.png';
 
 const Footer = () => {
   return (
-    <Box component="footer" sx={{ bgcolor: 'background.paper', py: 6 }}>
-      <Container maxWidth="lg">
-        <Typography variant="h6" align="center" gutterBottom>
-          Your Footer Content Here
-        </Typography>
-        <Typography
-          variant="subtitle1"
-          align="center"
-          color="text.secondary"
-          component="p"
-        >
-          Something here to give the footer a purpose!
-        </Typography>
-      </Container>
-    </Box>
+    <AppBar position="fixed" sx={{ top: 'auto', bottom: 0 }}>
+      <Toolbar sx={{ minHeight: '48px' }}> {/* Adjust the height here */}
+        <Container maxWidth="lg" sx={{ display: 'flex', justifyContent: 'center' }}>        
+          <Typography variant="subtitle1" color="inherit">
+            Free Life Funding 2023
+          </Typography>
+        </Container>
+      </Toolbar>
+    </AppBar>
   );
 };
 
