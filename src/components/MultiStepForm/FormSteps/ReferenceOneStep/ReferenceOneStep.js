@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import FormButton from '../../../Buttons/FormButton';
 
 
-const StepSeven = () => {
+const ReferenceOneStep = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const formData = useSelector((state) => state.form);
@@ -31,86 +31,59 @@ const StepSeven = () => {
   };
 
   const goToPreviousStep = () => {
-    dispatch(updateCurrentStep(6));
-    navigate('/step-6'); // Update with your actual route
+    dispatch(updateCurrentStep(9));
+    navigate('/step-9'); // Update with your actual route
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    try {
-      console.info(formData, formData);
-
-      const response = await fetch('http://localhost:5001/spec-fi-app/us-central1/submitFormData', { // Use the correct URL of your Firebase function
-        method: 'POST',
-        mode: 'no-cors',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (response.ok) {
-        console.log('Form data submitted successfully');
-        // Handle successful submission here, e.g., navigate to the next step
-      } else {
-        console.error('Failed to submit form data', response);
-        // Handle errors here
-      }
-    } catch (error) {
-      console.error('Error submitting form data:', error);
-      // Handle network errors here
-    }
+  const goToNextStep = () => {
+    dispatch(updateCurrentStep(11));
+    navigate('/step-11'); // Update with your actual route
   };
 
 
   // Example check to enable the 'Next' button
-  const canProceed = ['reference1FirstName', 'reference1LastName', 'reference1Phone', 'reference1Relationship',
-    'reference2FirstName', 'reference2LastName', 'reference2Phone', 'reference2Relationship']
+  const canProceed = ['reference1FirstName', 'reference1LastName', 'reference1Phone', 'reference1Relationship']
     .every(field => formData[field] && String(formData[field]).trim() !== '');
 
   return (
     <Container>
-      <h2>References</h2>
+      <h2>Reference #1</h2>
       <Box component="form" noValidate sx={{ mt: 1 }}>
-        {[1, 2].map((refNumber) => (
-          <Box key={`reference-${refNumber}`} sx={{ mb: 2 }}>
-            <h3>Reference #{refNumber}</h3>
             <TextField
               fullWidth
               label="First Name"
-              name={`reference${refNumber}FirstName`}
-              value={formData[`reference${refNumber}FirstName`] || ''}
-              onChange={(e) => handleChange(`reference${refNumber}FirstName`, e.target.value)}
+              name={`reference1FirstName`}
+              value={formData[`reference1FirstName`] || ''}
+              onChange={(e) => handleChange(`reference1FirstName`, e.target.value)}
               required
               margin="normal"
             />
             <TextField
               fullWidth
               label="Last Name"
-              name={`reference${refNumber}LastName`}
-              value={formData[`reference${refNumber}LastName`] || ''}
-              onChange={(e) => handleChange(`reference${refNumber}LastName`, e.target.value)}
+              name={`reference1LastName`}
+              value={formData[`reference1LastName`] || ''}
+              onChange={(e) => handleChange(`reference1LastName`, e.target.value)}
               required
               margin="normal"
             />
             <TextField
               fullWidth
               label="Phone Number"
-              name={`reference${refNumber}Phone`}
-              value={formData[`reference${refNumber}Phone`] || ''}
-              onChange={(e) => handleChange(`reference${refNumber}Phone`, e.target.value)}
+              name={`reference1Phone`}
+              value={formData[`reference1Phone`] || ''}
+              onChange={(e) => handleChange(`reference1Phone`, e.target.value)}
               required
               margin="normal"
-              error={!!errors[`reference${refNumber}Phone`]}
-              helperText={errors[`reference${refNumber}Phone`]}
+              error={!!errors[`reference1Phone`]}
+              helperText={errors[`reference1Phone`]}
             />
             <FormControl fullWidth margin="normal">
               <InputLabel>Relationship</InputLabel>
               <Select
-                name={`reference${refNumber}Relationship`}
-                value={formData[`reference${refNumber}Relationship`] || ''}
-                onChange={(e) => handleChange(`reference${refNumber}Relationship`, e.target.value)}
+                name={`reference1Relationship`}
+                value={formData[`reference1Relationship`] || ''}
+                onChange={(e) => handleChange(`reference1Relationship`, e.target.value)}
                 required
               >
                 <MenuItem value="parent">Parent</MenuItem>
@@ -121,21 +94,19 @@ const StepSeven = () => {
               </Select>
             </FormControl>
           </Box>
-        ))}
         <Box mt={2}>
           <FormButton
             onClick={goToPreviousStep}
             text="Back">
           </FormButton>
           <FormButton
-            onClick={handleSubmit}
+            onClick={goToNextStep}
             text="Submit"
             disabled={!canProceed}>
           </FormButton>
-        </Box>
-      </Box>
+        </Box>    
     </Container>
   );
 };
 
-export default StepSeven;
+export default ReferenceOneStep;

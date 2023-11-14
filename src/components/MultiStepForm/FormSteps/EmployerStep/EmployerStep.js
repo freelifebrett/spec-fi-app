@@ -5,7 +5,7 @@ import { TextField, Button, Container, Typography, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import FormButton from '../../../Buttons/FormButton';
 
-const StepFive = () => {
+const EmployerStep = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const formData = useSelector(state => state.form);
@@ -30,9 +30,6 @@ const StepFive = () => {
             case 'employerName':
                 if (!value.trim()) error = 'Employer name is required.';
                 break;
-            case 'occupation':
-                if (!value.trim()) error = 'Occupation/title is required.';
-                break;
             case 'employerPhone':
                 if (!/^\d{10}$/.test(value)) error = 'Invalid phone number. It must be 10 digits.';
                 break;
@@ -46,12 +43,7 @@ const StepFive = () => {
                 if (!/^[A-Za-z]{2}$/.test(value)) error = 'Invalid state abbreviation. It must be 2 characters.';
                 break;
             case 'employerZipCode':
-                if (!/^\d{5}$/.test(value)) error = 'Invalid zip code. It must be 5 digits.';
-                break;
-            case 'averageIncome':
-                if (!value.trim() || isNaN(value) || Number(value) <= 0) {
-                    error = 'Invalid average income. It must be a positive number.';
-                }
+                if (!/^\d{5}$/.test(value)) error = 'Invalid zip code. It must be 5 digits.';                
                 break;
             default:
                 break;
@@ -68,13 +60,13 @@ const StepFive = () => {
 
     // Navigation functions
     const goToPreviousStep = () => {
-        dispatch(updateCurrentStep(4));
-        navigate('/step-4'); // Update with your actual route
+        dispatch(updateCurrentStep(6));
+        navigate('/step-6'); // Update with your actual route
     };
 
     const goToNextStep = () => {
-        dispatch(updateCurrentStep(6));
-        navigate('/step-6'); // Update with your actual route
+        dispatch(updateCurrentStep(8));
+        navigate('/step-8'); // Update with your actual route
     };
 
 
@@ -95,16 +87,6 @@ const StepFive = () => {
                     onChange={handleFieldChange}
                     error={!!errors.employerName}
                     helperText={errors.employerName}
-                />
-                <TextField
-                    fullWidth
-                    margin="normal"
-                    label="Occupation/Title"
-                    name="occupation"
-                    value={formData.occupation || ''}
-                    onChange={handleFieldChange}
-                    error={!!errors.occupation}
-                    helperText={errors.occupation}
                 />
                 <TextField
                     fullWidth
@@ -156,16 +138,6 @@ const StepFive = () => {
                     error={!!errors.employerZipCode}
                     helperText={errors.employerZipCode}
                 />
-                <TextField
-                    fullWidth
-                    margin="normal"
-                    label="Average Income"
-                    name="averageIncome"
-                    value={formData.averageIncome || ''}
-                    onChange={handleFieldChange}
-                    error={!!errors.averageIncome}
-                    helperText={errors.averageIncome}
-                />
                 <Box mt={2}>
                     <FormButton
                         onClick={goToPreviousStep}
@@ -182,4 +154,4 @@ const StepFive = () => {
     );
 };
 
-export default StepFive;
+export default EmployerStep;

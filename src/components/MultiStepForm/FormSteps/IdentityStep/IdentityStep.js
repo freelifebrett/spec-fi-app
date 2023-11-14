@@ -5,7 +5,7 @@ import { TextField, Button, Container, Typography, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import FormButton from '../../../Buttons/FormButton';
 
-const StepThree = () => {
+const IndentityStep = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const formData = useSelector((state) => state.form); // Updated to use state.form
@@ -28,8 +28,8 @@ const StepThree = () => {
   };
 
   const goToPreviousStep = () => {
-    dispatch(updateCurrentStep(2));
-    navigate('/step-2');
+    dispatch(updateCurrentStep(4));
+    navigate('/step-4');
   };
 
   const handleSubmit = (e) => {
@@ -50,8 +50,8 @@ const StepThree = () => {
     setErrors(newErrors);
     if (formIsValid) {
       dispatch(updateField({ dob: localData.dob, ssn: localData.ssn }));
-      dispatch(updateCurrentStep(4)); // Assuming the next step is 4
-      navigate('/step-4'); // Navigate to the next step
+      dispatch(updateCurrentStep(6)); // Assuming the next step is 4
+      navigate('/step-6'); // Navigate to the next step
     }
   };
 
@@ -111,4 +111,4 @@ const StepThree = () => {
   );
 };
 
-export default StepThree;
+export default IndentityStep;

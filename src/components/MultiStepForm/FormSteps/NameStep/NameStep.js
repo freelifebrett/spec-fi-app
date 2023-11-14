@@ -5,7 +5,7 @@ import { TextField, Button, Container, Typography, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import FormButton from '../../../Buttons/FormButton';
 
-const StepOne = () => {
+const NameStep = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const formData = useSelector((state) => state.form); // Adjust the path according to your store setup
@@ -94,4 +94,4 @@ const StepOne = () => {
   );
 };
 
-export default StepOne;
+export default NameStep;

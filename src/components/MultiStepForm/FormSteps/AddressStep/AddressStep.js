@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import FormButton from '../../../Buttons/FormButton';
 
 
-const StepTwo = () => {
+const AddressStep = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const formData = useSelector(state => state.form);
@@ -157,60 +157,6 @@ const StepTwo = () => {
           margin="normal"
           required
         />
-
-        <FormControl fullWidth margin="normal">
-          <InputLabel id="time-at-address-label">Time at Address</InputLabel>
-          <Select
-            labelId="time-at-address-label"
-            id="timeAtAddress"
-            name="timeAtAddress"
-            value={formData.timeAtAddress}
-            label="Time at Address"
-            onChange={handleFieldChange}
-            required
-          >
-            <MenuItem value="0">0 years</MenuItem>
-            <MenuItem value="1">1 year</MenuItem>
-            <MenuItem value="2">2 years</MenuItem>
-            <MenuItem value="3">3 years</MenuItem>
-            <MenuItem value="4">4 years</MenuItem>
-            <MenuItem value="5">5 years</MenuItem>
-            <MenuItem value="6">6 years</MenuItem>
-            <MenuItem value="7">7 years</MenuItem>
-            <MenuItem value="8">8 years</MenuItem>
-            <MenuItem value="9">9 years</MenuItem>
-            <MenuItem value="10+">10+ years</MenuItem>
-          </Select>
-        </FormControl>
-
-        <FormControl fullWidth margin="normal">
-          <InputLabel id="own-or-rent-label">Own or Rent</InputLabel>
-          <Select
-            labelId="own-or-rent-label"
-            id="ownOrRent"
-            name="ownOrRent"
-            value={formData.ownOrRent}
-            label="Own or Rent"
-            onChange={handleFieldChange}
-            required
-          >
-            <MenuItem value="Own">Own</MenuItem>
-            <MenuItem value="Rent">Rent</MenuItem>
-          </Select>
-        </FormControl>
-
-        <TextField
-          label="Housing Payment"
-          variant="outlined"
-          name="housingPayment"
-          value={formData.housingPayment}
-          onChange={handleFieldChange}
-          fullWidth
-          required
-          margin="normal"
-          error={!!errors.housingPayment}
-          helperText={errors.housingPayment || ''}
-        />
         <Box mt={2}>
           <FormButton
             onClick={goToPreviousStep}
@@ -227,4 +173,4 @@ const StepTwo = () => {
   );
 };
 
-export default StepTwo;
+export default AddressStep;

@@ -34,6 +34,27 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 
 const theme = createTheme({
+  typography: {
+    fontFamily: [
+      'Roboto', // The font you want to use
+      '"Helvetica Neue"', // Fallback fonts
+      'Arial',
+      'sans-serif'
+    ].join(','),
+    // You can also define font size, weight, and other properties for different elements.
+    h1: {
+      fontSize: '2.5rem', // Example size for h1 elements
+      fontWeight: 500, // Example weight for h1 elements
+    },
+    body1: {
+      fontSize: '1rem', // Body text size
+      fontWeight: 400,
+    },
+    button: {
+      textTransform: 'none', // If you want to remove uppercase styling from buttons
+    },
+    // ... Add more styles for other text elements as needed
+  },
   palette: {
     primary: {
       main: '#2E7D32', // A medium green

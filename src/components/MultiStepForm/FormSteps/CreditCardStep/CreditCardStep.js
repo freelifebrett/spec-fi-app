@@ -5,7 +5,7 @@ import { updateField, updateCurrentStep } from '../../../../redux/form/formSlice
 import { useNavigate } from 'react-router-dom';
 import FormButton from '../../../Buttons/FormButton';
 
-const StepSix = () => {
+const CreditCardStep = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const formData = useSelector(state => state.form);
@@ -14,15 +14,6 @@ const StepSix = () => {
   const validate = (name, value) => {
     let error = '';
     switch (name) {
-      case 'bankName':
-        if (!value.trim()) error = 'Bank name is required';
-        break;
-      case 'accountNumber':
-        if (!/^\d+$/.test(value)) error = 'Account number must be numeric';
-        break;
-      case 'routingNumber':
-        if (!/^\d+$/.test(value)) error = 'Routing number must be numeric';
-        break;
       case 'cardNumber':
         if (!/^\d+$/.test(value)) error = 'Card number must be numeric';
         break;
@@ -53,13 +44,13 @@ const StepSix = () => {
 
   // Navigation functions
   const goToPreviousStep = () => {
-    dispatch(updateCurrentStep(5));
-    navigate('/step-5'); // Update with your actual route
+    dispatch(updateCurrentStep(8));
+    navigate('/step-8'); // Update with your actual route
   };
 
   const goToNextStep = () => {
-    dispatch(updateCurrentStep(7));
-    navigate('/step-7'); // Update with your actual route
+    dispatch(updateCurrentStep(10));
+    navigate('/step-10'); // Update with your actual route
   };
 
   const canProceed = Object.values(errors).every(x => x === '') &&
@@ -68,38 +59,8 @@ const StepSix = () => {
 
   return (
     <Container>
-        <h2>Payment</h2>
+        <h2>Credit Card Info</h2>
         <Box component="form" noValidate sx={{ mt: 1 }}>
-          <TextField
-            fullWidth
-            label="Bank Name"
-            name="bankName"
-            value={formData.bankName || ''}
-            onChange={handleFieldChange}
-            error={!!errors.bankName}
-            helperText={errors.bankName}
-            margin="normal"
-          />
-          <TextField
-            fullWidth
-            label="Account Number"
-            name="accountNumber"
-            value={formData.accountNumber || ''}
-            onChange={handleFieldChange}
-            error={!!errors.accountNumber}
-            helperText={errors.accountNumber}
-            margin="normal"
-          />
-          <TextField
-            fullWidth
-            label="Routing Number"
-            name="routingNumber"
-            value={formData.routingNumber || ''}
-            onChange={handleFieldChange}
-            error={!!errors.routingNumber}
-            helperText={errors.routingNumber}
-            margin="normal"
-          />
           <TextField
             fullWidth
             label="Card Number"
@@ -166,4 +127,4 @@ const StepSix = () => {
   );
 };
 
-export default StepSix;
+export default CreditCardStep;

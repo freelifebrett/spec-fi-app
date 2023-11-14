@@ -5,7 +5,7 @@ import { updateField, updateCurrentStep } from '../../../../redux/form/formSlice
 import { useNavigate } from 'react-router-dom';
 import FormButton from '../../../Buttons/FormButton';
 
-const StepFour = () => {
+const ContactStep = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const formData = useSelector(state => state.form);
@@ -96,4 +96,4 @@ const StepFour = () => {
   );
 };
 
-export default StepFour;
+export default ContactStep;
