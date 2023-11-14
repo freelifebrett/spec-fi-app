@@ -1,6 +1,6 @@
 .App {
   text-align: center;
-  padding-bottom: 80px;
+  padding-bottom: 60px;
 }
 
 .form-container {
@@ -13,7 +13,7 @@
   height: auto; /* Maintain aspect ratio */
   max-width: 250px;
   pointer-events: none;
-  margin: 20px; /* Add some margin if needed */
+  margin: 20px; 
 }
 
 .App-header {
@@ -25,7 +25,7 @@
   justify-content: center;
   font-size: calc(8px + 1vmin); /* Slightly smaller font-size */
   color: #858585;
-  margin-bottom: 40px;
+  /* margin-bottom: 40px; */
 }
 
 .App-link {
@@ -42,13 +42,13 @@
 }
 
 .header-title {
-  font-size: calc(20px + (30 - 20) * ((100vw - 400px) / (1600 - 400))) !important;
+  font-size: calc(20px + (34 - 20) * ((100vw - 320px) / (1600 - 320))) !important;
   color: #444; /* Dark gray */
-  font-weight: 800 !important;  
+  font-weight: 800 !important;    
 }
-
+/* 
 .multi-step-form {
   margin: 0;
-}
+} */
 
 

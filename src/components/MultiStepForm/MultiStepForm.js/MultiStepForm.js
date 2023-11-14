@@ -20,7 +20,7 @@ const MultiStepForm = () => {
 
     const totalSteps = 11; // Total number of steps    
     const progress = (formData.currentStep / totalSteps) * 100;
-    const stepNames = ["Name Details", "Address Details", "Housing Details", "Contact Details", "Identity Details", "Occupation Details", "Employer Details", "Bank Details", "Credit Card Details", "Reference One", "Reference Two"];
+    const stepNames = ["Name", "Address", "Housing", "Contact", "Identity", "Occupation", "Employer", "Bank", "Credit Card", "Reference One", "Reference Two"];
 
     return (
         <div className="multi-step-form">
