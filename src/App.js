@@ -5,10 +5,14 @@ import store from './redux/store';
 import MultiStepForm from './components/MultiStepForm/MultiStepForm.js';
 import FlipSecretsLogo from './images/flip_secrets_logo.png';
 import './App.css';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
+import Footer from './components/Footer';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -33,13 +37,22 @@ function App() {
     <Provider store={store}>
       <Router>
         <div className="App">
-          <header className="App-header">
+          {/* <header className="App-header">
             <img className='App-logo' src={FlipSecretsLogo} alt="Flip Secrets Logo" />
             <h1>Financing Application</h1>
-          </header>
+          </header> */}
+          <AppBar position="static">
+            <Toolbar>
+              <img className='App-logo' src={FlipSecretsLogo} alt="Flip Secrets Logo" />
+              {/* <Typography variant="h6" color="inherit" component="div">
+                Financing Application
+              </Typography> */}
+            </Toolbar>
+          </AppBar>
           <Routes>
             <Route path="/*" element={<MultiStepForm />} />
           </Routes>
+          <Footer/>
         </div>
       </Router>
     </Provider>

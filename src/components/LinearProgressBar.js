@@ -5,7 +5,8 @@ import Box from '@mui/material/Box';
 
 const LinearProgressBar = styled(LinearProgressWithLabel)(({ theme }) => ({
     height: 20,
-    borderRadius: 10
+    borderRadius: 10,
+    margin: 15
   }));
 
 function LinearProgressWithLabel(props) {
