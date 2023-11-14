@@ -48,62 +48,70 @@ const ReferenceOneStep = () => {
   return (
     <Container>
       <Box component="form" noValidate sx={{ mt: 1 }}>
-            <TextField
-              fullWidth
-              label="First Name"
-              name={`reference1FirstName`}
-              value={formData[`reference1FirstName`] || ''}
-              onChange={(e) => handleChange(`reference1FirstName`, e.target.value)}
-              required
-              margin="normal"
-            />
-            <TextField
-              fullWidth
-              label="Last Name"
-              name={`reference1LastName`}
-              value={formData[`reference1LastName`] || ''}
-              onChange={(e) => handleChange(`reference1LastName`, e.target.value)}
-              required
-              margin="normal"
-            />
-            <TextField
-              fullWidth
-              label="Phone Number"
-              name={`reference1Phone`}
-              value={formData[`reference1Phone`] || ''}
-              onChange={(e) => handleChange(`reference1Phone`, e.target.value)}
-              required
-              margin="normal"
-              error={!!errors[`reference1Phone`]}
-              helperText={errors[`reference1Phone`]}
-            />
-            <FormControl fullWidth margin="normal">
-              <InputLabel>Relationship</InputLabel>
-              <Select
-                name={`reference1Relationship`}
-                value={formData[`reference1Relationship`] || ''}
-                onChange={(e) => handleChange(`reference1Relationship`, e.target.value)}
-                required
-              >
-                <MenuItem value="parent">Parent</MenuItem>
-                <MenuItem value="sibling">Sibling</MenuItem>
-                <MenuItem value="friend">Friend</MenuItem>
-                <MenuItem value="colleague">Colleague</MenuItem>
-                <MenuItem value="other">Other</MenuItem>
-              </Select>
-            </FormControl>
-          </Box>
-        <Box mt={2}>
-          <FormButton
-            onClick={goToPreviousStep}
-            text="Back">
-          </FormButton>
-          <FormButton
-            onClick={goToNextStep}
-            text="Submit"
-            disabled={!canProceed}>
-          </FormButton>
-        </Box>    
+        <TextField
+          fullWidth
+          label="First Name"
+          name={`reference1FirstName`}
+          value={formData[`reference1FirstName`] || ''}
+          onChange={(e) => handleChange(`reference1FirstName`, e.target.value)}
+          required
+          margin="normal"
+        />
+        <TextField
+          fullWidth
+          label="Last Name"
+          name={`reference1LastName`}
+          value={formData[`reference1LastName`] || ''}
+          onChange={(e) => handleChange(`reference1LastName`, e.target.value)}
+          required
+          margin="normal"
+        />
+        <TextField
+          fullWidth
+          label="Phone Number"
+          name={`reference1Phone`}
+          value={formData[`reference1Phone`] || ''}
+          onChange={(e) => handleChange(`reference1Phone`, e.target.value)}
+          required
+          margin="normal"
+          error={!!errors[`reference1Phone`]}
+          helperText={errors[`reference1Phone`]}
+        />
+        <FormControl fullWidth margin="normal">
+          <InputLabel>Relationship</InputLabel>
+          <Select
+            name={`reference1Relationship`}
+            value={formData[`reference1Relationship`] || ''}
+            onChange={(e) => handleChange(`reference1Relationship`, e.target.value)}
+            required
+          >
+            <MenuItem value="00001">Parent</MenuItem>
+            <MenuItem value="00002">Grandparent</MenuItem>
+            <MenuItem value="00003">Sibling</MenuItem>
+            <MenuItem value="00004">Spouse</MenuItem>
+            <MenuItem value="00005">Significant Other</MenuItem>
+            <MenuItem value="00006">Friend</MenuItem>
+            <MenuItem value="00007">Co-Worker</MenuItem>
+            <MenuItem value="00008">Child</MenuItem>
+            <MenuItem value="00009">In-Law</MenuItem>
+            <MenuItem value="00010">Other</MenuItem>
+            <MenuItem value="00011">Cousin</MenuItem>
+            <MenuItem value="00012">Aunt</MenuItem>
+            <MenuItem value="00013">Uncle</MenuItem>
+          </Select>
+        </FormControl>
+      </Box>
+      <Box mt={2}>
+        <FormButton
+          onClick={goToPreviousStep}
+          text="Back">
+        </FormButton>
+        <FormButton
+          onClick={goToNextStep}
+          text="Next"
+          disabled={!canProceed}>
+        </FormButton>
+      </Box>
     </Container>
   );
 };
