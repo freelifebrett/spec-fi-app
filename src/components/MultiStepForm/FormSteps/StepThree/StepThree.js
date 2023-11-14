@@ -64,7 +64,7 @@ const StepThree = () => {
     ['dob', 'ssn'].every(field => localData[field] && localData[field].trim() !== '');
 
   return (
-    <Container component="main" maxWidth="sm">
+    <Container>
       <h2>Identity</h2>
       <Box component="form" noValidate autoComplete="off">
         <TextField

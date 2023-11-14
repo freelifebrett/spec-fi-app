@@ -70,7 +70,7 @@ const StepSeven = () => {
     .every(field => formData[field] && String(formData[field]).trim() !== '');
 
   return (
-    <Container component="main" maxWidth="sm">
+    <Container>
       <h2>References</h2>
       <Box component="form" noValidate sx={{ mt: 1 }}>
         {[1, 2].map((refNumber) => (

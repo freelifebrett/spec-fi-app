@@ -44,7 +44,7 @@ const StepOne = () => {
   const canProceed = !errors.firstName && !errors.lastName && formData.firstName && formData.lastName;
 
   return (
-    <Container maxWidth="sm">
+    <Container>
       <h2>Name</h2>
       <Box component="form" noValidate autoComplete="off">
         <TextField

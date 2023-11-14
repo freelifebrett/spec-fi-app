@@ -55,7 +55,7 @@ const StepFour = () => {
   };
 
   return (
-    <Container maxWidth="sm">
+    <Container>
       <Box my={4}>
         <h2>Contact</h2>
           <TextField

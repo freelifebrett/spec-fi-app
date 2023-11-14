@@ -4,13 +4,11 @@
 }
 
 .form-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start; /* Aligns to the start of the container */
-  align-items: center; /* Aligns horizontally */
-  
-  margin: 6vh 0; /* Adds padding at the top */
+  margin: 6vh 0;
+  max-width: 800px;
 }
+
+
 
 .App-logo {
   width: 45vw; /* Adjust the value as needed */

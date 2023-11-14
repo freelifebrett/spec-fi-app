@@ -97,7 +97,7 @@ const StepTwo = () => {
       .every(field => formData[field] && formData[field].trim() !== '');
 
   return (
-    <Container maxWidth="sm">
+    <Container>
       <h2>Address</h2>
       <Box component="form" noValidate autoComplete="off">
         <TextField
