@@ -1,14 +1,12 @@
 .App {
   text-align: center;
-  /* padding-bottom: 80px; */
+  padding-bottom: 80px;
 }
 
 .form-container {
-  margin: 5vh auto;
+  margin: 3vh auto;
   max-width: 800px;
 }
-
-
 
 .App-logo {
   width: 45vw; /* Adjust the value as needed */
@@ -42,3 +40,15 @@
     transform: rotate(360deg);
   }
 }
+
+.header-title {
+  font-size: calc(20px + (30 - 20) * ((100vw - 400px) / (1600 - 400))) !important;
+  color: #444; /* Dark gray */
+  font-weight: 800 !important;  
+}
+
+.multi-step-form {
+  margin: 0;
+}
+
+

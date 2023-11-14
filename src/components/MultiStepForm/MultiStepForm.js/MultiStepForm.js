@@ -13,23 +13,28 @@ import CreditCardStep from '../FormSteps/CreditCardStep';
 import ReferenceOneStep from '../FormSteps/ReferenceOneStep';
 import ReferenceTwoStep from '../FormSteps/ReferenceTwoStep';
 import IdentityStep from '../FormSteps/IdentityStep';
+import { Typography } from '@mui/material';
 
 const MultiStepForm = () => {
     const formData = useSelector((state) => state.form); // Adjust the path according to your store setup
 
     const totalSteps = 11; // Total number of steps    
     const progress = (formData.currentStep / totalSteps) * 100;
-    const stepNames = ["Name Details", "Address Details", "Housing Details", "Contact Details", "Identity Details", "Occupation Details", "Employer Details", "Bank Details", "Credit Card Details", "Reference One Details", "Reference Two Details"];
+    const stepNames = ["Name Details", "Address Details", "Housing Details", "Contact Details", "Identity Details", "Occupation Details", "Employer Details", "Bank Details", "Credit Card Details", "Reference One", "Reference Two"];
 
     return (
         <div className="multi-step-form">
-            <h1>Financing Application: {stepNames[formData.currentStep - 1]}</h1>
-            <LinearProgressBar value={progress}/>
+            <Typography className="header-title">
+                Financing Application: {stepNames[formData.currentStep - 1]}
+            </Typography>
+
+            {/* <h1>Financing Application: {stepNames[formData.currentStep - 1]}</h1> */}
+            <LinearProgressBar value={progress} />
             <Routes>
                 <Route path="/" element={<NameStep />} />
                 <Route path="step-1" element={<NameStep />} />
                 <Route path="step-2" element={<AddressStep />} />
-                <Route path="step-3" element={<HousingStep />} />            
+                <Route path="step-3" element={<HousingStep />} />
                 <Route path="step-4" element={<ContactStep />} />
                 <Route path="step-5" element={<IdentityStep />} />
                 <Route path="step-6" element={<OccupationStep />} />
