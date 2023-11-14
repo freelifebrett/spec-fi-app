@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import NameStep from '../FormSteps/NameStep';
 import HousingStep from '../FormSteps/HousingStep';
 import ContactStep from '../FormSteps/ContactStep';
@@ -16,19 +16,30 @@ import IdentityStep from '../FormSteps/IdentityStep';
 import { Typography } from '@mui/material';
 
 const MultiStepForm = () => {
+    const navigate = useNavigate();
     const formData = useSelector((state) => state.form); // Adjust the path according to your store setup
+    const { currentStep } = useSelector((state) => state.form);
 
     const totalSteps = 11; // Total number of steps    
     const progress = (formData.currentStep / totalSteps) * 100;
     const stepNames = ["Name", "Address", "Housing", "Contact", "Identity", "Occupation", "Employer", "Bank", "Credit Card", "Reference One", "Reference Two"];
+
+    React.useEffect(() => {
+        // Assuming step URLs are like '/step-1', '/step-2', etc.
+        console.info("currentStep", currentStep);
+        const pathStepNumber = parseInt(window.location.pathname.split('-')[1]);
+        if (pathStepNumber && pathStepNumber !== currentStep) {
+            console.info("currentStep after redirect", currentStep);
+            navigate(`/step-${currentStep}`);
+        }
+    }, [currentStep, navigate]);
+
 
     return (
         <div className="multi-step-form">
             <Typography className="header-title">
                 Financing Application: {stepNames[formData.currentStep - 1]}
             </Typography>
-
-            {/* <h1>Financing Application: {stepNames[formData.currentStep - 1]}</h1> */}
             <LinearProgressBar value={progress} />
             <Routes>
                 <Route path="/" element={<NameStep />} />
