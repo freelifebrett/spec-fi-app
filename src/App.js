@@ -62,9 +62,11 @@ function App() {
               </Typography> */}
               </Toolbar>
             </AppBar>
-            <Routes>
-              <Route path="/*" element={<MultiStepForm />} />
-            </Routes>
+            <div className="form-container">
+              <Routes>
+                <Route path="/*" element={<MultiStepForm />} />
+              </Routes>
+            </div>
             <Footer />
           </div>
         </Router>

@@ -65,8 +65,8 @@ const StepThree = () => {
 
   return (
     <Container component="main" maxWidth="sm">
-      <Box my={4}>
       <h2>Identity</h2>
+      <Box component="form" noValidate autoComplete="off">
         <TextField
           margin="normal"
           required

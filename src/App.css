@@ -1,6 +1,15 @@
 .App {
   text-align: center;
-  padding-bottom: 80px;
+  /* padding-bottom: 80px; */
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Aligns to the start of the container */
+  align-items: center; /* Aligns horizontally */
+  
+  margin: 6vh 0; /* Adds padding at the top */
 }
 
 .App-logo {
