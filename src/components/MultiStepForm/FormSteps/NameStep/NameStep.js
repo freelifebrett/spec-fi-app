@@ -45,7 +45,6 @@ const NameStep = () => {
 
   return (
     <Container>
-      <h2>Name</h2>
       <Box component="form" noValidate autoComplete="off">
         <TextField
           fullWidth

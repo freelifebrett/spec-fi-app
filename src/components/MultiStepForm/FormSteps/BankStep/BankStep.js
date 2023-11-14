@@ -56,7 +56,6 @@ const BankStep = () => {
 
   return (
     <Container>
-        <h2>Bank Info</h2>
         <Box component="form" noValidate sx={{ mt: 1 }}>
           <TextField
             fullWidth

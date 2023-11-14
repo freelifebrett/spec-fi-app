@@ -97,8 +97,7 @@ const AddressStep = () => {
       .every(field => formData[field] && formData[field].trim() !== '');
 
   return (
-    <Container>
-      <h2>Address</h2>
+    <Container>    
       <Box component="form" noValidate autoComplete="off">
         <TextField
           fullWidth

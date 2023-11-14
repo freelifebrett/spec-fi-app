@@ -65,7 +65,6 @@ const IndentityStep = () => {
 
   return (
     <Container>
-      <h2>Identity</h2>
       <Box component="form" noValidate autoComplete="off">
         <TextField
           margin="normal"

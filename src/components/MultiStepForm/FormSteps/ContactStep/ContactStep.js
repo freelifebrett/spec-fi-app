@@ -56,8 +56,7 @@ const ContactStep = () => {
 
   return (
     <Container>
-      <Box my={4}>
-        <h2>Contact</h2>
+      <Box my={4}>        
           <TextField
             fullWidth
             margin="normal"

@@ -19,10 +19,11 @@ const MultiStepForm = () => {
 
     const totalSteps = 11; // Total number of steps    
     const progress = (formData.currentStep / totalSteps) * 100;
+    const stepNames = ["Name Details", "Address Details", "Housing Details", "Contact Details", "Identity Details", "Occupation Details", "Employer Details", "Bank Details", "Credit Card Details", "Reference One Details", "Reference Two Details"];
 
     return (
         <div className="multi-step-form">
-            <h1>Financing Application</h1>
+            <h1>Financing Application: {stepNames[formData.currentStep - 1]}</h1>
             <LinearProgressBar value={progress}/>
             <Routes>
                 <Route path="/" element={<NameStep />} />

@@ -75,8 +75,7 @@ const EmployerStep = () => {
             .every(field => formData[field] && formData[field].trim() !== '');
 
     return (
-        <Container>
-            <h2>Employer</h2>
+        <Container>            
             <Box my={4}>
                 <TextField
                     fullWidth

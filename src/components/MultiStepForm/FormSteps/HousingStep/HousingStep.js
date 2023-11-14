@@ -75,7 +75,6 @@ const HousingStep = () => {
 
     return (
         <Container>
-            <h2>Housing Details</h2>
             <Box component="form" noValidate autoComplete="off">
                 <FormControl fullWidth margin="normal">
                     <InputLabel id="time-at-address-label">Time at Address</InputLabel>

@@ -70,7 +70,6 @@ const ReferenceTwoStep = () => {
 
   return (
     <Container>
-      <h2>Reference #2</h2>
       <Box component="form" noValidate sx={{ mt: 1 }}>
             <TextField
               fullWidth

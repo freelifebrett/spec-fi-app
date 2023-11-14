@@ -47,7 +47,6 @@ const ReferenceOneStep = () => {
 
   return (
     <Container>
-      <h2>Reference #1</h2>
       <Box component="form" noValidate sx={{ mt: 1 }}>
             <TextField
               fullWidth

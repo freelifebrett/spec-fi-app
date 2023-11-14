@@ -66,7 +66,6 @@ const OccupationStep = () => {
 
     return (
         <Container>
-            <h2>Occupation</h2>
             <Box my={4}>
                 <TextField
                     fullWidth
