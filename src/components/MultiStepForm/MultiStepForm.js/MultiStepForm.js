@@ -19,7 +19,6 @@ const MultiStepForm = () => {
     return (
         <div className="multi-step-form">
             <LinearProgressBar value={progress}/>
-
             <Routes>
                 <Route path="/" element={<StepOne />} />
                 <Route path="step-1" element={<StepOne />} />
