@@ -8,6 +8,7 @@ import './App.css';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
@@ -32,30 +33,43 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#2E7D32', // A medium green
+    },
+    secondary: {
+      main: '#81C784', // A lighter green
+    },
+  },
+});
+
 function App() {
   return (
-    <Provider store={store}>
-      <Router>
-        <div className="App">
-          {/* <header className="App-header">
+    <ThemeProvider theme={theme}>
+      <Provider store={store}>
+        <Router>
+          <div className="App">
+            {/* <header className="App-header">
             <img className='App-logo' src={FlipSecretsLogo} alt="Flip Secrets Logo" />
             <h1>Financing Application</h1>
           </header> */}
-          <AppBar position="static">
-            <Toolbar>
-              <img className='App-logo' src={FlipSecretsLogo} alt="Flip Secrets Logo" />
-              {/* <Typography variant="h6" color="inherit" component="div">
+            <AppBar position="static">
+              <Toolbar>
+                <img className='App-logo' src={FlipSecretsLogo} alt="Flip Secrets Logo" />
+                {/* <Typography variant="h6" color="inherit" component="div">
                 Financing Application
               </Typography> */}
-            </Toolbar>
-          </AppBar>
-          <Routes>
-            <Route path="/*" element={<MultiStepForm />} />
-          </Routes>
-          <Footer/>
-        </div>
-      </Router>
-    </Provider>
+              </Toolbar>
+            </AppBar>
+            <Routes>
+              <Route path="/*" element={<MultiStepForm />} />
+            </Routes>
+            <Footer />
+          </div>
+        </Router>
+      </Provider>
+    </ThemeProvider>
   );
 }
 
