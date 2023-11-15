@@ -8,11 +8,7 @@ import FormButton from '../../../Buttons/FormButton';
 const IndentityStep = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const formData = useSelector((state) => state.form); // Updated to use state.form
-  // const [localData, setLocalData] = useState({
-  //   dob: formData.dob || '',
-  //   ssn: formData.ssn || '',
-  // });
+  const formData = useSelector((state) => state.form);
   const [errors, setErrors] = useState({});
   const [ssnMasked, setSsnMasked] = useState(true);
 
@@ -22,12 +18,12 @@ const IndentityStep = () => {
 
   const getMaskedSsnValue = () => {
     if (!formData.ssn) {
-      return ''; // Return empty string if no SSN has been entered
+      return '';
     }
     if (ssnMasked) {
-      return '*'.repeat(formData.ssn.length); // Return asterisks based on the length of the input
+      return '*'.repeat(formData.ssn.length);
     }
-    return formData.ssn; // Return the actual SSN if not masked
+    return formData.ssn;
   };
 
   const validate = (name, value) => {
@@ -43,13 +39,11 @@ const IndentityStep = () => {
     }
   };
 
-  // Handle input changes without validating SSN
   const handleFieldChange = (e) => {
     const { name, value } = e.target;
     dispatch(updateField({ fieldName: name, fieldValue: value }));
   };
 
-  // Handle blur event for SSN
   const handleBlur = (e) => {
     const { name, value } = e.target;
     const errorMessage = validate(name, value);
@@ -105,7 +99,7 @@ const IndentityStep = () => {
           InputLabelProps={{
             shrink: true,
           }}
-        />       
+        />
         <TextField
           margin="normal"
           required
