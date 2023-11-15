@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateField, updateCurrentStep } from '../../../../redux/form/formSlice';
-import states from '../../../../constants/states';
-import { TextField, Button, Container, Typography, Box, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
+import { TextField, FormHelperText, Container, Box, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import FormButton from '../../../Buttons/FormButton';
 
@@ -85,7 +84,7 @@ const HousingStep = () => {
     return (
         <Container>
             <Box component="form" noValidate autoComplete="off">
-                <FormControl fullWidth margin="normal">
+                <FormControl fullWidth margin="normal" error={!!errors.timeAtAddress}>
                     <InputLabel id="time-at-address-label">Time at Address</InputLabel>
                     <Select
                         labelId="time-at-address-label"
@@ -108,9 +107,10 @@ const HousingStep = () => {
                         <MenuItem value="9">9 years</MenuItem>
                         <MenuItem value="10+">10+ years</MenuItem>
                     </Select>
+                    <FormHelperText>{errors.timeAtAddress}</FormHelperText>
                 </FormControl>
 
-                <FormControl fullWidth margin="normal">
+                <FormControl fullWidth margin="normal" error={!!errors.ownOrRent}>
                     <InputLabel id="own-or-rent-label">Own or Rent</InputLabel>
                     <Select
                         labelId="own-or-rent-label"
@@ -124,6 +124,7 @@ const HousingStep = () => {
                         <MenuItem value="Own">Own</MenuItem>
                         <MenuItem value="Rent">Rent</MenuItem>
                     </Select>
+                    <FormHelperText>{errors.ownOrRent}</FormHelperText>
                 </FormControl>
 
                 <TextField
