@@ -21,7 +21,13 @@ const IndentityStep = () => {
   };
 
   const getMaskedSsnValue = () => {
-    return ssnMasked ? "***-**-****" : formData.ssn;
+    if (!localData.ssn) {
+      return ''; // Return empty string if no SSN has been entered
+    }
+    if (ssnMasked) {
+      return '*'.repeat(localData.ssn.length); // Return asterisks based on the length of the input
+    }
+    return localData.ssn; // Return the actual SSN if not masked
   };
 
   // Existing validation logic from your original StepThree.js
@@ -32,7 +38,7 @@ const IndentityStep = () => {
 
 
   const validateSSN = (ssn) => {
-    const regex = /^\d{3}-\d{2}-\d{4}$/;
+    const regex = /^\d{9}$/; // Validates a 9-digit number without dashes
     return regex.test(ssn);
   };
 
@@ -64,9 +70,11 @@ const IndentityStep = () => {
     }
   };
 
-  const handleInputChange = (e) => {
-    const { id, value } = e.target;
-    setLocalData({ ...localData, [id]: value });
+  const handleFieldChange = (e) => {
+    const { name, value } = e.target;
+    // const errorMessage = validate(name, value);
+    // setErrors({ ...errors, [name]: errorMessage });
+    dispatch(updateField({ fieldName: name, fieldValue: value }));
   };
 
   const canProceed = Object.values(errors).every(error => error === '') &&
@@ -85,7 +93,7 @@ const IndentityStep = () => {
           autoComplete="dob"
           autoFocus
           value={localData.dob}
-          onChange={handleInputChange}
+          onChange={handleFieldChange}
           error={!!errors.dob}
           helperText={errors.dob}
           type="date"
@@ -102,7 +110,7 @@ const IndentityStep = () => {
           name="ssn"
           autoComplete="ssn"
           value={getMaskedSsnValue()}
-          onChange={handleInputChange}
+          onChange={handleFieldChange}
           error={!!errors.ssn}
           helperText={errors.ssn}
         />
