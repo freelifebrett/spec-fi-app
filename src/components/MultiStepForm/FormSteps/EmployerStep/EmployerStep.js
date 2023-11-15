@@ -52,12 +52,6 @@ const EmployerStep = () => {
         return error;
     };
 
-
-    // Call validate function when form data changes
-    useEffect(() => {
-        validate();
-    }, [formData]);
-
     // Navigation functions
     const goToPreviousStep = () => {
         dispatch(updateCurrentStep(6));
@@ -76,7 +70,7 @@ const EmployerStep = () => {
 
     return (
         <Container>            
-            <Box my={4}>
+            <Box>
                 <TextField
                     fullWidth
                     margin="normal"
