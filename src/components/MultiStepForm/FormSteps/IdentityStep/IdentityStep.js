@@ -89,6 +89,9 @@ const IndentityStep = () => {
           error={!!errors.dob}
           helperText={errors.dob}
           type="date"
+          InputLabelProps={{
+            shrink: true,
+          }}
         />       
         <TextField
           margin="normal"
