@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateField, updateCurrentStep } from '../../../../redux/form/formSlice';
 import states from '../../../../constants/states';
-import { TextField, Button, Container, Typography, Box, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
+import { TextField, FormHelperText, Container, Box, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import FormButton from '../../../Buttons/FormButton';
 
@@ -17,7 +17,7 @@ const AddressStep = () => {
   const validate = (name, value) => {
     let error = '';
     const trimmedValue = value.trim();
-  
+
     switch (name) {
       case 'address':
         if (!trimmedValue) {
@@ -67,7 +67,7 @@ const AddressStep = () => {
     }
     return error;
   };
-  
+
 
   // Handle input changes
   const handleFieldChange = (e) => {
@@ -86,10 +86,10 @@ const AddressStep = () => {
     e.preventDefault();
     let formIsValid = true;
     let newErrors = {};
-  
+
     // List of fields to validate in this step
     const fieldsToValidate = ['address', 'city', 'state', 'zipCode', 'ownOrRent', 'timeAtAddress', 'housingPayment'];
-  
+
     // Validate only the fields in this step
     fieldsToValidate.forEach(field => {
       const error = validate(field, formData[field] || '');
@@ -98,8 +98,9 @@ const AddressStep = () => {
         formIsValid = false;
       }
     });
-  
+
     setErrors(newErrors);
+    console.info(formIsValid);
     if (formIsValid) {
       // Update Redux state if needed
       dispatch(updateCurrentStep(3));
@@ -114,7 +115,7 @@ const AddressStep = () => {
       .every(field => formData[field] && formData[field].trim() !== '');
 
   return (
-    <Container>    
+    <Container>
       <Box component="form" noValidate autoComplete="off">
         <TextField
           fullWidth
@@ -142,8 +143,8 @@ const AddressStep = () => {
           required
         />
 
-        <FormControl fullWidth margin="normal">
-          <InputLabel id="state-label">State (Required)</InputLabel>
+        <FormControl fullWidth margin="normal" error={!!errors.state}>
+          <InputLabel id="state-label" required>State (Required)</InputLabel>
           <Select
             labelId="state-label"
             id="state"
@@ -159,6 +160,7 @@ const AddressStep = () => {
               </MenuItem>
             ))}
           </Select>
+          <FormHelperText>{errors.state}</FormHelperText>
         </FormControl>
 
         <TextField
