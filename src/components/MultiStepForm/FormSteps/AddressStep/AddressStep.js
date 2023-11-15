@@ -17,13 +17,12 @@ const AddressStep = () => {
   const validate = (name, value) => {
     let error = '';
     const trimmedValue = value.trim();
-
+  
     switch (name) {
       case 'address':
         if (!trimmedValue) {
           error = 'Address is required';
         }
-        // Add more complex address validation if necessary
         break;
       case 'city':
         if (!trimmedValue) {
@@ -33,7 +32,9 @@ const AddressStep = () => {
         }
         break;
       case 'state':
-        // Assuming state is a dropdown and a value is always selected
+        if (!trimmedValue) {
+          error = 'State is required';
+        }
         break;
       case 'zipCode':
         if (!trimmedValue) {
@@ -44,21 +45,21 @@ const AddressStep = () => {
         break;
       case 'ownOrRent':
         if (!trimmedValue) {
-          error = 'Please select whether you own or rent your home';
+          error = 'This field is required';
         }
         break;
       case 'timeAtAddress':
         if (!trimmedValue) {
           error = 'Time at address is required';
-        } else if (!/^\d+$/.test(trimmedValue) || parseInt(trimmedValue, 10) < 0 || parseInt(trimmedValue, 10) > 99) {
-          error = 'Invalid number of years';
+        } else if (!/^\d+$/.test(trimmedValue)) {
+          error = 'Time at address must be a number';
         }
         break;
       case 'housingPayment':
         if (!trimmedValue) {
           error = 'Housing payment is required';
-        } else if (!/^\d+(\.\d{1,2})?$/.test(trimmedValue) || parseFloat(trimmedValue) < 0) {
-          error = 'Invalid housing payment amount';
+        } else if (!/^\d+(\.\d{1,2})?$/.test(trimmedValue)) {
+          error = 'Housing payment must be a valid amount';
         }
         break;
       default:
@@ -66,6 +67,7 @@ const AddressStep = () => {
     }
     return error;
   };
+  
 
   // Handle input changes
   const handleFieldChange = (e) => {
@@ -82,13 +84,28 @@ const AddressStep = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Perform your validation and other logic here
-
-    // Update Redux state if neededs
-    dispatch(updateCurrentStep(3));
-
-    // Navigate to StepThree
-    navigate('/step-3');
+    let formIsValid = true;
+    let newErrors = {};
+  
+    // List of fields to validate in this step
+    const fieldsToValidate = ['address', 'city', 'state', 'zipCode', 'ownOrRent', 'timeAtAddress', 'housingPayment'];
+  
+    // Validate only the fields in this step
+    fieldsToValidate.forEach(field => {
+      const error = validate(field, formData[field] || '');
+      if (error) {
+        newErrors[field] = error;
+        formIsValid = false;
+      }
+    });
+  
+    setErrors(newErrors);
+    if (formIsValid) {
+      // Update Redux state if needed
+      dispatch(updateCurrentStep(3));
+      // Navigate to the next step
+      navigate('/step-3');
+    }
   };
 
   // Check if the form can proceed to the next step
