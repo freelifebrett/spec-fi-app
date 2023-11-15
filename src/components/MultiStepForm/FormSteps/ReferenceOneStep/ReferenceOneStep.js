@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { TextField, Button, FormControl, InputLabel, Select, MenuItem, Box, Container } from '@mui/material';
+import { TextField, FormHelperText, FormControl, InputLabel, Select, MenuItem, Box, Container } from '@mui/material';
 import { updateField, updateCurrentStep } from '../../../../redux/form/formSlice'; // Update with your actual path
 import { useNavigate } from 'react-router-dom';
 import FormButton from '../../../Buttons/FormButton';
@@ -12,21 +12,45 @@ const ReferenceOneStep = () => {
   const formData = useSelector((state) => state.form);
   const [errors, setErrors] = useState({});
 
-  const validatePhoneNumber = (phoneNumber) => {
-    const regex = /^\d{10}$/;
-    return regex.test(phoneNumber.replace(/[\s-()]/g, ''));
+  const validate = (name, value) => {
+    switch (name) {
+      case 'reference1FirstName':
+      case 'reference1LastName':
+        return value.trim() !== '' ? '' : 'This field is required';
+      case 'reference1Phone':
+        return /^\d{10}$/.test(value) ? '' : 'Invalid phone number. Format: 1234567890';
+      case 'reference1Relationship':
+        return value !== '' ? '' : 'Please select a relationship';
+      default:
+        return '';
+    }
   };
 
-  const handleChange = (fieldName, value) => {
-    dispatch(updateField({ fieldName, fieldValue: value }));
+  const handleFieldChange = (e) => {
+    const { name, value } = e.target;
+    dispatch(updateField({ fieldName: name, fieldValue: value }));
 
-    if (fieldName.includes('Phone') && !validatePhoneNumber(value)) {
-      setErrors(prevErrors => ({
-        ...prevErrors,
-        [fieldName]: 'Invalid phone number format. Use 5551234567.',
-      }));
-    } else {
-      setErrors(prevErrors => ({ ...prevErrors, [fieldName]: '' }));
+    // Call validate and handle the error
+    const error = validate(name, value);
+    setErrors(prevErrors => ({ ...prevErrors, [name]: error }));
+  };
+
+  const goToNextStep = () => {
+    let formIsValid = true;
+    let newErrors = {};
+
+    ['reference1FirstName', 'reference1LastName', 'reference1Phone', 'reference1Relationship'].forEach(field => {
+      const error = validate(field, formData[field]);
+      if (error) {
+        newErrors[field] = error;
+        formIsValid = false;
+      }
+    });
+
+    setErrors(newErrors);
+    if (formIsValid) {
+      dispatch(updateCurrentStep(11)); // Update to the correct next step number
+      navigate('/step-11'); // Update to the correct next step path
     }
   };
 
@@ -34,12 +58,6 @@ const ReferenceOneStep = () => {
     dispatch(updateCurrentStep(9));
     navigate('/step-9'); // Update with your actual route
   };
-
-  const goToNextStep = () => {
-    dispatch(updateCurrentStep(11));
-    navigate('/step-11'); // Update with your actual route
-  };
-
 
   // Example check to enable the 'Next' button
   const canProceed = ['reference1FirstName', 'reference1LastName', 'reference1Phone', 'reference1Relationship']
@@ -51,39 +69,43 @@ const ReferenceOneStep = () => {
         <TextField
           fullWidth
           label="First Name"
-          name={`reference1FirstName`}
-          value={formData[`reference1FirstName`] || ''}
-          onChange={(e) => handleChange(`reference1FirstName`, e.target.value)}
+          name="reference1FirstName"
+          value={formData.reference1FirstName || ''}
+          onChange={handleFieldChange}
           required
           margin="normal"
+          error={!!errors.reference1FirstName}
+          helperText={errors.reference1FirstName}
         />
         <TextField
           fullWidth
           label="Last Name"
-          name={`reference1LastName`}
-          value={formData[`reference1LastName`] || ''}
-          onChange={(e) => handleChange(`reference1LastName`, e.target.value)}
+          name="reference1LastName"
+          value={formData.reference1LastName || ''}
+          onChange={handleFieldChange}
           required
           margin="normal"
+          error={!!errors.reference1LastName}
+          helperText={errors.reference1LastName}
         />
         <TextField
           fullWidth
           label="Phone Number"
-          name={`reference1Phone`}
-          value={formData[`reference1Phone`] || ''}
-          onChange={(e) => handleChange(`reference1Phone`, e.target.value)}
+          name="reference1Phone"
+          value={formData.reference1Phone || ''}
+          onChange={handleFieldChange}
           required
           margin="normal"
-          error={!!errors[`reference1Phone`]}
-          helperText={errors[`reference1Phone`]}
+          error={!!errors.reference1Phone}
+          helperText={errors.reference1Phone}
         />
-        <FormControl fullWidth margin="normal">
+        <FormControl fullWidth margin="normal" error={!!errors.reference1Relationship}>
           <InputLabel>Relationship</InputLabel>
           <Select
-            name={`reference1Relationship`}
-            value={formData[`reference1Relationship`] || ''}
-            onChange={(e) => handleChange(`reference1Relationship`, e.target.value)}
-            required
+            name="reference1Relationship"
+            value={formData.reference1Relationship || ''}
+            onChange={handleFieldChange}
+            required                    
           >
             <MenuItem value="00001">Parent</MenuItem>
             <MenuItem value="00002">Grandparent</MenuItem>
@@ -99,6 +121,7 @@ const ReferenceOneStep = () => {
             <MenuItem value="00012">Aunt</MenuItem>
             <MenuItem value="00013">Uncle</MenuItem>
           </Select>
+          <FormHelperText>{errors.reference1Relationship}</FormHelperText>
         </FormControl>
       </Box>
       <Box mt={2}>
