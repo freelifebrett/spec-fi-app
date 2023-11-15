@@ -87,7 +87,7 @@ const ContactStep = () => {
           onBlur={handleBlur}
           error={!!errors.phoneNumber}
           helperText={errors.phoneNumber}
-          type="num"
+          type="number"
           inputProps={{ maxLength: 10 }}
         />      
         <TextField

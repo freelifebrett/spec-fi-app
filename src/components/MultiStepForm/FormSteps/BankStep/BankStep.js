@@ -46,9 +46,23 @@ const BankStep = () => {
   };
 
   const goToNextStep = () => {
-    dispatch(updateCurrentStep(9));
-    navigate('/step-9'); // Update with your actual route
-  };
+    let formIsValid = true;
+    let newErrors = {};
+
+    ['bankName', 'accountNumber', 'routingNumber'].forEach(field => {
+        const error = validate(field, formData[field]);
+        if (error) {
+            newErrors[field] = error;
+            formIsValid = false;
+        }
+    });
+
+    setErrors(newErrors);
+    if (formIsValid) {
+        dispatch(updateCurrentStep(9)); // Update to the correct next step number
+        navigate('/step-9'); // Update to the correct next step path
+    }
+};
 
   const canProceed = Object.values(errors).every(x => x === '') &&
     ['bankName', 'accountNumber', 'routingNumber']

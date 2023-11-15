@@ -68,12 +68,26 @@ const CreditCardStep = () => {
   };
 
   const goToNextStep = () => {
-    dispatch(updateCurrentStep(10));
-    navigate('/step-10'); // Update with your actual route
-  };
+    let formIsValid = true;
+    let newErrors = {};
+
+    ['cardNumber', 'cardCVV', 'cardExpMonth', 'cardExpYear'].forEach(field => {
+        const error = validate(field, formData[field]);
+        if (error) {
+            newErrors[field] = error;
+            formIsValid = false;
+        }
+    });
+
+    setErrors(newErrors);
+    if (formIsValid) {
+        dispatch(updateCurrentStep(10)); // Update to the correct next step number
+        navigate('/step-10'); // Update to the correct next step path
+    }
+};
 
   const canProceed = Object.values(errors).every(x => x === '') &&
-    ['bankName', 'accountNumber', 'routingNumber', 'cardNumber', 'cardCVV', 'cardExpMonth', 'cardExpYear']
+    ['cardNumber', 'cardCVV', 'cardExpMonth', 'cardExpYear']
       .every(field => formData[field] && String(formData[field]).trim() !== '');
 
   return (
@@ -87,6 +101,7 @@ const CreditCardStep = () => {
           onChange={handleFieldChange}
           error={!!errors.cardNumber}
           helperText={errors.cardNumber}
+          type="number"
           margin="normal"
         />
         <TextField
@@ -98,6 +113,8 @@ const CreditCardStep = () => {
           error={!!errors.cardCVV}
           helperText={errors.cardCVV}
           margin="normal"
+          type="number"
+          inputProps={{ maxLength: 4 }}
         />
         <FormControl fullWidth margin="normal">
           <InputLabel>Expiration Month</InputLabel>
