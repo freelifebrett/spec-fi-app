@@ -10,21 +10,6 @@ const IndentityStep = () => {
   const navigate = useNavigate();
   const formData = useSelector((state) => state.form);
   const [errors, setErrors] = useState({});
-  const [ssnMasked, setSsnMasked] = useState(true);
-
-  const toggleSsnMask = () => {
-    setSsnMasked(!ssnMasked);
-  };
-
-  const getMaskedSsnValue = () => {
-    if (!formData.ssn) {
-      return '';
-    }
-    if (ssnMasked) {
-      return '*'.repeat(formData.ssn.length);
-    }
-    return formData.ssn;
-  };
 
   const validate = (name, value) => {
     switch (name) {
@@ -108,23 +93,13 @@ const IndentityStep = () => {
           label="Social Security Number"
           name="ssn"
           autoComplete="ssn"
-          value={getMaskedSsnValue()}
+          value={formData.ssn}
           onBlur={handleBlur}
           onChange={handleFieldChange}
           error={!!errors.ssn}
           helperText={errors.ssn}
           inputProps={{ maxLength: 9 }}
         />
-        <Button 
-          onClick={toggleSsnMask} 
-          style={{ 
-            marginTop: '5px', 
-            marginBottom: '10px', 
-            marginLeft: 'auto', 
-            fontSize: '0.75rem' 
-          }}>
-          {ssnMasked ? 'Show SSN' : 'Hide SSN'}
-        </Button>
         <Box mt={2}>
           <FormButton
             onClick={goToPreviousStep}
