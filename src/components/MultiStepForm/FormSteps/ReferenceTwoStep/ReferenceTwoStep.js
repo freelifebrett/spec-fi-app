@@ -30,11 +30,20 @@ const ReferenceTwoStep = () => {
     const { name, value } = e.target;
     dispatch(updateField({ fieldName: name, fieldValue: value }));
 
-    // Call validate and handle the error
-    const error = validate(name, value);
-    setErrors(prevErrors => ({ ...prevErrors, [name]: error }));
+    // Only validate fields other than employerPhone
+    if (name !== 'reference2Phone') {
+      const error = validate(name, value);
+      setErrors(prevErrors => ({ ...prevErrors, [name]: error }));
+    }
   };
 
+  const handleBlur = (e) => {
+    const { name, value } = e.target;
+    if (name === 'reference2Phone') {
+      const error = validate(name, value);
+      setErrors(prevErrors => ({ ...prevErrors, [name]: error }));
+    }
+  };
   const handleSubmit = async () => {
     let formIsValid = true;
     let newErrors = {};
@@ -115,6 +124,7 @@ const ReferenceTwoStep = () => {
           name="reference2Phone"
           value={formData.reference2Phone || ''}
           onChange={handleFieldChange}
+          onBlur={handleBlur}
           required
           margin="normal"
           error={!!errors.reference2Phone}

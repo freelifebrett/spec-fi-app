@@ -93,6 +93,7 @@ const OccupationStep = () => {
                     onChange={handleFieldChange}
                     error={!!errors.averageIncome}
                     helperText={errors.averageIncome}
+                    type="number"
                 />
                 <Box mt={2}>
                     <FormButton

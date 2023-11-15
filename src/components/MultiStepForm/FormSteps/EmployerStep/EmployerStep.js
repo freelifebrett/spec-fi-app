@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateField, updateCurrentStep } from '../../../../redux/form/formSlice';
-import { TextField, Button, Container, Typography, Box } from '@mui/material';
+import states from '../../../../constants/states';
+import { TextField, FormControl, Container, InputLabel, Box, Select, FormHelperText, MenuItem } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import FormButton from '../../../Buttons/FormButton';
 
@@ -16,9 +17,19 @@ const EmployerStep = () => {
         const { name, value } = e.target;
         dispatch(updateField({ fieldName: name, fieldValue: value }));
 
-        // Call validate and handle the error
-        const error = validate(name, value);
-        setErrors(prevErrors => ({ ...prevErrors, [name]: error }));
+        // Only validate fields other than employerPhone
+        if (name !== 'employerPhone') {
+            const error = validate(name, value);
+            setErrors(prevErrors => ({ ...prevErrors, [name]: error }));
+        }
+    };
+
+    const handleBlur = (e) => {
+        const { name, value } = e.target;
+        if (name === 'employerPhone') {
+            const error = validate(name, value);
+            setErrors(prevErrors => ({ ...prevErrors, [name]: error }));
+        }
     };
 
     // Add validation logic here
@@ -30,7 +41,7 @@ const EmployerStep = () => {
                 if (!value.trim()) error = 'Employer name is required.';
                 break;
             case 'employerPhone':
-                if (!/^\d{10}$/.test(value)) error = 'Invalid phone number. It must be 10 digits.';
+                if (!/^\d{10}$/.test(value)) error = 'Invalid phone number. Format: 1234567890';
                 break;
             case 'employerAddress':
                 if (!value.trim()) error = 'Employer address is required.';
@@ -101,9 +112,10 @@ const EmployerStep = () => {
                     name="employerPhone"
                     value={formData.employerPhone || ''}
                     onChange={handleFieldChange}
+                    onBlur={handleBlur}
                     error={!!errors.employerPhone}
                     helperText={errors.employerPhone}
-                    type="num"
+                    type="number"
                     inputProps={{ maxLength: 10 }}
                 />
                 <TextField
@@ -126,16 +138,24 @@ const EmployerStep = () => {
                     error={!!errors.employerCity}
                     helperText={errors.employerCity}
                 />
-                <TextField
-                    fullWidth
-                    margin="normal"
-                    label="Employer State"
-                    name="employerState"
-                    value={formData.employerState || ''}
-                    onChange={handleFieldChange}
-                    error={!!errors.employerState}
-                    helperText={errors.employerState}
-                />
+                <FormControl fullWidth margin="normal" error={!!errors.employerState}>
+                    <InputLabel id="employer-state-label">State</InputLabel>
+                    <Select
+                        labelId="employer-state-label"
+                        id="employerState"
+                        name="employerState"
+                        value={formData.employerState || ''}
+                        onChange={handleFieldChange}
+                        label="State"
+                    >
+                        {states.map(state => (
+                            <MenuItem key={state.abbreviation} value={state.abbreviation}>
+                                {state.name}
+                            </MenuItem>
+                        ))}
+                    </Select>
+                    <FormHelperText>{errors.employerState}</FormHelperText>
+                </FormControl>
                 <TextField
                     fullWidth
                     margin="normal"

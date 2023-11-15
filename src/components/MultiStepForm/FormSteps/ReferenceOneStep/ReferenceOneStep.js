@@ -30,9 +30,19 @@ const ReferenceOneStep = () => {
     const { name, value } = e.target;
     dispatch(updateField({ fieldName: name, fieldValue: value }));
 
-    // Call validate and handle the error
-    const error = validate(name, value);
-    setErrors(prevErrors => ({ ...prevErrors, [name]: error }));
+    // Only validate fields other than employerPhone
+    if (name !== 'reference1Phone') {
+      const error = validate(name, value);
+      setErrors(prevErrors => ({ ...prevErrors, [name]: error }));
+    }
+  };
+
+  const handleBlur = (e) => {
+    const { name, value } = e.target;
+    if (name === 'reference1Phone') {
+      const error = validate(name, value);
+      setErrors(prevErrors => ({ ...prevErrors, [name]: error }));
+    }
   };
 
   const goToNextStep = () => {
@@ -94,6 +104,7 @@ const ReferenceOneStep = () => {
           name="reference1Phone"
           value={formData.reference1Phone || ''}
           onChange={handleFieldChange}
+          onBlur={handleBlur}
           required
           margin="normal"
           error={!!errors.reference1Phone}
@@ -105,7 +116,7 @@ const ReferenceOneStep = () => {
             name="reference1Relationship"
             value={formData.reference1Relationship || ''}
             onChange={handleFieldChange}
-            required                    
+            required
           >
             <MenuItem value="00001">Parent</MenuItem>
             <MenuItem value="00002">Grandparent</MenuItem>

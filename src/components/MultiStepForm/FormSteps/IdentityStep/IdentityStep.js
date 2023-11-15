@@ -99,6 +99,7 @@ const IndentityStep = () => {
           error={!!errors.ssn}
           helperText={errors.ssn}
           inputProps={{ maxLength: 9 }}
+          type='number'
         />
         <Box mt={2}>
           <FormButton

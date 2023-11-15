@@ -90,6 +90,7 @@ const BankStep = () => {
             error={!!errors.accountNumber}
             helperText={errors.accountNumber}
             margin="normal"
+            type="number"
           />
           <TextField
             fullWidth
@@ -100,6 +101,7 @@ const BankStep = () => {
             error={!!errors.routingNumber}
             helperText={errors.routingNumber}
             margin="normal"
+            type="number"
           />
           <Box mt={2}>
             <FormButton

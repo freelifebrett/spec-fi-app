@@ -30,7 +30,7 @@ const ContactStep = () => {
     }
     return error;
   };
-  
+
 
   // Handle field change
   const handleFieldChange = (e) => {
@@ -89,7 +89,7 @@ const ContactStep = () => {
           helperText={errors.phoneNumber}
           type="number"
           inputProps={{ maxLength: 10 }}
-        />      
+        />
         <TextField
           fullWidth
           margin="normal"
