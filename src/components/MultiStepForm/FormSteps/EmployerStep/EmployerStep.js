@@ -21,7 +21,6 @@ const EmployerStep = () => {
         setErrors(prevErrors => ({ ...prevErrors, [name]: error }));
     };
 
-
     // Add validation logic here
     const validate = (name, value) => {
         let error = '';
@@ -43,7 +42,7 @@ const EmployerStep = () => {
                 if (!/^[A-Za-z]{2}$/.test(value)) error = 'Invalid state abbreviation. It must be 2 characters.';
                 break;
             case 'employerZipCode':
-                if (!/^\d{5}$/.test(value)) error = 'Invalid zip code. It must be 5 digits.';                
+                if (!/^\d{5}$/.test(value)) error = 'Invalid zip code. It must be 5 digits.';
                 break;
             default:
                 break;
@@ -59,17 +58,31 @@ const EmployerStep = () => {
     };
 
     const goToNextStep = () => {
-        dispatch(updateCurrentStep(8));
-        navigate('/step-8'); // Update with your actual route
+        let formIsValid = true;
+        let newErrors = {};
+
+        ['employerName', 'employerPhone', 'employerAddress', 'employerCity', 'employerState', 'employerZipCode'].forEach(field => {
+            const error = validate(field, formData[field]);
+            if (error) {
+                newErrors[field] = error;
+                formIsValid = false;
+            }
+        });
+
+        setErrors(newErrors);
+        if (formIsValid) {
+            dispatch(updateCurrentStep(8)); // Update to the correct next step number
+            navigate('/step-8'); // Update to the correct next step path
+        }
     };
 
 
     const canProceed = Object.values(errors).every(x => x === '') &&
-        ['employerName', 'occupation', 'employerPhone', 'employerAddress', 'city', 'state', 'zipCode', 'averageIncome']
+        ['employerName', 'employerPhone', 'employerAddress', 'employerCity', 'employerState', 'employerZipCode']
             .every(field => formData[field] && formData[field].trim() !== '');
 
     return (
-        <Container>            
+        <Container>
             <Box>
                 <TextField
                     fullWidth
@@ -90,6 +103,8 @@ const EmployerStep = () => {
                     onChange={handleFieldChange}
                     error={!!errors.employerPhone}
                     helperText={errors.employerPhone}
+                    type="num"
+                    inputProps={{ maxLength: 10 }}
                 />
                 <TextField
                     fullWidth
