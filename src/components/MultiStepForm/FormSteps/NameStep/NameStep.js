@@ -80,7 +80,7 @@ const NameStep = () => {
           id="middleName"
           name="middleName"
           label="Middle Name"
-          value={formData.middleName || ''}
+          value={localData.middleName || ''}
           onChange={handleFieldChange}
           margin="normal"
         />
