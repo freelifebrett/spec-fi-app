@@ -42,26 +42,7 @@ const AddressStep = () => {
         } else if (!/^\d{5}$/.test(trimmedValue)) {
           error = 'Zip Code must be 5 digits';
         }
-        break;
-      case 'ownOrRent':
-        if (!trimmedValue) {
-          error = 'This field is required';
-        }
-        break;
-      case 'timeAtAddress':
-        if (!trimmedValue) {
-          error = 'Time at address is required';
-        } else if (!/^\d+$/.test(trimmedValue)) {
-          error = 'Time at address must be a number';
-        }
-        break;
-      case 'housingPayment':
-        if (!trimmedValue) {
-          error = 'Housing payment is required';
-        } else if (!/^\d+(\.\d{1,2})?$/.test(trimmedValue)) {
-          error = 'Housing payment must be a valid amount';
-        }
-        break;
+        break;    
       default:
         break;
     }
@@ -88,7 +69,7 @@ const AddressStep = () => {
     let newErrors = {};
 
     // List of fields to validate in this step
-    const fieldsToValidate = ['address', 'city', 'state', 'zipCode', 'ownOrRent', 'timeAtAddress', 'housingPayment'];
+    const fieldsToValidate = ['address', 'city', 'state', 'zipCode'];
 
     // Validate only the fields in this step
     fieldsToValidate.forEach(field => {
@@ -111,7 +92,7 @@ const AddressStep = () => {
 
   // Check if the form can proceed to the next step
   const canProceed = Object.values(errors).every(x => x === '') &&
-    ['address', 'city', 'state', 'zipCode', 'ownOrRent', 'timeAtAddress', 'housingPayment']
+    ['address', 'city', 'state', 'zipCode']
       .every(field => formData[field] && formData[field].trim() !== '');
 
   return (
