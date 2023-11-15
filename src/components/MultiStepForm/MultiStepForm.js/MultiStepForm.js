@@ -26,10 +26,8 @@ const MultiStepForm = () => {
 
     React.useEffect(() => {
         // Assuming step URLs are like '/step-1', '/step-2', etc.
-        console.info("currentStep", currentStep);
         const pathStepNumber = parseInt(window.location.pathname.split('-')[1]);
-        if (pathStepNumber && pathStepNumber !== currentStep) {
-            console.info("currentStep after redirect", currentStep);
+        if (pathStepNumber && pathStepNumber !== currentStep) {        
             navigate(`/step-${currentStep}`);
         }
     }, [currentStep, navigate]);
