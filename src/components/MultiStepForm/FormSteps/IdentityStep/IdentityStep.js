@@ -14,6 +14,15 @@ const IndentityStep = () => {
     ssn: formData.ssn || '',
   });
   const [errors, setErrors] = useState({});
+  const [ssnMasked, setSsnMasked] = useState(true);
+
+  const toggleSsnMask = () => {
+    setSsnMasked(!ssnMasked);
+  };
+
+  const getMaskedSsnValue = () => {
+    return ssnMasked ? "***-**-****" : formData.ssn;
+  };
 
   // Existing validation logic from your original StepThree.js
   const validateDOB = (dob) => {
@@ -80,7 +89,7 @@ const IndentityStep = () => {
           error={!!errors.dob}
           helperText={errors.dob}
           type="date"
-        />
+        />       
         <TextField
           margin="normal"
           required
@@ -89,11 +98,21 @@ const IndentityStep = () => {
           label="Social Security Number"
           name="ssn"
           autoComplete="ssn"
-          value={localData.ssn}
+          value={getMaskedSsnValue()}
           onChange={handleInputChange}
           error={!!errors.ssn}
           helperText={errors.ssn}
         />
+        <Button 
+          onClick={toggleSsnMask} 
+          style={{ 
+            marginTop: '5px', 
+            marginBottom: '10px', 
+            marginLeft: 'auto', 
+            fontSize: '0.75rem' 
+          }}>
+          {ssnMasked ? 'Show SSN' : 'Hide SSN'}
+        </Button>
         <Box mt={2}>
           <FormButton
             onClick={goToPreviousStep}

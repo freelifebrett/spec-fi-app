@@ -11,11 +11,30 @@ const CreditCardStep = () => {
   const formData = useSelector(state => state.form);
   const [errors, setErrors] = React.useState({});
 
+  const isValidCardNumber = (number) => {
+    let sum = 0;
+    for (let i = 0; i < number.length; i++) {
+      let digit = parseInt(number[i]);
+      if (i % 2 === number.length % 2) {
+        digit *= 2;
+        if (digit > 9) {
+          digit -= 9;
+        }
+      }
+      sum += digit;
+    }
+    return sum % 10 === 0;
+  };
+
   const validate = (name, value) => {
     let error = '';
     switch (name) {
       case 'cardNumber':
-        if (!/^\d+$/.test(value)) error = 'Card number must be numeric';
+        if (!/^\d+$/.test(value)) {
+          error = 'Card number must be numeric';
+        } else if (!isValidCardNumber(value)) {
+          error = 'Invalid card number';
+        }
         break;
       case 'cardCVV':
         if (!/^\d+$/.test(value)) error = 'CVV must be numeric';
@@ -59,69 +78,69 @@ const CreditCardStep = () => {
 
   return (
     <Container>
-        <Box component="form" noValidate sx={{ mt: 1 }}>
-          <TextField
-            fullWidth
-            label="Card Number"
-            name="cardNumber"
-            value={formData.cardNumber || ''}
+      <Box component="form" noValidate sx={{ mt: 1 }}>
+        <TextField
+          fullWidth
+          label="Card Number"
+          name="cardNumber"
+          value={formData.cardNumber || ''}
+          onChange={handleFieldChange}
+          error={!!errors.cardNumber}
+          helperText={errors.cardNumber}
+          margin="normal"
+        />
+        <TextField
+          fullWidth
+          label="Card CVV"
+          name="cardCVV"
+          value={formData.cardCVV || ''}
+          onChange={handleFieldChange}
+          error={!!errors.cardCVV}
+          helperText={errors.cardCVV}
+          margin="normal"
+        />
+        <FormControl fullWidth margin="normal">
+          <InputLabel>Expiration Month</InputLabel>
+          <Select
+            name="cardExpMonth"
+            value={formData.cardExpMonth || ''}
             onChange={handleFieldChange}
-            error={!!errors.cardNumber}
-            helperText={errors.cardNumber}
-            margin="normal"
-          />
-          <TextField
-            fullWidth
-            label="Card CVV"
-            name="cardCVV"
-            value={formData.cardCVV || ''}
+            error={!!errors.cardExpMonth}
+          >
+            {[...Array(12)].map((_, i) => (
+              <MenuItem key={i} value={i + 1}>
+                {`${i + 1}`.padStart(2, '0')}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        <FormControl fullWidth margin="normal">
+          <InputLabel>Expiration Year</InputLabel>
+          <Select
+            name="cardExpYear"
+            value={formData.cardExpYear || ''}
             onChange={handleFieldChange}
-            error={!!errors.cardCVV}
-            helperText={errors.cardCVV}
-            margin="normal"
-          />
-          <FormControl fullWidth margin="normal">
-            <InputLabel>Expiration Month</InputLabel>
-            <Select
-              name="cardExpMonth"
-              value={formData.cardExpMonth || ''}
-              onChange={handleFieldChange}
-              error={!!errors.cardExpMonth}
-            >
-              {[...Array(12)].map((_, i) => (
-                <MenuItem key={i} value={i + 1}>
-                  {`${i + 1}`.padStart(2, '0')}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          <FormControl fullWidth margin="normal">
-            <InputLabel>Expiration Year</InputLabel>
-            <Select
-              name="cardExpYear"
-              value={formData.cardExpYear || ''}
-              onChange={handleFieldChange}
-              error={!!errors.cardExpYear}
-            >
-              {[...Array(20)].map((_, i) => (
-                <MenuItem key={i} value={new Date().getFullYear() + i}>
-                  {new Date().getFullYear() + i}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          <Box mt={2}>
-            <FormButton
-              onClick={goToPreviousStep}
-              text="Back">
-            </FormButton>
-            <FormButton
-              onClick={goToNextStep}
-              text="Next"
-              disabled={!canProceed}>
-            </FormButton>
-          </Box>
+            error={!!errors.cardExpYear}
+          >
+            {[...Array(20)].map((_, i) => (
+              <MenuItem key={i} value={new Date().getFullYear() + i}>
+                {new Date().getFullYear() + i}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        <Box mt={2}>
+          <FormButton
+            onClick={goToPreviousStep}
+            text="Back">
+          </FormButton>
+          <FormButton
+            onClick={goToNextStep}
+            text="Next"
+            disabled={!canProceed}>
+          </FormButton>
         </Box>
+      </Box>
     </Container>
   );
 };
