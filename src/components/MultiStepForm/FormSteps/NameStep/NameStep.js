@@ -10,11 +10,6 @@ const NameStep = () => {
   const navigate = useNavigate();
   const formData = useSelector((state) => state.form); // Adjust the path according to your store setup
   const [errors, setErrors] = useState({});
-  const [localData, setLocalData] = useState({
-    firstName: formData.firstName || '',
-    middleName: formData.middleName || '',
-    lastName: formData.lastName || '',
-  });
 
   // Validation function
   const validate = (name, value) => {
@@ -30,7 +25,7 @@ const NameStep = () => {
   const handleFieldChange = (e) => {
     const { name, value } = e.target;
     const errorMessage = validate(name, value);
-    setLocalData({ ...localData, [name]: value });
+    dispatch(updateField({ fieldName: name, fieldValue: value }));
     setErrors({ ...errors, [name]: errorMessage });
   };
 
@@ -40,7 +35,7 @@ const NameStep = () => {
     let newErrors = {};
 
     ['firstName', 'middleName', 'lastName'].forEach(field => {
-      const error = validate(field, localData[field]);
+      const error = validate(field, formData[field]);
       if (error) {
         newErrors[field] = error;
         formIsValid = false;
@@ -49,7 +44,7 @@ const NameStep = () => {
 
     setErrors(newErrors);
     if (formIsValid) {    
-      dispatch(updateField({ firstName: localData.firstName, middleName: localData.middleName, lastName: localData.lastName }));
+      dispatch(updateField({ firstName: formData.firstName, middleName: formData.middleName, lastName: formData.lastName }));
       dispatch(updateCurrentStep(2)); // Update to the correct next step number
       navigate('/step-2'); // Update to the correct next step path
     }
@@ -57,7 +52,7 @@ const NameStep = () => {
 
   // Check if the form can proceed to the next step
   const canProceed = Object.values(errors).every(error => error === '') &&
-    ['firstName', 'lastName'].every(field => localData[field] && localData[field].trim() !== '');
+    ['firstName', 'lastName'].every(field => formData[field] && formData[field].trim() !== '');
 
   return (
     <Container>
@@ -67,7 +62,7 @@ const NameStep = () => {
           id="firstName"
           name="firstName"
           label="First Name (Required)"
-          value={localData.firstName || ''}
+          value={formData.firstName || ''}
           onChange={handleFieldChange}
           error={!!errors.firstName}
           helperText={errors.firstName}
@@ -80,7 +75,7 @@ const NameStep = () => {
           id="middleName"
           name="middleName"
           label="Middle Name"
-          value={localData.middleName || ''}
+          value={formData.middleName || ''}
           onChange={handleFieldChange}
           margin="normal"
         />
@@ -90,7 +85,7 @@ const NameStep = () => {
           id="lastName"
           name="lastName"
           label="Last Name (Required)"
-          value={localData.lastName || ''}
+          value={formData.lastName || ''}
           onChange={handleFieldChange}
           error={!!errors.lastName}
           helperText={errors.lastName}
