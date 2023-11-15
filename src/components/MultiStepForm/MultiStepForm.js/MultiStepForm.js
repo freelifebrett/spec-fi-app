@@ -54,8 +54,7 @@ const MultiStepForm = () => {
                 <Route path="step-9" element={<CreditCardStep />} />
                 <Route path="step-10" element={<ReferenceOneStep />} />
                 <Route path="step-11" element={<ReferenceTwoStep />} />
-            </Routes>
-            {/* Navigation buttons are typically not needed here as each step would have its own navigation. */}
+            </Routes>            
         </div>
     );
 };
