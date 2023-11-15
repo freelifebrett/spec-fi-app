@@ -70,17 +70,10 @@ function App() {
     <ThemeProvider theme={theme}>
       <Provider store={store}>
         <Router>
-          <div className="App">
-            {/* <header className="App-header">
-            <img className='App-logo' src={FlipSecretsLogo} alt="Flip Secrets Logo" />
-            <h1>Financing Application</h1>
-          </header> */}
+          <div className="App">            
             <AppBar position="static">
               <Toolbar>
                 <img className='App-logo' src={FlipSecretsLogo} alt="Flip Secrets Logo" />
-                {/* <Typography variant="h6" color="inherit" component="div">
-                Financing Application
-              </Typography> */}
               </Toolbar>
             </AppBar>
             <div className="form-container">

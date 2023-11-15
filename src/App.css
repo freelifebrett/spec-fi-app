@@ -25,7 +25,6 @@
   justify-content: center;
   font-size: calc(8px + 1vmin); /* Slightly smaller font-size */
   color: #858585;
-  /* margin-bottom: 40px; */
 }
 
 .App-link {
@@ -46,9 +45,4 @@
   color: #444; /* Dark gray */
   font-weight: 800 !important;    
 }
-/* 
-.multi-step-form {
-  margin: 0;
-} */
-
 
