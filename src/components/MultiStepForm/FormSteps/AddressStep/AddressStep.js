@@ -90,7 +90,6 @@ const AddressStep = () => {
     });
 
     setErrors(newErrors);
-    console.info(formIsValid);
     if (formIsValid) {
       // Update Redux state if needed
       dispatch(updateCurrentStep(3));
