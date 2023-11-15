@@ -59,13 +59,22 @@ const HousingStep = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Perform your validation and other logic here
+        let formIsValid = true;
+        let newErrors = {};
 
-        // Update Redux state if neededs
-        dispatch(updateCurrentStep(4));
+        ['ownOrRent', 'timeAtAddress', 'housingPayment'].forEach(field => {
+            const error = validate(field, formData[field]);
+            if (error) {
+                newErrors[field] = error;
+                formIsValid = false;
+            }
+        });
 
-        // Navigate to StepThree
-        navigate('/step-4');
+        setErrors(newErrors);
+        if (formIsValid) {
+            dispatch(updateCurrentStep(4)); // Update to the correct next step number
+            navigate('/step-4'); // Update to the correct next step path
+        }
     };
 
     // Check if the form can proceed to the next step
