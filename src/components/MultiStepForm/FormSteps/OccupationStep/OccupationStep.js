@@ -21,7 +21,6 @@ const OccupationStep = () => {
         setErrors(prevErrors => ({ ...prevErrors, [name]: error }));
     };
 
-
     // Add validation logic here
     const validate = (name, value) => {
         let error = '';
@@ -29,7 +28,7 @@ const OccupationStep = () => {
         switch (name) {
             case 'occupation':
                 if (!value.trim()) error = 'Occupation/title is required.';
-                break;        
+                break;
             case 'averageIncome':
                 if (!value.trim() || isNaN(value) || Number(value) <= 0) {
                     error = 'Invalid average income. It must be a positive number.';
@@ -43,10 +42,24 @@ const OccupationStep = () => {
     };
 
 
-    // Call validate function when form data changes
-    useEffect(() => {
-        validate();
-    }, [formData]);
+    const goToNextStep = () => {
+        let formIsValid = true;
+        let newErrors = {};
+
+        ['occupation', 'averageIncome'].forEach(field => {
+            const error = validate(field, formData[field]);
+            if (error) {
+                newErrors[field] = error;
+                formIsValid = false;
+            }
+        });
+
+        setErrors(newErrors);
+        if (formIsValid) {
+            dispatch(updateCurrentStep(7)); // Update to the correct next step number
+            navigate('/step-7'); // Update to the correct next step path
+        }
+    };
 
     // Navigation functions
     const goToPreviousStep = () => {
@@ -54,19 +67,13 @@ const OccupationStep = () => {
         navigate('/step-5'); // Update with your actual route
     };
 
-    const goToNextStep = () => {
-        dispatch(updateCurrentStep(7));
-        navigate('/step-7'); // Update with your actual route
-    };
-
-
     const canProceed = Object.values(errors).every(x => x === '') &&
         ['occupation', 'averageIncome']
             .every(field => formData[field] && formData[field].trim() !== '');
 
     return (
         <Container>
-            <Box my={4}>
+            <Box>
                 <TextField
                     fullWidth
                     margin="normal"
