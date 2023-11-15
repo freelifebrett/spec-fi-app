@@ -9,10 +9,10 @@ const IndentityStep = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const formData = useSelector((state) => state.form); // Updated to use state.form
-  const [localData, setLocalData] = useState({
-    dob: formData.dob || '',
-    ssn: formData.ssn || '',
-  });
+  // const [localData, setLocalData] = useState({
+  //   dob: formData.dob || '',
+  //   ssn: formData.ssn || '',
+  // });
   const [errors, setErrors] = useState({});
   const [ssnMasked, setSsnMasked] = useState(true);
 
@@ -21,25 +21,39 @@ const IndentityStep = () => {
   };
 
   const getMaskedSsnValue = () => {
-    if (!localData.ssn) {
+    if (!formData.ssn) {
       return ''; // Return empty string if no SSN has been entered
     }
     if (ssnMasked) {
-      return '*'.repeat(localData.ssn.length); // Return asterisks based on the length of the input
+      return '*'.repeat(formData.ssn.length); // Return asterisks based on the length of the input
     }
-    return localData.ssn; // Return the actual SSN if not masked
+    return formData.ssn; // Return the actual SSN if not masked
   };
 
-  // Existing validation logic from your original StepThree.js
-  const validateDOB = (dob) => {
-    const regex = /^(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/;
-    return regex.test(dob) && new Date(dob) <= new Date();
+  const validate = (name, value) => {
+    switch (name) {
+      case 'dob':
+        const dobRegex = /^(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/;
+        return dobRegex.test(value) && new Date(value) <= new Date() ? '' : 'Invalid Date of Birth';
+      case 'ssn':
+        const ssnRegex = /^\d{9}$/;
+        return ssnRegex.test(value) ? '' : 'Invalid Social Security Number. Format: 123456789';
+      default:
+        return '';
+    }
   };
 
+  // Handle input changes without validating SSN
+  const handleFieldChange = (e) => {
+    const { name, value } = e.target;
+    dispatch(updateField({ fieldName: name, fieldValue: value }));
+  };
 
-  const validateSSN = (ssn) => {
-    const regex = /^\d{9}$/; // Validates a 9-digit number without dashes
-    return regex.test(ssn);
+  // Handle blur event for SSN
+  const handleBlur = (e) => {
+    const { name, value } = e.target;
+    const errorMessage = validate(name, value);
+    setErrors({ ...errors, [name]: errorMessage });
   };
 
   const goToPreviousStep = () => {
@@ -52,33 +66,24 @@ const IndentityStep = () => {
     let formIsValid = true;
     let newErrors = {};
 
-    if (!validateDOB(localData.dob)) {
-      newErrors.dob = 'Invalid Date of Birth';
-      formIsValid = false;
-    }
-
-    if (!validateSSN(localData.ssn)) {
-      newErrors.ssn = 'Invalid Social Security Number';
-      formIsValid = false;
-    }
+    ['dob', 'ssn'].forEach(field => {
+      const error = validate(field, formData[field]);
+      if (error) {
+        newErrors[field] = error;
+        formIsValid = false;
+      }
+    });
 
     setErrors(newErrors);
     if (formIsValid) {
-      dispatch(updateField({ dob: localData.dob, ssn: localData.ssn }));
-      dispatch(updateCurrentStep(6)); // Assuming the next step is 4
-      navigate('/step-6'); // Navigate to the next step
+      dispatch(updateField({ dob: formData.dob, ssn: formData.ssn }));
+      dispatch(updateCurrentStep(6));
+      navigate('/step-6');
     }
   };
 
-  const handleFieldChange = (e) => {
-    const { name, value } = e.target;
-    // const errorMessage = validate(name, value);
-    // setErrors({ ...errors, [name]: errorMessage });
-    dispatch(updateField({ fieldName: name, fieldValue: value }));
-  };
-
   const canProceed = Object.values(errors).every(error => error === '') &&
-    ['dob', 'ssn'].every(field => localData[field] && localData[field].trim() !== '');
+    ['dob', 'ssn'].every(field => formData[field] && formData[field].trim() !== '');
 
   return (
     <Container>
@@ -92,7 +97,7 @@ const IndentityStep = () => {
           name="dob"
           autoComplete="dob"
           autoFocus
-          value={localData.dob}
+          value={formData.dob}
           onChange={handleFieldChange}
           error={!!errors.dob}
           helperText={errors.dob}
@@ -110,9 +115,11 @@ const IndentityStep = () => {
           name="ssn"
           autoComplete="ssn"
           value={getMaskedSsnValue()}
+          onBlur={handleBlur}
           onChange={handleFieldChange}
           error={!!errors.ssn}
           helperText={errors.ssn}
+          inputProps={{ maxLength: 9 }}
         />
         <Button 
           onClick={toggleSsnMask} 

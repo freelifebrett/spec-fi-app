@@ -53,9 +53,18 @@ const AddressStep = () => {
   // Handle input changes
   const handleFieldChange = (e) => {
     const { name, value } = e.target;
+    if (name !== 'zipCode') {
+      const errorMessage = validate(name, value);
+      setErrors({ ...errors, [name]: errorMessage });
+    }
+    dispatch(updateField({ fieldName: name, fieldValue: value }));
+  };
+
+  // Handle blur event for zip code
+  const handleZipCodeBlur = (e) => {
+    const { name, value } = e.target;
     const errorMessage = validate(name, value);
     setErrors({ ...errors, [name]: errorMessage });
-    dispatch(updateField({ fieldName: name, fieldValue: value }));
   };
 
   const goToPreviousStep = () => {
@@ -150,6 +159,7 @@ const AddressStep = () => {
           name="zipCode"
           label="Zip Code (Required)"
           value={formData.zipCode || ''}
+          onBlur={handleZipCodeBlur}
           onChange={handleFieldChange}
           error={!!errors.zipCode}
           helperText={errors.zipCode}

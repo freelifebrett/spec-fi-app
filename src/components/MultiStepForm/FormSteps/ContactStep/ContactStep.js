@@ -16,8 +16,8 @@ const ContactStep = () => {
     let error = '';
     switch (name) {
       case 'phoneNumber':
-        if (!/^\d{3}-\d{3}-\d{4}$/.test(value)) {
-          error = 'Invalid phone number. Format: 123-456-7890';
+        if (!/^\d{10}$/.test(value)) {
+          error = 'Invalid phone number. Format: 1234567890';
         }
         break;
       case 'email':
@@ -35,9 +35,13 @@ const ContactStep = () => {
   // Handle field change
   const handleFieldChange = (e) => {
     const { name, value } = e.target;
+    dispatch(updateField({ fieldName: name, fieldValue: value }));
+  };
+
+  const handleBlur = (e) => {
+    const { name, value } = e.target;
     const errorMessage = validate(name, value);
     setErrors({ ...errors, [name]: errorMessage });
-    dispatch(updateField({ fieldName: name, fieldValue: value }));
   };
 
   const canProceed = Object.values(errors).every(x => x === '') &&
@@ -80,9 +84,11 @@ const ContactStep = () => {
           label="Phone Number (Required)"
           value={formData.phoneNumber}
           onChange={handleFieldChange}
+          onBlur={handleBlur}
           error={!!errors.phoneNumber}
           helperText={errors.phoneNumber}
-          type="tel"
+          type="num"
+          inputProps={{ maxLength: 10 }}
         />      
         <TextField
           fullWidth
@@ -92,6 +98,7 @@ const ContactStep = () => {
           label="Email Address (Required)"
           value={formData.email}
           onChange={handleFieldChange}
+          onBlur={handleBlur}
           error={!!errors.email}
           helperText={errors.email}
           type="email"
