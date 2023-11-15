@@ -138,6 +138,7 @@ const HousingStep = () => {
                     margin="normal"
                     error={!!errors.housingPayment}
                     helperText={errors.housingPayment || ''}
+                    type="number"
                 />
                 <Box mt={2}>
                     <FormButton

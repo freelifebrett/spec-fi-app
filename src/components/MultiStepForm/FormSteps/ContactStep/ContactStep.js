@@ -12,84 +12,101 @@ const ContactStep = () => {
   const [errors, setErrors] = React.useState({});
 
   // Validation logic
-  const validatePhoneNumber = (number) => {
-    const regex = /^\d{10}$/;
-    return regex.test(number);
+  const validate = (name, value) => {
+    let error = '';
+    switch (name) {
+      case 'phoneNumber':
+        if (!/^\d{3}-\d{3}-\d{4}$/.test(value)) {
+          error = 'Invalid phone number. Format: 123-456-7890';
+        }
+        break;
+      case 'email':
+        if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value)) {
+          error = 'Invalid email address.';
+        }
+        break;
+      default:
+        break;
+    }
+    return error;
   };
-
-  const validateEmail = (email) => {
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return regex.test(email);
-  };
+  
 
   // Handle field change
   const handleFieldChange = (e) => {
     const { name, value } = e.target;
-
-    // Update the field value in the Redux store
+    const errorMessage = validate(name, value);
+    setErrors({ ...errors, [name]: errorMessage });
     dispatch(updateField({ fieldName: name, fieldValue: value }));
-
-    // Validate fields and set errors
-    if (name === 'phoneNumber') {
-      const isValid = validatePhoneNumber(value);
-      setErrors({ ...errors, phoneNumber: isValid ? '' : 'Invalid phone number.' });
-    } else if (name === 'email') {
-      const isValid = validateEmail(value);
-      setErrors({ ...errors, email: isValid ? '' : 'Invalid email address.' });
-    }
   };
 
   const canProceed = Object.values(errors).every(x => x === '') &&
-    ['phoneNumber', 'email'] // Add other fields if necessary
-      .every(field => formData[field] && formData[field].trim() !== '');
+    ['phoneNumber', 'email'].every(field => formData[field] && formData[field].trim() !== '');
 
   // Navigation functions
   const goToPreviousStep = () => {
     dispatch(updateCurrentStep(3));
-    navigate('/step-3'); // Update with your actual route
+    navigate('/step-3');
   };
 
   const goToNextStep = () => {
-    dispatch(updateCurrentStep(5));
-    navigate('/step-5'); // Update with your actual route
+    let formIsValid = true;
+    let newErrors = {};
+
+    ['phoneNumber', 'email'].forEach(field => {
+      const error = validate(field, formData[field]);
+      if (error) {
+        newErrors[field] = error;
+        formIsValid = false;
+      }
+    });
+
+    setErrors(newErrors);
+
+    if (formIsValid) {
+      dispatch(updateCurrentStep(5));
+      navigate('/step-5');
+    }
   };
 
   return (
     <Container>
-      <Box my={4}>        
-          <TextField
-            fullWidth
-            margin="normal"
-            id="phoneNumber"
-            name="phoneNumber"
-            label="Phone Number (Required)"
-            value={formData.phoneNumber}
-            onChange={handleFieldChange}
-            error={!!errors.phoneNumber}
-            helperText={errors.phoneNumber}
-          />
-          <TextField
-            fullWidth
-            margin="normal"
-            id="email"
-            name="email"
-            label="Email Address (Required)"
-            value={formData.email}
-            onChange={handleFieldChange}
-            error={!!errors.email}
-            helperText={errors.email}
-          />
-          <Box mt={2}>
-            <FormButton
-              onClick={goToPreviousStep}
-              text="Back">
-            </FormButton>
-            <FormButton
-              onClick={goToNextStep}
-              text="Next"
-              disabled={!canProceed}>
-            </FormButton>
-          </Box>
+      <Box>
+        <TextField
+          fullWidth
+          margin="normal"
+          id="phoneNumber"
+          name="phoneNumber"
+          label="Phone Number (Required)"
+          value={formData.phoneNumber}
+          onChange={handleFieldChange}
+          error={!!errors.phoneNumber}
+          helperText={errors.phoneNumber}
+          type="tel"
+        />      
+        <TextField
+          fullWidth
+          margin="normal"
+          id="email"
+          name="email"
+          label="Email Address (Required)"
+          value={formData.email}
+          onChange={handleFieldChange}
+          error={!!errors.email}
+          helperText={errors.email}
+          type="email"
+        />
+        <Box mt={2}>
+          <FormButton
+            onClick={goToPreviousStep}
+            text="Back">
+          </FormButton>
+          <FormButton
+            onClick={goToNextStep}
+            text="Next"
+            disabled={!canProceed}>
+          </FormButton>
+        </Box>
       </Box>
     </Container>
   );
