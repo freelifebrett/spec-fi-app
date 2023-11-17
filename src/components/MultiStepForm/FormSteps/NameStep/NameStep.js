@@ -77,6 +77,8 @@ const NameStep = () => {
           label="Middle Name"
           value={formData.middleName || ''}
           onChange={handleFieldChange}
+          error={!!errors.middleName}
+          helperText={errors.middleName}
           margin="normal"
         />
 

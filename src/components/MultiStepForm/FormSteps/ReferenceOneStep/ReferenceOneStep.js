@@ -107,13 +107,16 @@ const ReferenceOneStep = () => {
           onBlur={handleBlur}
           required
           margin="normal"
+          type="number"
           error={!!errors.reference1Phone}
           helperText={errors.reference1Phone}
         />
         <FormControl fullWidth margin="normal" error={!!errors.reference1Relationship}>
-          <InputLabel>Relationship</InputLabel>
+          <InputLabel id="reference-one-relationship-label">Relationship</InputLabel>
           <Select
             name="reference1Relationship"
+            labelId="reference-one-relationship-label"
+            label="Relationship"
             value={formData.reference1Relationship || ''}
             onChange={handleFieldChange}
             required

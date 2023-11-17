@@ -163,6 +163,7 @@ const AddressStep = () => {
           error={!!errors.zipCode}
           helperText={errors.zipCode}
           margin="normal"
+          type="number"
           required
         />
         <Box mt={2}>

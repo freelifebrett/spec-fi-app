@@ -129,9 +129,11 @@ const ReferenceTwoStep = () => {
           helperText={errors.reference2Phone}
         />
         <FormControl fullWidth margin="normal" error={!!errors.reference2Relationship}>
-          <InputLabel>Relationship</InputLabel>
+        <InputLabel id="reference-two-relationship-label">Relationship</InputLabel>
           <Select
             name="reference2Relationship"
+            labelId="reference-two-relationship-label"
+            label="Relationship"
             value={formData.reference2Relationship || ''}
             onChange={handleFieldChange}
             required                    

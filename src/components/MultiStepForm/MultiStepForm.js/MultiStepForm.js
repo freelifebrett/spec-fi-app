@@ -22,7 +22,7 @@ const MultiStepForm = () => {
 
     const totalSteps = 11; // Total number of steps    
     const progress = (formData.currentStep / totalSteps) * 100;
-    const stepNames = ["Name", "Address", "Housing", "Contact", "Identity", "Occupation", "Employer", "Bank", "Credit Card", "Reference One", "Reference Two"];
+    const stepNames = ["Name", "Address", "Housing", "Contact", "Identity", "Occupation", "Employer", "Credit/Debit Card", "Bank", "Reference One", "Reference Two"];
 
     React.useEffect(() => {
         // Assuming step URLs are like '/step-1', '/step-2', etc.
@@ -48,8 +48,8 @@ const MultiStepForm = () => {
                 <Route path="step-5" element={<IdentityStep />} />
                 <Route path="step-6" element={<OccupationStep />} />
                 <Route path="step-7" element={<EmployerStep />} />
-                <Route path="step-8" element={<BankStep />} />
-                <Route path="step-9" element={<CreditCardStep />} />
+                <Route path="step-8" element={<CreditCardStep />} />
+                <Route path="step-9" element={<BankStep />} />        
                 <Route path="step-10" element={<ReferenceOneStep />} />
                 <Route path="step-11" element={<ReferenceTwoStep />} />
             </Routes>            

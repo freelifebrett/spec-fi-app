@@ -4,6 +4,7 @@ import { TextField, FormHelperText, FormControl, InputLabel, Select, MenuItem, C
 import { updateField, updateCurrentStep } from '../../../../redux/form/formSlice';
 import { useNavigate } from 'react-router-dom';
 import FormButton from '../../../Buttons/FormButton';
+import states from '../../../../constants/states';
 
 const CreditCardStep = () => {
   const dispatch = useDispatch();
@@ -73,8 +74,8 @@ const CreditCardStep = () => {
 
   // Navigation functions
   const goToPreviousStep = () => {
-    dispatch(updateCurrentStep(8));
-    navigate('/step-8'); // Update with your actual route
+    dispatch(updateCurrentStep(7));
+    navigate('/step-7'); // Update with your actual route
   };
 
   const goToNextStep = () => {
@@ -91,8 +92,8 @@ const CreditCardStep = () => {
 
     setErrors(newErrors);
     if (formIsValid) {
-        dispatch(updateCurrentStep(10)); // Update to the correct next step number
-        navigate('/step-10'); // Update to the correct next step path
+        dispatch(updateCurrentStep(9)); // Update to the correct next step number
+        navigate('/step-9'); // Update to the correct next step path
     }
 };
 
@@ -126,11 +127,13 @@ const CreditCardStep = () => {
           margin="normal"
           type="number"
           inputProps={{ maxLength: 4 }}
-        />
-        <FormControl fullWidth margin="normal" error={!!errors.cardExpMonth}>
-          <InputLabel>Expiration Month</InputLabel>
+        />        
+        <FormControl fullWidth margin="normal" error={!!errors.cardExpMonth} >
+          <InputLabel  id="card-exp-month-label">Expiration Month</InputLabel>
           <Select
             name="cardExpMonth"
+            labelId="card-exp-month-label"
+            label="Expiration Month"
             value={formData.cardExpMonth || ''}
             onChange={handleFieldChange}            
           >
@@ -143,10 +146,11 @@ const CreditCardStep = () => {
           <FormHelperText>{errors.cardExpMonth}</FormHelperText>
         </FormControl>
         <FormControl fullWidth margin="normal" error={!!errors.cardExpYear}>
-          <InputLabel id="card-exp-label">Expiration Year</InputLabel>
-          <Select
-            labelId="card-exp-label"
+          <InputLabel id="card-exp-year-label">Expiration Year</InputLabel>
+          <Select            
             name="cardExpYear"
+            labelId="card-exp-year-label"
+            label="Expiration Year"
             value={formData.cardExpYear || ''}
             onChange={handleFieldChange}            
           >

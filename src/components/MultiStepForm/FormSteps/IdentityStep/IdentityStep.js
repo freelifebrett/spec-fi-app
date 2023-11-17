@@ -5,7 +5,7 @@ import { TextField, Button, Container, Typography, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import FormButton from '../../../Buttons/FormButton';
 
-const IndentityStep = () => {
+const IdentityStep = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const formData = useSelector((state) => state.form);
@@ -77,6 +77,7 @@ const IndentityStep = () => {
           autoComplete="dob"
           autoFocus
           value={formData.dob}
+          onBlur={handleBlur}
           onChange={handleFieldChange}
           error={!!errors.dob}
           helperText={errors.dob}
@@ -117,4 +118,4 @@ const IndentityStep = () => {
   );
 };
 
-export default IndentityStep;
+export default IdentityStep;
