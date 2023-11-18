@@ -68,8 +68,8 @@ const AddressStep = () => {
   };
 
   const goToPreviousStep = () => {
-    dispatch(updateCurrentStep(1));
-    navigate('/step-1'); // Update with your actual route
+    dispatch(updateCurrentStep(2));
+    navigate('/step-2');
   };
 
   const handleSubmit = (e) => {
@@ -92,9 +92,9 @@ const AddressStep = () => {
     setErrors(newErrors);
     if (formIsValid) {
       // Update Redux state if needed
-      dispatch(updateCurrentStep(3));
+      dispatch(updateCurrentStep(4));
       // Navigate to the next step
-      navigate('/step-3');
+      navigate('/step-4');
     }
   };
 

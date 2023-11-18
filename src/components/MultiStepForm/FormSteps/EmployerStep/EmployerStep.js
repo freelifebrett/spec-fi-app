@@ -18,7 +18,7 @@ const EmployerStep = () => {
         dispatch(updateField({ fieldName: name, fieldValue: value }));
 
         // Only validate fields other than employerPhone
-        if (name !== 'employerPhone') {
+        if (name !== 'employerPhone' && name !== 'employerZipCode') {
             const error = validate(name, value);
             setErrors(prevErrors => ({ ...prevErrors, [name]: error }));
         }
@@ -26,7 +26,7 @@ const EmployerStep = () => {
 
     const handleBlur = (e) => {
         const { name, value } = e.target;
-        if (name === 'employerPhone') {
+        if (name === 'employerPhone' || name === 'employerZipCode') {
             const error = validate(name, value);
             setErrors(prevErrors => ({ ...prevErrors, [name]: error }));
         }
@@ -163,6 +163,7 @@ const EmployerStep = () => {
                     name="employerZipCode"
                     value={formData.employerZipCode || ''}
                     onChange={handleFieldChange}
+                    onBlur={handleBlur}
                     error={!!errors.employerZipCode}
                     helperText={errors.employerZipCode}
                 />

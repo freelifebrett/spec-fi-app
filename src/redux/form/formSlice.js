@@ -13,8 +13,7 @@ const initialState = {
   cardNumber: '',
   city: '',
   confirmPassword: '',
-  country: 'United States', // Default value set to United States
-  currentStep: 1,
+  country: 'United States', // Default value set to United States  
   dob: '',
   email: '',
   employerAddress: '',
@@ -46,6 +45,8 @@ const initialState = {
   state: '', // consider using an abbreviation for states
   timeAtAddress: '',
   zipCode: '',
+  isApplicationSubmitted: false,
+  currentStep: 1
 };
 
 
@@ -111,9 +112,12 @@ const formSlice = createSlice({
       // Update the currentStep based on the action payload
       state.currentStep = action.payload;
     },
+    updateSubmissionStatus(state, action) {
+      state.isApplicationSubmitted = action.payload;
+    },
     // Add more reducers as needed
   },
 });
 
-export const { updateField, updateCurrentStep } = formSlice.actions;
+export const { updateField, updateCurrentStep, updateSubmissionStatus } = formSlice.actions;
 export default formSlice.reducer;

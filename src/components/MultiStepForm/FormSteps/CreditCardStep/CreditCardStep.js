@@ -4,7 +4,7 @@ import { TextField, FormHelperText, FormControl, InputLabel, Select, MenuItem, C
 import { updateField, updateCurrentStep } from '../../../../redux/form/formSlice';
 import { useNavigate } from 'react-router-dom';
 import FormButton from '../../../Buttons/FormButton';
-import states from '../../../../constants/states';
+import PaymentHelperText from '../../../PaymentHelperText';
 
 const CreditCardStep = () => {
   const dispatch = useDispatch();
@@ -83,19 +83,19 @@ const CreditCardStep = () => {
     let newErrors = {};
 
     ['cardNumber', 'cardCVV', 'cardExpMonth', 'cardExpYear'].forEach(field => {
-        const error = validate(field, formData[field]);
-        if (error) {
-            newErrors[field] = error;
-            formIsValid = false;
-        }
+      const error = validate(field, formData[field]);
+      if (error) {
+        newErrors[field] = error;
+        formIsValid = false;
+      }
     });
 
     setErrors(newErrors);
     if (formIsValid) {
-        dispatch(updateCurrentStep(9)); // Update to the correct next step number
-        navigate('/step-9'); // Update to the correct next step path
+      dispatch(updateCurrentStep(9)); // Update to the correct next step number
+      navigate('/step-9'); // Update to the correct next step path
     }
-};
+  };
 
   const canProceed = Object.values(errors).every(x => x === '') &&
     ['cardNumber', 'cardCVV', 'cardExpMonth', 'cardExpYear']
@@ -127,15 +127,15 @@ const CreditCardStep = () => {
           margin="normal"
           type="number"
           inputProps={{ maxLength: 4 }}
-        />        
+        />
         <FormControl fullWidth margin="normal" error={!!errors.cardExpMonth} >
-          <InputLabel  id="card-exp-month-label">Expiration Month</InputLabel>
+          <InputLabel id="card-exp-month-label">Expiration Month</InputLabel>
           <Select
             name="cardExpMonth"
             labelId="card-exp-month-label"
             label="Expiration Month"
             value={formData.cardExpMonth || ''}
-            onChange={handleFieldChange}            
+            onChange={handleFieldChange}
           >
             {[...Array(12)].map((_, i) => (
               <MenuItem key={i} value={i + 1}>
@@ -147,12 +147,12 @@ const CreditCardStep = () => {
         </FormControl>
         <FormControl fullWidth margin="normal" error={!!errors.cardExpYear}>
           <InputLabel id="card-exp-year-label">Expiration Year</InputLabel>
-          <Select            
+          <Select
             name="cardExpYear"
             labelId="card-exp-year-label"
             label="Expiration Year"
             value={formData.cardExpYear || ''}
-            onChange={handleFieldChange}            
+            onChange={handleFieldChange}
           >
             {[...Array(20)].map((_, i) => (
               <MenuItem key={i} value={new Date().getFullYear() + i}>
@@ -163,6 +163,7 @@ const CreditCardStep = () => {
           <FormHelperText>{errors.cardExpYear}</FormHelperText>
         </FormControl>
         <Box mt={2}>
+          <PaymentHelperText/>
           <FormButton
             onClick={goToPreviousStep}
             text="Back">

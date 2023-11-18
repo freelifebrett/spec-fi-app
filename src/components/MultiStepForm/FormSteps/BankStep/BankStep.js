@@ -4,6 +4,7 @@ import { TextField, Button, FormControl, InputLabel, Select, MenuItem, Container
 import { updateField, updateCurrentStep } from '../../../../redux/form/formSlice';
 import { useNavigate } from 'react-router-dom';
 import FormButton from '../../../Buttons/FormButton';
+import PaymentHelperText from '../../../PaymentHelperText';
 
 const BankStep = () => {
   const dispatch = useDispatch();
@@ -50,19 +51,19 @@ const BankStep = () => {
     let newErrors = {};
 
     ['bankName', 'accountNumber', 'routingNumber'].forEach(field => {
-        const error = validate(field, formData[field]);
-        if (error) {
-            newErrors[field] = error;
-            formIsValid = false;
-        }
+      const error = validate(field, formData[field]);
+      if (error) {
+        newErrors[field] = error;
+        formIsValid = false;
+      }
     });
 
     setErrors(newErrors);
     if (formIsValid) {
-        dispatch(updateCurrentStep(10)); // Update to the correct next step number
-        navigate('/step-10'); // Update to the correct next step path
+      dispatch(updateCurrentStep(10)); // Update to the correct next step number
+      navigate('/step-10'); // Update to the correct next step path
     }
-};
+  };
 
   const canProceed = Object.values(errors).every(x => x === '') &&
     ['bankName', 'accountNumber', 'routingNumber']
@@ -70,51 +71,52 @@ const BankStep = () => {
 
   return (
     <Container>
-        <Box component="form" noValidate sx={{ mt: 1 }}>
-          <TextField
-            fullWidth
-            label="Bank Name"
-            name="bankName"
-            value={formData.bankName || ''}
-            onChange={handleFieldChange}
-            error={!!errors.bankName}
-            helperText={errors.bankName}
-            margin="normal"
-          />
-          <TextField
-            fullWidth
-            label="Account Number"
-            name="accountNumber"
-            value={formData.accountNumber || ''}
-            onChange={handleFieldChange}
-            error={!!errors.accountNumber}
-            helperText={errors.accountNumber}
-            margin="normal"
-            type="number"
-          />
-          <TextField
-            fullWidth
-            label="Routing Number"
-            name="routingNumber"
-            value={formData.routingNumber || ''}
-            onChange={handleFieldChange}
-            error={!!errors.routingNumber}
-            helperText={errors.routingNumber}
-            margin="normal"
-            type="number"
-          />
-          <Box mt={2}>
-            <FormButton
-              onClick={goToPreviousStep}
-              text="Back">
-            </FormButton>
-            <FormButton
-              onClick={goToNextStep}
-              text="Next"
-              disabled={!canProceed}>
-            </FormButton>
-          </Box>
+      <Box component="form" noValidate sx={{ mt: 1 }}>
+        <TextField
+          fullWidth
+          label="Bank Name"
+          name="bankName"
+          value={formData.bankName || ''}
+          onChange={handleFieldChange}
+          error={!!errors.bankName}
+          helperText={errors.bankName}
+          margin="normal"
+        />
+        <TextField
+          fullWidth
+          label="Account Number"
+          name="accountNumber"
+          value={formData.accountNumber || ''}
+          onChange={handleFieldChange}
+          error={!!errors.accountNumber}
+          helperText={errors.accountNumber}
+          margin="normal"
+          type="number"
+        />
+        <TextField
+          fullWidth
+          label="Routing Number"
+          name="routingNumber"
+          value={formData.routingNumber || ''}
+          onChange={handleFieldChange}
+          error={!!errors.routingNumber}
+          helperText={errors.routingNumber}
+          margin="normal"
+          type="number"
+        />
+        <Box mt={2}>
+          <PaymentHelperText/>
+          <FormButton
+            onClick={goToPreviousStep}
+            text="Back">
+          </FormButton>
+          <FormButton
+            onClick={goToNextStep}
+            text="Next"
+            disabled={!canProceed}>
+          </FormButton>
         </Box>
+      </Box>
     </Container>
   );
 };
