@@ -9,7 +9,7 @@
 }
 
 .App-logo {
-  width: 45vw; /* Adjust the value as needed */
+  width: 35vw; /* Adjust the value as needed */
   height: auto; /* Maintain aspect ratio */
   max-width: 250px;
   pointer-events: none;
