@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Provider } from 'react-redux';
+import { Provider, useSelector, useDispatch  } from 'react-redux';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import store from './redux/store';
 import MultiStepForm from './components/MultiStepForm/MultiStepForm.js';
@@ -11,7 +11,6 @@ import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
 import { getStorage, ref, getDownloadURL } from 'firebase/storage';
-import { useSelector, useDispatch } from 'react-redux';
 import { updateThemeColors, updateLogoUrl } from './redux/form/formSlice';
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
@@ -43,8 +42,8 @@ const analytics = getAnalytics(app);
 function App() {
   const dispatch = useDispatch();
 
-  const themeColors = useSelector(state => ({ primary: state.form.primaryColor, secondary: state.form.secondaryColor }));
-  const logoUrl = useSelector(state => state.form.logoUrl);
+  // const themeColors = useSelector(state => ({ primary: state.form.primaryColor, secondary: state.form.secondaryColor }));
+  // const logoUrl = useSelector(state => state.form.logoUrl);
 
   const theme = createTheme({
     typography: {
@@ -68,14 +67,14 @@ function App() {
       },
       // ... Add more styles for other text elements as needed
     },
-    palette: {
-      primary: {
-        main: themeColors.primary, // A medium green
-      },
-      secondary: {
-        main: themeColors.secondary, // A lighter green
-      },
-    },
+    // palette: {
+    //   primary: {
+    //     main: themeColors.primary, // A medium green
+    //   },
+    //   secondary: {
+    //     main: themeColors.secondary, // A lighter green
+    //   },
+    // },
   });
 
 
@@ -86,38 +85,38 @@ function App() {
     return 'flipsecrets';
   };
 
-  const fetchThemeAndLogo = async (subdomain) => {
-    const db = getFirestore();
-    const storage = getStorage();
+  // const fetchThemeAndLogo = async (subdomain) => {
+  //   const db = getFirestore();
+  //   const storage = getStorage();
 
-    // Fetch theme colors from Firestore
-    const docRef = doc(db, 'merchant', subdomain);
-    const docSnap = await getDoc(docRef);
+  //   // Fetch theme colors from Firestore
+  //   const docRef = doc(db, 'merchant', subdomain);
+  //   const docSnap = await getDoc(docRef);
 
-    let theme = { primaryColor: '#2E7D32', secondaryColor: '#81C784' };
-    let logoUrl = '';
+  //   let theme = { primaryColor: '#2E7D32', secondaryColor: '#81C784' };
+  //   let logoUrl = '';
 
-    if (docSnap.exists()) {
-      const data = docSnap.data();
-      theme = { primaryColor: data.primaryColor, secondaryColor: data.secondaryColor };
+  //   if (docSnap.exists()) {
+  //     const data = docSnap.data();
+  //     theme = { primaryColor: data.primaryColor, secondaryColor: data.secondaryColor };
 
-      // Construct logo URL from Firebase Storage
-      const logoRef = ref(storage, `${subdomain}/logo.png`);
-      logoUrl = await getDownloadURL(logoRef);
-    }
+  //     // Construct logo URL from Firebase Storage
+  //     const logoRef = ref(storage, `${subdomain}/logo.png`);
+  //     logoUrl = await getDownloadURL(logoRef);
+  //   }
 
-    return { theme, logoUrl };
-  };
+  //   return { theme, logoUrl };
+  // };
 
-  useEffect(() => {
-    const subdomain = getSubdomain();
-    fetchThemeAndLogo(subdomain).then(({ theme, logoUrl }) => {
-      // Update theme and logo
-      // This depends on your state management solution
-      dispatch(updateThemeColors(theme));
-      dispatch(updateLogoUrl(logoUrl));
-    });
-  }, []);
+  // useEffect(() => {
+  //   const subdomain = getSubdomain();
+  //   fetchThemeAndLogo(subdomain).then(({ theme, logoUrl }) => {
+  //     // Update theme and logo
+  //     // This depends on your state management solution
+  //     dispatch(updateThemeColors(theme));
+  //     dispatch(updateLogoUrl(logoUrl));
+  //   });
+  // }, []);
 
 
   return (
