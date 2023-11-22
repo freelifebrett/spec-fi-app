@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
-import { Provider, useSelector, useDispatch  } from 'react-redux';
+import {useSelector, useDispatch  } from 'react-redux';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import store from './redux/store';
 import MultiStepForm from './components/MultiStepForm/MultiStepForm.js';
 import FlipSecretsLogo from './images/flip_secrets_logo.png';
 import './App.css';
@@ -121,7 +120,7 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Provider store={store}>
+      
         <Router>
           <div className="App">
             <AppBar position="static">
@@ -136,8 +135,7 @@ function App() {
             </div>
             <Footer />
           </div>
-        </Router>
-      </Provider>
+        </Router>      
     </ThemeProvider>
   );
 }
