@@ -74,7 +74,7 @@ const ReferenceTwoStep = () => {
             //     if (response.ok) {
                     dispatch(updateSubmissionStatus(true));                    
                     console.log('Form data submitted successfully');
-                    navigate('/thank-you'); // Navigate to the thank you page
+                    // navigate('/thank-you'); // Navigate to the thank you page
             //     } else {
             //         console.error('Failed to submit form data', response);
             //         setSubmitError('Failed to submit form data');

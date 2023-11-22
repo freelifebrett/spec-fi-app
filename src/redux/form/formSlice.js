@@ -1,4 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
+// Inside your formSlice.js
+
+
 
 const initialState = {
   accountNumber: '',
@@ -46,9 +49,11 @@ const initialState = {
   timeAtAddress: '',
   zipCode: '',
   isApplicationSubmitted: false,
-  currentStep: 1
+  currentStep: 1,
+  primaryColor: '#2E7D32',
+  secondaryColor: '#81C784',
+  logoUrl: 'defaultLogoUrl',
 };
-
 
 // const initialState = {
 //     accountNumber: '123456789',
@@ -115,9 +120,16 @@ const formSlice = createSlice({
     updateSubmissionStatus(state, action) {
       state.isApplicationSubmitted = action.payload;
     },
-    // Add more reducers as needed
+    updateThemeColors(state, action) {
+      const { primaryColor, secondaryColor } = action.payload;
+      state.primaryColor = primaryColor;
+      state.secondaryColor = secondaryColor;
+    },
+    updateLogoUrl(state, action) {
+      state.logoUrl = action.payload;
+    }
   },
 });
 
-export const { updateField, updateCurrentStep, updateSubmissionStatus } = formSlice.actions;
+export const { updateField, updateCurrentStep, updateSubmissionStatus, updateLogoUrl, updateThemeColors } = formSlice.actions;
 export default formSlice.reducer;
