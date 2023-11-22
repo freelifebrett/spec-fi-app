@@ -41,8 +41,8 @@ const analytics = getAnalytics(app);
 function App() {
   const dispatch = useDispatch();
 
-  // const themeColors = useSelector(state => ({ primary: state.form.primaryColor, secondary: state.form.secondaryColor }));
-  // const logoUrl = useSelector(state => state.form.logoUrl);
+  const themeColors = useSelector(state => ({ primary: state.form.primaryColor, secondary: state.form.secondaryColor }));
+  const logoUrl = useSelector(state => state.form.logoUrl);
 
   const theme = createTheme({
     typography: {
@@ -66,14 +66,14 @@ function App() {
       },
       // ... Add more styles for other text elements as needed
     },
-    // palette: {
-    //   primary: {
-    //     main: themeColors.primary, // A medium green
-    //   },
-    //   secondary: {
-    //     main: themeColors.secondary, // A lighter green
-    //   },
-    // },
+    palette: {
+      primary: {
+        main: themeColors.primary, // A medium green
+      },
+      secondary: {
+        main: themeColors.secondary, // A lighter green
+      },
+    },
   });
 
 
@@ -81,41 +81,46 @@ function App() {
     // const host = window.location.hostname;
     // return host.split('.')[0];
 
-    return 'flipsecrets';
+    return 'creatorscollective';
   };
 
-  // const fetchThemeAndLogo = async (subdomain) => {
-  //   const db = getFirestore();
-  //   const storage = getStorage();
+  const fetchThemeAndLogo = async (subdomain) => {
+    const db = getFirestore();
+    const storage = getStorage();
+  
+    // Fetch theme colors from Firestore
+    const docRef = doc(db, 'merchants', subdomain);
+    const docSnap = await getDoc(docRef);
+  
+    let theme = { primaryColor: '#2E7D32', secondaryColor: '#81C784' };
+    let logoUrl = '';
+  
+    if (docSnap.exists()) {
+      const data = docSnap.data();
+      // Only use the primaryColor and secondaryColor fields
+      theme = { primaryColor: data.primaryColor, secondaryColor: data.secondaryColor };
+  
+      // Construct logo URL from Firebase Storage
+      const logoRef = ref(storage, `${subdomain}/logo.png`);
+      logoUrl = await getDownloadURL(logoRef);
+    }
 
-  //   // Fetch theme colors from Firestore
-  //   const docRef = doc(db, 'merchant', subdomain);
-  //   const docSnap = await getDoc(docRef);
+    console.info(docSnap.data())
+    console.info(subdomain);
+  
+    return { theme, logoUrl };
+  };
+  
 
-  //   let theme = { primaryColor: '#2E7D32', secondaryColor: '#81C784' };
-  //   let logoUrl = '';
-
-  //   if (docSnap.exists()) {
-  //     const data = docSnap.data();
-  //     theme = { primaryColor: data.primaryColor, secondaryColor: data.secondaryColor };
-
-  //     // Construct logo URL from Firebase Storage
-  //     const logoRef = ref(storage, `${subdomain}/logo.png`);
-  //     logoUrl = await getDownloadURL(logoRef);
-  //   }
-
-  //   return { theme, logoUrl };
-  // };
-
-  // useEffect(() => {
-  //   const subdomain = getSubdomain();
-  //   fetchThemeAndLogo(subdomain).then(({ theme, logoUrl }) => {
-  //     // Update theme and logo
-  //     // This depends on your state management solution
-  //     dispatch(updateThemeColors(theme));
-  //     dispatch(updateLogoUrl(logoUrl));
-  //   });
-  // }, []);
+  useEffect(() => {
+    const subdomain = getSubdomain();
+    fetchThemeAndLogo(subdomain).then(({ theme, logoUrl }) => {
+      // Update theme and logo
+      // This depends on your state management solution
+      dispatch(updateThemeColors(theme));
+      dispatch(updateLogoUrl(logoUrl));
+    });
+  }, []);
 
 
   return (
@@ -125,7 +130,7 @@ function App() {
           <div className="App">
             <AppBar position="static">
               <Toolbar>
-                <img className='App-logo' src={FlipSecretsLogo} alt="Flip Secrets Logo" />
+                <img className='App-logo' src={logoUrl} alt="Flip Secrets Logo" />
               </Toolbar>
             </AppBar>
             <div className="form-container">
