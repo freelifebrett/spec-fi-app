@@ -1,3 +1,4 @@
+import React, { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import store from './redux/store';
@@ -10,7 +11,6 @@ import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
 import { getStorage, ref, getDownloadURL } from 'firebase/storage';
-import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateThemeColors, updateLogoUrl } from './redux/form/formSlice';
 // Import the functions you need from the SDKs you need
@@ -114,7 +114,7 @@ function App() {
     fetchThemeAndLogo(subdomain).then(({ theme, logoUrl }) => {
       // Update theme and logo
       // This depends on your state management solution
-      dispatch(updateTheme(theme));
+      dispatch(updateThemeColors(theme));
       dispatch(updateLogoUrl(logoUrl));
     });
   }, []);
