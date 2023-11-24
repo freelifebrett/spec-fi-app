@@ -101,7 +101,6 @@ const initialState = {
   state: 'CA', // consider using an abbreviation for states
   timeAtAddress: '2 years',
   zipCode: '90001',
-  isApplicationSubmitted: false,
   currentStep: 1,
   primaryColor: '#000000',
   secondaryColor: '#000000',
@@ -123,9 +122,6 @@ const formSlice = createSlice({
       // Update the currentStep based on the action payload
       state.currentStep = action.payload;
     },
-    updateSubmissionStatus(state, action) {
-      state.isApplicationSubmitted = action.payload;
-    },
     updateThemeColors(state, action) {
       const { primaryColor, secondaryColor } = action.payload;
       state.primaryColor = primaryColor;
@@ -137,5 +133,5 @@ const formSlice = createSlice({
   },
 });
 
-export const { updateField, updateCurrentStep, updateSubmissionStatus, updateLogoUrl, updateThemeColors } = formSlice.actions;
+export const { updateField, updateCurrentStep, updateLogoUrl, updateThemeColors } = formSlice.actions;
 export default formSlice.reducer;

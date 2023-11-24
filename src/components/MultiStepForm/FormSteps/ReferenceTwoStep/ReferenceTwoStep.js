@@ -46,6 +46,7 @@ const ReferenceTwoStep = () => {
             setErrors(prevErrors => ({ ...prevErrors, [name]: error }));
         }
     };
+
     const handleSubmit = async () => {
         let formIsValid = true;
         let newErrors = {};
@@ -74,10 +75,23 @@ const ReferenceTwoStep = () => {
                 console.info(response);
 
                 if (response.ok) {
-                    response.json().then(data => {
-                        dispatch(updateSubmissionStatus(true));                    
-                        console.log('Form data submitted successfully', data);
-                        navigate('/thank-you'); // Navigate to the thank you page
+                    response.json().then(data => {                                        
+                        switch (data.applicationStatus) {
+                            case 'PROCESSED':
+                                navigate('/thank-you'); // Navigate to the thank you page
+                                break;
+                            case 'REJECTED':
+                                setSubmitError('The application has been rejected at this time.');
+                                break;
+                            case 'DUPLICATE':
+                                setSubmitError('The application has already been submitted.');
+                                break;
+                            case 'LOGIN FAILED':
+                                setSubmitError('Application couldn\'t be submitted at this time.');
+                                break;
+                            default:
+                                setSubmitError('An unknown error occurred.');
+                        }
                     });            
                 } else {
                     console.error('Failed to submit form data', response);
