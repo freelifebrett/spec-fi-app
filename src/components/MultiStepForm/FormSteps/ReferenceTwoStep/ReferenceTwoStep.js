@@ -61,30 +61,30 @@ const ReferenceTwoStep = () => {
         setErrors(newErrors);
         if (formIsValid) {
             setIsLoading(true);
-            // try {
-            //     const response = await fetch('http://localhost:5001/spec-fi-app/us-central1/submitFormData', { // Use the correct URL of your Firebase function
-            //         method: 'POST',
-            //         mode: 'no-cors',
-            //         headers: {
-            //             'Content-Type': 'application/json',
-            //         },
-            //         body: JSON.stringify(formData),
-            //     });
+            try {
+                const response = await fetch('http://localhost:5001/spec-fi-app/us-central1/submitFormData', { // Use the correct URL of your Firebase function
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData),
+                });
 
-            //     if (response.ok) {
+                if (response.ok) {
                     dispatch(updateSubmissionStatus(true));                    
                     console.log('Form data submitted successfully');
-                    // navigate('/thank-you'); // Navigate to the thank you page
-            //     } else {
-            //         console.error('Failed to submit form data', response);
-            //         setSubmitError('Failed to submit form data');
-            //     }
-            // } catch (error) {
-            //     console.error('Error submitting form data:', error);
-            //     setSubmitError('Error submitting form data');
-            // } finally {
-            //     setIsLoading(false);
-            // }
+                    navigate('/thank-you'); // Navigate to the thank you page
+                } else {
+                    console.error('Failed to submit form data', response);
+                    setSubmitError('Failed to submit form data');
+                }
+            } catch (error) {
+                console.error('Error submitting form data:', error);
+                setSubmitError('Error submitting form data');
+            } finally {
+                setIsLoading(false);
+            }
         }
     };
 
