@@ -188,7 +188,7 @@ const ReferenceTwoStep = () => {
                 </FormButton>
                 <FormButton
                     onClick={handleSubmit}
-                    text="Next"
+                    text="Submit"
                     disabled={!canProceed}>
                 </FormButton>
             </Box>
