@@ -2,6 +2,7 @@ const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const js2xmlparser = require("js2xmlparser");
 const axios = require("axios");
+const xml2js = require('xml2js');
 const cors = require('cors')({ origin: true });
 admin.initializeApp();
 
@@ -23,12 +24,25 @@ exports.submitFormData = functions.https.onRequest((request, response) => {
             console.info('xmlData', remove_linebreaks_ss(xmlData));
 
             // Step 4: Send XML data to the endpoint
-            const response = await axios.post('https://www.specialfinancingco.com/partner/ProcessApplicationXMLv2.asp', xmlData, {
+            const specFiResponse = await axios.post('https://www.specialfinancingco.com/partner/ProcessApplicationXMLv2.asp', xmlData, {
                 headers: { 'Content-Type': 'text/xml' }
             });
 
-            // Step 5 and 6: Process and return the response            
-            return response.data;
+            const parser = new xml2js.Parser();
+            parser.parseString(specFiResponse.data, (err, result) => {
+                if (err) {
+                    throw err;
+                }
+
+                // Extract the ReturnResponse value
+                const returnResponse = result.applicationXMLresponse.reply[0].ReturnResponse[0];
+
+                // Extract the ApplicationNum value
+                const sfcAppNumber = result.applicationXMLresponse.reply[0].SFCAppNumber[0];
+
+                // Step 6: Return the extracted value as JSON
+                response.json({ applicationStatus: returnResponse, applicationNumber: sfcAppNumber });
+            });
         } catch (error) {
             // console.error('Error submitting form data:', error);
             throw error;
@@ -149,7 +163,7 @@ function mapFormDataToXML(formData) {
             CCAddress: '',
             CCIssuerName: '',
             CCCardHolderName: '',
-            CCCVV: formData.cardCVV,            
+            CCCVV: formData.cardCVV,
             ref1FirstName: formData.reference1FirstName,
             ref1LastName: formData.reference1LastName,
             ref1Phone: formData.reference1Phone,
@@ -233,8 +247,8 @@ function remove_linebreaks_ss(str) {
 
     // Looop and traverse string
     for (let i = 0; i < str.length; i++)
-    if (!(str[i] == "\n" || str[i] == "\r"))
-        newstr += str[i];
+        if (!(str[i] == "\n" || str[i] == "\r"))
+            newstr += str[i];
 
 
     return newstr;
