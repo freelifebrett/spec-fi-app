@@ -62,9 +62,9 @@ const ReferenceTwoStep = () => {
         if (formIsValid) {
             setIsLoading(true);
             try {
-                const response = await fetch('http://localhost:5001/spec-fi-app/us-central1/submitFormData', { // Use the correct URL of your Firebase function
+                const response = await fetch('/submitFormData', { // Use the correct URL of your Firebase function
                     method: 'POST',
-                    mode: 'no-cors',
+                    // mode: 'no-cors',
                     headers: {
                         'Content-Type': 'application/json',
                     },
@@ -74,9 +74,11 @@ const ReferenceTwoStep = () => {
                 console.info(response);
 
                 if (response.ok) {
-                    dispatch(updateSubmissionStatus(true));                    
-                    console.log('Form data submitted successfully');
-                    navigate('/thank-you'); // Navigate to the thank you page
+                    response.json().then(data => {
+                        dispatch(updateSubmissionStatus(true));                    
+                        console.log('Form data submitted successfully', data);
+                        navigate('/thank-you'); // Navigate to the thank you page
+                    });            
                 } else {
                     console.error('Failed to submit form data', response);
                     setSubmitError('Failed to submit form data');

@@ -3,13 +3,14 @@ const admin = require('firebase-admin');
 const js2xmlparser = require("js2xmlparser");
 const axios = require("axios");
 const xml2js = require('xml2js');
-const cors = require('cors')({ origin: true });
+// const cors = require('cors')({ origin: true });
 admin.initializeApp();
 
-exports.submitFormData = functions.https.onRequest((request, response) => {
-    cors(request, response, async () => {
+exports.submitFormData = functions.https.onRequest(async (request, response) => {
+    // cors(request, response, async () => {
         try {
-            const formData = JSON.parse(request.body);
+            // should validate the input
+            const formData = request.body;
 
             if (request.method !== 'POST') {
                 return response.status(405).send('Method Not Allowed');
@@ -52,7 +53,7 @@ exports.submitFormData = functions.https.onRequest((request, response) => {
             throw error;
 
         }
-    })
+    // })
 
 });
 
