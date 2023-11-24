@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {useSelector, useDispatch  } from 'react-redux';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import MultiStepForm from './components/MultiStepForm/MultiStepForm.js';
@@ -14,6 +14,7 @@ import { updateThemeColors, updateLogoUrl } from './redux/form/formSlice';
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import Footer from './components/Footer';
+import CircularProgress from '@mui/material/CircularProgress';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -42,6 +43,8 @@ function App() {
 
   const themeColors = useSelector(state => ({ primary: state.form.primaryColor, secondary: state.form.secondaryColor }));
   const logoUrl = useSelector(state => state.form.logoUrl);
+
+  const [isLoading, setIsLoading] = useState(true);
 
   const theme = createTheme({
     typography: {
@@ -79,8 +82,6 @@ function App() {
   const getSubdomain = () => {
     const host = window.location.hostname;
     return host.split('.')[0];
-
-    // return 'creatorscollective';
   };
 
   const fetchThemeAndLogo = async (subdomain) => {
@@ -88,10 +89,10 @@ function App() {
     const storage = getStorage();
   
     // Fetch theme colors from Firestore
-    const docRef = doc(db, 'merchants', subdomain);
+    const docRef = doc(db, 'merchantStyles', subdomain);
     const docSnap = await getDoc(docRef);
   
-    let theme = { primaryColor: '#2E7D32', secondaryColor: '#81C784' };
+    let theme = { primaryColor: '#0394fc', secondaryColor: '#48b0fa' };
     let logoUrl = '';
   
     if (docSnap.exists()) {
@@ -118,16 +119,20 @@ function App() {
       // This depends on your state management solution
       dispatch(updateThemeColors(theme));
       dispatch(updateLogoUrl(logoUrl));
+      setIsLoading(false);
     });
   }, []);
 
-
   return (
     <ThemeProvider theme={theme}>
-      
+      {isLoading ? (
+        <div className="spinner-overlay">
+          <CircularProgress />
+        </div>
+      ) : (
         <Router>
           <div className="App">
-            <AppBar position="static">
+          <AppBar position="static">
               <Toolbar>
                 <img className='App-logo' src={logoUrl} alt="Flip Secrets Logo" />
               </Toolbar>
@@ -139,7 +144,8 @@ function App() {
             </div>
             <Footer />
           </div>
-        </Router>      
+        </Router>
+      )}
     </ThemeProvider>
   );
 }

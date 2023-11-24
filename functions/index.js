@@ -9,15 +9,26 @@ admin.initializeApp();
 exports.submitFormData = functions.https.onRequest(async (request, response) => {
     // cors(request, response, async () => {
         try {
-            // should validate the input
-            const formData = request.body;
-
             if (request.method !== 'POST') {
                 return response.status(405).send('Method Not Allowed');
             }
+    
+            // should validate the input
+            const formData = request.body;
+    
+            // Extract merchant name (uid) from the application subdomain
+            const merchantName = extractMerchantName(request); // Implement this function
+    
+            // Fetch merchant data from Firestore
+            const merchantRef = admin.firestore().collection('merchants').doc(merchantName);
+            const merchantDoc = await merchantRef.get();
+            if (!merchantDoc.exists) {
+                return response.status(404).send('Merchant not found');
+            }
+            const merchantData = merchantDoc.data();
 
             // Step 2: Map the form data to XML format
-            const xmlDataObject = mapFormDataToXML(formData);
+            const xmlDataObject = mapFormDataToXML(formData, merchantData);
 
             // Step 3: Convert the object to XML
             const xmlData = js2xmlparser.parse("applicationXML", xmlDataObject);
@@ -62,8 +73,8 @@ function mapFormDataToXML(formData) {
     return {
         // applicationXML: {
         authentication: {
-            username: 'SBUSER',
-            password: 'SBPWD'
+            username: merchantData.specialFinanceUsername,
+            password: merchantData.specialFinancePassword
         },
         application: {
             applicationNum: generateApplicationNumber(15), // Randomly generated alphanumeric string
@@ -214,7 +225,7 @@ function mapFormDataToXML(formData) {
             ref5City: '',
             ref5State: '',
             ref5Zip5: '',
-            sfcCompanyCode: 'SB1234'
+            sfcCompanyCode: merchantData.specialFinanceCompanyCode
         }
         // }
     };
@@ -246,15 +257,18 @@ function generateApplicationNumber(length) {
     return result;
 }
 
+function extractMerchantName(request) {
+    // Extract the host (subdomain) from the request headers
+    const host = request.headers.host;
 
-function remove_linebreaks_ss(str) {
-    let newstr = "";
+    // Assuming the URL pattern is `merchantname.yourapp.com`
+    // Split the host by '.' and get the first part as the merchant name
+    const subdomainParts = host.split('.');
+    if (subdomainParts.length >= 3) {
+        return subdomainParts[0];
+    }
 
-    // Looop and traverse string
-    for (let i = 0; i < str.length; i++)
-        if (!(str[i] == "\n" || str[i] == "\r"))
-            newstr += str[i];
-
-
-    return newstr;
+    // If the pattern does not match, handle accordingly
+    // This could be an error or a default value, depending on your application's requirements
+    throw new Error('Invalid host format');
 }
