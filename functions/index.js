@@ -45,7 +45,7 @@ function mapFormDataToXML(formData) {
                 password: 'SBPWD'
             },
             application: {
-                sfcCompanyCode: 'SB1234',
+                applicationNum: '123456789', // This should be dynamically generated or fetched
                 firstName: formData.firstName,
                 midName: formData.middleName,
                 lastName: formData.lastName,
@@ -55,38 +55,28 @@ function mapFormDataToXML(formData) {
                 city: formData.city,
                 state: formData.state,
                 zip: formData.zipCode,
-                taaYears: formData.timeAtAddress.split(' ')[0],
+                taaYears: extractYears(formData.timeAtAddress),
+                taaMonths: extractMonths(formData.timeAtAddress),
                 ownrent: formData.ownOrRent.toUpperCase(),
                 housingPayment: formData.housingPayment,
                 email: formData.email,
                 homPhone: formData.phoneNumber.replace(/-/g, ''),
+                busPhone: '', // Add if available
+                celPhone: '', // Add if available
                 employer: formData.employerName,
                 occupation: formData.occupation,
                 empAddress: formData.employerAddress,
                 empCity: formData.employerCity,
-                empState: formData.employerState, 
-                empZip: formData.employerZipCode, 
-                loeYears: formData.employmentLength.split(' ')[0], // Example: '2 years'
+                empState: formData.employerState,
+                empZip: formData.employerZipCode,
+                loeYears: extractYears(formData.employmentLength),
+                loeMonths: extractMonths(formData.employmentLength),
                 income: formData.averageIncome,
                 incomePeriod: formData.incomePeriod.toUpperCase(),
-                BankName: formData.bankName,
-                BankAcctNo: formData.accountNumber,
-                BankRoutingNo: formData.routingNumber,
-                BankAcctType: formData.accountType.toUpperCase(),
-                CCAcctNo: formData.cardNumber,
-                CCExpMonth: formData.cardExpMonth,
-                CCExpYear: formData.cardExpYear,
-                CCCardType: formData.cardBrand.toUpperCase(),
-                CCCVV: formData.cardCVV,
-                ref1FirstName: formData.reference1FirstName,
-                ref1LastName: formData.reference1LastName,
-                ref1Phone: formData.reference1Phone.replace(/-/g, ''),
-                ref1Relationship: formData.reference1Relationship.toUpperCase(),
-                ref2FirstName: formData.reference2FirstName,
-                ref2LastName: formData.reference2LastName,
-                ref2Phone: formData.reference2Phone.replace(/-/g, ''),
-                ref2Relationship: formData.reference2Relationship.toUpperCase(),
-                // Additional reference fields can be added here if present in initialState
+                otherIncome: '', // Add if available
+                otherIncomePeriod: '', // Add if available
+                otherIncomeSource: '', // Add if available
+                // ... Continue mapping other fields as per your XML structure
             }
         }
     };
@@ -96,6 +86,16 @@ function formatDate(dob) {
     const date = new Date(dob);
     const formattedDate = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
     return formattedDate;
+}
+
+function extractYears(timeString) {
+    // Extract years from a string like '3 years 5 months'
+    return timeString.split(' ')[0];
+}
+
+function extractMonths(timeString) {
+    // Extract months from a string like '3 years 5 months'
+    return timeString.split(' ')[2];
 }
 
 

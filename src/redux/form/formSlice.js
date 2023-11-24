@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import FlipSecretsLogo from '../../images/cc_logo.png';
 // Inside your formSlice.js
 
 
@@ -50,9 +51,9 @@ const initialState = {
   zipCode: '',
   isApplicationSubmitted: false,
   currentStep: 1,
-  primaryColor: '#2E7D32',
-  secondaryColor: '#81C784',
-  logoUrl: 'defaultLogoUrl',
+  primaryColor: '#000000',
+  secondaryColor: '#000000',
+  logoUrl: FlipSecretsLogo,
 };
 
 // const initialState = {

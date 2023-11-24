@@ -1,7 +1,6 @@
 // src/components/Footer.js
 import React from 'react';
 import { Box, Typography, Container, AppBar, Toolbar } from '@mui/material';
-import FlipSecretsLogo from '../images/flip_secrets_logo.png';
 
 const Footer = () => {
     return (

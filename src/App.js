@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import {useSelector, useDispatch  } from 'react-redux';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import MultiStepForm from './components/MultiStepForm/MultiStepForm.js';
-import FlipSecretsLogo from './images/flip_secrets_logo.png';
 import './App.css';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -78,10 +77,10 @@ function App() {
 
 
   const getSubdomain = () => {
-    // const host = window.location.hostname;
-    // return host.split('.')[0];
+    const host = window.location.hostname;
+    return host.split('.')[0];
 
-    return 'creatorscollective';
+    // return 'creatorscollective';
   };
 
   const fetchThemeAndLogo = async (subdomain) => {
@@ -101,7 +100,7 @@ function App() {
       theme = { primaryColor: data.primaryColor, secondaryColor: data.secondaryColor };
   
       // Construct logo URL from Firebase Storage
-      const logoRef = ref(storage, `${subdomain}/logo.png`);
+      const logoRef = ref(storage, `merchants/${subdomain}/logo.png`);
       logoUrl = await getDownloadURL(logoRef);
     }
 
