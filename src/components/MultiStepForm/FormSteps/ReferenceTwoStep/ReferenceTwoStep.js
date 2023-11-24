@@ -71,6 +71,8 @@ const ReferenceTwoStep = () => {
                     body: JSON.stringify(formData),
                 });
 
+                console.info(response);
+
                 if (response.ok) {
                     dispatch(updateSubmissionStatus(true));                    
                     console.log('Form data submitted successfully');

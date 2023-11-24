@@ -21,7 +21,7 @@ exports.submitFormData = functions.https.onRequest((request, response) => {
             // Step 3: Convert the object to XML
             const xmlData = js2xmlparser.parse("applicationXML", xmlDataObject);
 
-            console.info('xmlData', remove_linebreaks_ss(xmlData));
+            // console.info('xmlData', remove_linebreaks_ss(xmlData));
 
             // Step 4: Send XML data to the endpoint
             const specFiResponse = await axios.post('https://www.specialfinancingco.com/partner/ProcessApplicationXMLv2.asp', xmlData, {
@@ -40,8 +40,12 @@ exports.submitFormData = functions.https.onRequest((request, response) => {
                 // Extract the ApplicationNum value
                 const sfcAppNumber = result.applicationXMLresponse.reply[0].SFCAppNumber[0];
 
+                const resData = { applicationStatus: returnResponse, applicationNumber: sfcAppNumber };
+
+                console.info(resData);
+
                 // Step 6: Return the extracted value as JSON
-                response.json({ applicationStatus: returnResponse, applicationNumber: sfcAppNumber });
+                response.json(resData);
             });
         } catch (error) {
             // console.error('Error submitting form data:', error);
