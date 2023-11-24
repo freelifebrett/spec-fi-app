@@ -6,6 +6,20 @@ import { useNavigate } from 'react-router-dom';
 import FormButton from '../../../Buttons/FormButton';
 
 
+// Define the overlay style
+const overlayStyle = {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'rgba(255, 255, 255, 0.5)', // semi-transparent white
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 1000 // ensure it's above everything else
+};
+
 const ReferenceTwoStep = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -75,7 +89,7 @@ const ReferenceTwoStep = () => {
                 console.info(response);
 
                 if (response.ok) {
-                    response.json().then(data => {                                        
+                    response.json().then(data => {
                         switch (data.applicationStatus) {
                             case 'PROCESSED':
                                 navigate('/thank-you'); // Navigate to the thank you page
@@ -92,7 +106,7 @@ const ReferenceTwoStep = () => {
                             default:
                                 setSubmitError('An unknown error occurred.');
                         }
-                    });            
+                    });
                 } else {
                     console.error('Failed to submit form data', response);
                     setSubmitError('Failed to submit form data');
@@ -117,8 +131,10 @@ const ReferenceTwoStep = () => {
 
     return (
         <Container>
-            {isLoading && <CircularProgress />} {/* Spinner */}
-    {submitError && <Alert severity="error">{submitError}</Alert>} {/* Error Popup */}
+            {isLoading && <div style={overlayStyle}>
+                <CircularProgress />
+            </div>} {/* Spinner */}
+            {submitError && <Alert severity="error">{submitError}</Alert>} {/* Error Popup */}
             <Box component="form" noValidate sx={{ mt: 1 }}>
                 <TextField
                     fullWidth
