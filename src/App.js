@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
 import { getStorage, ref, getDownloadURL } from 'firebase/storage';
-import { updateThemeColors, updateLogoUrl } from './redux/form/formSlice';
+import { updateThemeColors, updateLogoUrl, updateMerchantName } from './redux/form/formSlice';
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
@@ -114,6 +114,7 @@ function App() {
 
   useEffect(() => {
     const subdomain = getSubdomain();
+    dispatch(updateMerchantName(subdomain));
     fetchThemeAndLogo(subdomain).then(({ theme, logoUrl }) => {
       // Update theme and logo
       // This depends on your state management solution

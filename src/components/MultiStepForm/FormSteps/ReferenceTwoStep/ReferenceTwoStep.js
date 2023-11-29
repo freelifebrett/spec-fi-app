@@ -92,7 +92,9 @@ const ReferenceTwoStep = () => {
                     response.json().then(data => {
                         switch (data.applicationStatus) {
                             case 'PROCESSED':
-                                navigate('/thank-you'); // Navigate to the thank you page
+                            case 'SUCCESS':
+                                dispatch(updateCurrentStep(12));
+                                navigate('/step-12'); // Navigate to the thank you page
                                 break;
                             case 'REJECTED':
                                 setSubmitError('The application has been rejected at this time.');

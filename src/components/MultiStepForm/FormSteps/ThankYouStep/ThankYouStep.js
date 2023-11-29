@@ -9,7 +9,7 @@ const ThankYouStep = () => {
         Thank You!
       </Typography>
       <Typography variant="h6">
-        Your application has been submitted!
+        Your application has been matched with the lender Special Financing Company! They can be reached at 757-825-0450.
       </Typography>
       <FormControlLabel
         control={<Checkbox checked={true} color="primary" />}

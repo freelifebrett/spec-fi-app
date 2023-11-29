@@ -37,7 +37,7 @@ const MultiStepForm = () => {
     return (
         <div className="multi-step-form">
 
-            {currentStep <= totalSteps && (
+            {currentStep < totalSteps && (
                 <Box>
                     <Typography className="header-title">
                         Financing Application: {stepNames[formData.currentStep - 1]}

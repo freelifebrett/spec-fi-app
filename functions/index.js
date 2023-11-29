@@ -1,10 +1,12 @@
-const functions = require('firebase-functions');
-const admin = require('firebase-admin');
 const js2xmlparser = require("js2xmlparser");
 const axios = require("axios");
 const xml2js = require('xml2js');
 // const cors = require('cors')({ origin: true });
+
+const admin = require('firebase-admin');
 admin.initializeApp();
+
+const functions = require('firebase-functions');
 
 exports.submitFormData = functions.https.onRequest(async (request, response) => {
     // cors(request, response, async () => {
@@ -17,8 +19,10 @@ exports.submitFormData = functions.https.onRequest(async (request, response) => 
             const formData = request.body;
     
             // Extract merchant name (uid) from the application subdomain
-            const merchantName = extractMerchantName(request); // Implement this function
+            const merchantName = formData.merchantName;
     
+            console.info("merchantName", merchantName)
+
             // Fetch merchant data from Firestore
             const merchantRef = admin.firestore().collection('merchants').doc(merchantName);
             const merchantDoc = await merchantRef.get();
@@ -27,11 +31,17 @@ exports.submitFormData = functions.https.onRequest(async (request, response) => 
             }
             const merchantData = merchantDoc.data();
 
+            console.info("merchantData", merchantData);
+
             // Step 2: Map the form data to XML format
             const xmlDataObject = mapFormDataToXML(formData, merchantData);
 
+            console.info("xmlDataObject", xmlDataObject);
+
             // Step 3: Convert the object to XML
             const xmlData = js2xmlparser.parse("applicationXML", xmlDataObject);
+
+            console.info('xmlData', xmlData);
 
             // console.info('xmlData', remove_linebreaks_ss(xmlData));
 
@@ -45,6 +55,8 @@ exports.submitFormData = functions.https.onRequest(async (request, response) => 
                 if (err) {
                     throw err;
                 }
+
+                console.info(specFiResponse.data);
 
                 // Extract the ReturnResponse value
                 const returnResponse = result.applicationXMLresponse.reply[0].ReturnResponse[0];
@@ -69,7 +81,7 @@ exports.submitFormData = functions.https.onRequest(async (request, response) => 
 });
 
 
-function mapFormDataToXML(formData) {
+function mapFormDataToXML(formData, merchantData) {
     return {
         // applicationXML: {
         authentication: {
@@ -260,6 +272,9 @@ function generateApplicationNumber(length) {
 function extractMerchantName(request) {
     // Extract the host (subdomain) from the request headers
     const host = request.headers.host;
+
+    console.info("host", host);
+
 
     // Assuming the URL pattern is `merchantname.yourapp.com`
     // Split the host by '.' and get the first part as the merchant name
