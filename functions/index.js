@@ -89,6 +89,7 @@ function mapFormDataToXML(formData, merchantData) {
             password: merchantData.specialFinancePassword
         },
         application: {
+            sfcCompanyCode: merchantData.specialFinanceCompanyCode,
             applicationNum: generateApplicationNumber(15), // Randomly generated alphanumeric string
             firstName: formData.firstName,
             midName: formData.middleName,
@@ -100,7 +101,7 @@ function mapFormDataToXML(formData, merchantData) {
             state: formData.state,
             zip: formData.zipCode,
             taaYears: extractYears(formData.timeAtAddress),
-            taaMonths: extractMonths(formData.timeAtAddress),
+            taaMonths: '',
             ownrent: formData.ownOrRent.toUpperCase(),
             housingPayment: formData.housingPayment,
             email: formData.email,
@@ -114,7 +115,7 @@ function mapFormDataToXML(formData, merchantData) {
             empState: formData.employerState,
             empZip: formData.employerZipCode,
             loeYears: extractYears(formData.employmentLength),
-            loeMonths: extractMonths(formData.employmentLength),
+            loeMonths: '',
             income: formData.averageIncome,
             incomePeriod: formData.incomePeriod.toUpperCase(),
             otherIncome: '', // Add if available
@@ -178,7 +179,6 @@ function mapFormDataToXML(formData, merchantData) {
             coprevempZip: '',
             coprevloeYears: '',
             coprevloeMonths: '',
-            // ... Continue mapping other fields as per your XML structure
             BankName: formData.bankName,
             BankAcctNo: formData.accountNumber,
             BankRoutingNo: formData.routingNumber,
@@ -236,8 +236,7 @@ function mapFormDataToXML(formData, merchantData) {
             ref5Addr2: '',
             ref5City: '',
             ref5State: '',
-            ref5Zip5: '',
-            sfcCompanyCode: merchantData.specialFinanceCompanyCode
+            ref5Zip5: ''
         }
         // }
     };

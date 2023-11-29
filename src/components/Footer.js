@@ -8,7 +8,7 @@ const Footer = () => {
             <Toolbar sx={{ minHeight: '48px' }}> {/* Adjust the height here */}
                 <Container maxWidth="lg" sx={{ display: 'flex', justifyContent: 'center' }}>
                     <Typography variant="subtitle1" color="inherit" sx={{ fontWeight: 'bold' }}>
-                         Powered by GyraFi © 2023
+                         Powered by Gyrafi © 2023
                     </Typography>
                 </Container>
             </Toolbar>

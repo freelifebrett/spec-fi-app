@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { TextField, FormHelperText, FormControl, InputLabel, Select, MenuItem, Box, Container, CircularProgress, Alert } from '@mui/material';
-import { updateField, updateCurrentStep, updateSubmissionStatus } from '../../../../redux/form/formSlice'; // Update with your actual path
+import { TextField, FormHelperText, FormControl, InputLabel, Select, MenuItem, Box, Container, CircularProgress, Alert, Typography } from '@mui/material';
+import { updateField, updateCurrentStep } from '../../../../redux/form/formSlice'; // Update with your actual path
 import { useNavigate } from 'react-router-dom';
 import FormButton from '../../../Buttons/FormButton';
 
@@ -199,6 +199,9 @@ const ReferenceTwoStep = () => {
                     <FormHelperText>{errors.reference2Relationship}</FormHelperText>
                 </FormControl>
             </Box>
+            <Typography variant="body2" color="textSecondary">
+                Disclaimer: I understand that I am providing authorization to Special Financing Company, LLC under the Fair Credit Reporting Act, to obtain information from my personal credit profile. I authorize Special Financing Company, LLC to obtain such information solely to conduct a pre-qualification for credit.
+            </Typography>
             <Box mt={2}>
                 <FormButton
                     onClick={goToPreviousStep}
