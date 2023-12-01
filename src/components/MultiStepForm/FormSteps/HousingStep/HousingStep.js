@@ -52,8 +52,8 @@ const HousingStep = () => {
     };
 
     const goToPreviousStep = () => {
-        dispatch(updateCurrentStep(3));
-        navigate('/step-3'); // Update with your actual route
+        dispatch(updateCurrentStep(5));
+        navigate('/step-5'); // Update with your actual route
     };
 
     const handleSubmit = (e) => {
@@ -71,8 +71,8 @@ const HousingStep = () => {
 
         setErrors(newErrors);
         if (formIsValid) {
-            dispatch(updateCurrentStep(5)); // Update to the correct next step number
-            navigate('/step-5'); // Update to the correct next step path
+            dispatch(updateCurrentStep(7)); // Update to the correct next step number
+            navigate('/step-7'); // Update to the correct next step path
         }
     };
 

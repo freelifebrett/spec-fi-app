@@ -49,8 +49,8 @@ const ContactStep = () => {
 
   // Navigation functions
   const goToPreviousStep = () => {
-    dispatch(updateCurrentStep(1));
-    navigate('/step-1');
+    dispatch(updateCurrentStep(3));
+    navigate('/step-3');
   };
 
   const goToNextStep = () => {
@@ -68,8 +68,8 @@ const ContactStep = () => {
     setErrors(newErrors);
 
     if (formIsValid) {
-      dispatch(updateCurrentStep(3));
-      navigate('/step-3');
+      dispatch(updateCurrentStep(5));
+      navigate('/step-5');
     }
   };
 

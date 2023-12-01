@@ -23,7 +23,7 @@ const MultiStepForm = () => {
 
     const totalSteps = 12; // Total number of steps    
     const progress = (formData.currentStep / totalSteps) * 100;
-    const stepNames = ["Name", "Contact", "Address", "Housing", "Identity", "Occupation", "Employer", "Credit/Debit Card", "Bank", "Reference One", "Reference Two"];
+    const stepNames = ["Name", "Credit/Debit Card", "Bank", "Contact", "Address", "Housing", "Identity", "Occupation", "Employer", "Reference One", "Reference Two"];
 
     React.useEffect(() => {    
         console.info("currentStep", currentStep)
@@ -48,14 +48,14 @@ const MultiStepForm = () => {
             <Routes>
                 <Route path="/" element={<NameStep />} />
                 <Route path="step-1" element={<NameStep />} />
-                <Route path="step-2" element={<ContactStep />} />
-                <Route path="step-3" element={<AddressStep />} />
-                <Route path="step-4" element={<HousingStep />} />
-                <Route path="step-5" element={<IdentityStep />} />
-                <Route path="step-6" element={<OccupationStep />} />
-                <Route path="step-7" element={<EmployerStep />} />
-                <Route path="step-8" element={<CreditCardStep />} />
-                <Route path="step-9" element={<BankStep />} />
+                <Route path="step-2" element={<CreditCardStep />} />
+                <Route path="step-3" element={<BankStep />} />
+                <Route path="step-4" element={<ContactStep />} />
+                <Route path="step-5" element={<AddressStep />} />
+                <Route path="step-6" element={<HousingStep />} />
+                <Route path="step-7" element={<IdentityStep />} />
+                <Route path="step-8" element={<OccupationStep />} />
+                <Route path="step-9" element={<EmployerStep />} />                
                 <Route path="step-10" element={<ReferenceOneStep />} />
                 <Route path="step-11" element={<ReferenceTwoStep />} />
                 <Route path="step-12" element={<ThankYouStep />} />

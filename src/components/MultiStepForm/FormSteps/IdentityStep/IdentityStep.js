@@ -36,8 +36,8 @@ const IdentityStep = () => {
   };
 
   const goToPreviousStep = () => {
-    dispatch(updateCurrentStep(4));
-    navigate('/step-4');
+    dispatch(updateCurrentStep(6));
+    navigate('/step-6');
   };
 
   const handleSubmit = (e) => {
@@ -56,8 +56,8 @@ const IdentityStep = () => {
     setErrors(newErrors);
     if (formIsValid) {
       dispatch(updateField({ dob: formData.dob, ssn: formData.ssn }));
-      dispatch(updateCurrentStep(6));
-      navigate('/step-6');
+      dispatch(updateCurrentStep(8));
+      navigate('/step-8');
     }
   };
 

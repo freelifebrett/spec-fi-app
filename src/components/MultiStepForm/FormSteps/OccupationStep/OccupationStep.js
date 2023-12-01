@@ -56,15 +56,15 @@ const OccupationStep = () => {
 
         setErrors(newErrors);
         if (formIsValid) {
-            dispatch(updateCurrentStep(7)); // Update to the correct next step number
-            navigate('/step-7'); // Update to the correct next step path
+            dispatch(updateCurrentStep(9)); // Update to the correct next step number
+            navigate('/step-9'); // Update to the correct next step path
         }
     };
 
     // Navigation functions
     const goToPreviousStep = () => {
-        dispatch(updateCurrentStep(5));
-        navigate('/step-5'); // Update with your actual route
+        dispatch(updateCurrentStep(7));
+        navigate('/step-7'); // Update with your actual route
     };
 
     const canProceed = Object.values(errors).every(x => x === '') &&

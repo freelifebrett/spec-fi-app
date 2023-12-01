@@ -64,8 +64,8 @@ const EmployerStep = () => {
 
     // Navigation functions
     const goToPreviousStep = () => {
-        dispatch(updateCurrentStep(6));
-        navigate('/step-6'); // Update with your actual route
+        dispatch(updateCurrentStep(8));
+        navigate('/step-8'); // Update with your actual route
     };
 
     const goToNextStep = () => {
@@ -82,8 +82,8 @@ const EmployerStep = () => {
 
         setErrors(newErrors);
         if (formIsValid) {
-            dispatch(updateCurrentStep(8)); // Update to the correct next step number
-            navigate('/step-8'); // Update to the correct next step path
+            dispatch(updateCurrentStep(10)); // Update to the correct next step number
+            navigate('/step-10'); // Update to the correct next step path
         }
     };
 

@@ -42,8 +42,8 @@ const BankStep = () => {
 
   // Navigation functions
   const goToPreviousStep = () => {
-    dispatch(updateCurrentStep(8));
-    navigate('/step-8'); // Update with your actual route
+    dispatch(updateCurrentStep(2));
+    navigate('/step-2'); // Update with your actual route
   };
 
   const goToNextStep = () => {
@@ -60,8 +60,8 @@ const BankStep = () => {
 
     setErrors(newErrors);
     if (formIsValid) {
-      dispatch(updateCurrentStep(10)); // Update to the correct next step number
-      navigate('/step-10'); // Update to the correct next step path
+      dispatch(updateCurrentStep(4)); // Update to the correct next step number
+      navigate('/step-4'); // Update to the correct next step path
     }
   };
 

@@ -74,8 +74,8 @@ const CreditCardStep = () => {
 
   // Navigation functions
   const goToPreviousStep = () => {
-    dispatch(updateCurrentStep(7));
-    navigate('/step-7'); // Update with your actual route
+    dispatch(updateCurrentStep(1));
+    navigate('/step-1'); // Update with your actual route
   };
 
   const goToNextStep = () => {
@@ -92,8 +92,8 @@ const CreditCardStep = () => {
 
     setErrors(newErrors);
     if (formIsValid) {
-      dispatch(updateCurrentStep(9)); // Update to the correct next step number
-      navigate('/step-9'); // Update to the correct next step path
+      dispatch(updateCurrentStep(3)); // Update to the correct next step number
+      navigate('/step-3'); // Update to the correct next step path
     }
   };
 
