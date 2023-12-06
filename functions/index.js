@@ -10,72 +10,80 @@ const functions = require('firebase-functions');
 
 exports.submitFormData = functions.https.onRequest(async (request, response) => {
     // cors(request, response, async () => {
-        try {
-            if (request.method !== 'POST') {
-                return response.status(405).send('Method Not Allowed');
-            }
-    
-            // should validate the input
-            const formData = request.body;
-    
-            // Extract merchant name (uid) from the application subdomain
-            const merchantName = formData.merchantName;
-    
-            console.info("merchantName", merchantName)
-
-            // Fetch merchant data from Firestore
-            const merchantRef = admin.firestore().collection('merchants').doc(merchantName);
-            const merchantDoc = await merchantRef.get();
-            if (!merchantDoc.exists) {
-                return response.status(404).send('Merchant not found');
-            }
-            const merchantData = merchantDoc.data();
-
-            console.info("merchantData", merchantData);
-
-            // Step 2: Map the form data to XML format
-            const xmlDataObject = mapFormDataToXML(formData, merchantData);
-
-            console.info("xmlDataObject", xmlDataObject);
-
-            // Step 3: Convert the object to XML
-            const xmlData = js2xmlparser.parse("applicationXML", xmlDataObject);
-
-            console.info('xmlData', xmlData);
-
-            // console.info('xmlData', remove_linebreaks_ss(xmlData));
-
-            // Step 4: Send XML data to the endpoint
-            const specFiResponse = await axios.post('https://www.specialfinancingco.com/partner/ProcessApplicationXMLv2.asp', xmlData, {
-                headers: { 'Content-Type': 'text/xml' }
-            });
-
-            const parser = new xml2js.Parser();
-            parser.parseString(specFiResponse.data, (err, result) => {
-                if (err) {
-                    throw err;
-                }
-
-                console.info(specFiResponse.data);
-
-                // Extract the ReturnResponse value
-                const returnResponse = result.applicationXMLresponse.reply[0].ReturnResponse[0];
-
-                // Extract the ApplicationNum value
-                const sfcAppNumber = result.applicationXMLresponse.reply[0].SFCAppNumber[0];
-
-                const resData = { applicationStatus: returnResponse, applicationNumber: sfcAppNumber };
-
-                console.info(resData);
-
-                // Step 6: Return the extracted value as JSON
-                response.json(resData);
-            });
-        } catch (error) {
-            // console.error('Error submitting form data:', error);
-            throw error;
-
+    try {
+        if (request.method !== 'POST') {
+            return response.status(405).send('Method Not Allowed');
         }
+
+        // should validate the input
+        const formData = request.body;
+
+        // Extract merchant name (uid) from the application subdomain
+        const merchantName = formData.merchantName;
+
+        console.info("merchantName", merchantName)
+
+        // Fetch merchant data from Firestore
+        const merchantRef = admin.firestore().collection('merchants').doc(merchantName);
+        const merchantDoc = await merchantRef.get();
+        if (!merchantDoc.exists) {
+            return response.status(404).send('Merchant not found');
+        }
+        const merchantData = merchantDoc.data();
+
+        console.info("merchantData", merchantData);
+
+        // Step 2: Map the form data to XML format
+        const xmlDataObject = mapFormDataToXML(formData, merchantData);
+
+        console.info("xmlDataObject", xmlDataObject);
+
+        // Step 3: Convert the object to XML
+        const xmlData = js2xmlparser.parse("applicationXML", xmlDataObject);
+
+        console.info('xmlData', xmlData);
+
+        // console.info('xmlData', remove_linebreaks_ss(xmlData));
+
+        // Step 4: Send XML data to the endpoint
+        const specFiResponse = await axios.post('https://www.specialfinancingco.com/partner/ProcessApplicationXMLv2.asp', xmlData, {
+            headers: { 'Content-Type': 'text/xml' }
+        });
+
+        const parser = new xml2js.Parser();
+        parser.parseString(specFiResponse.data, (err, result) => {
+            if (err) {
+                throw err;
+            }
+
+            console.info(specFiResponse.data);
+
+            // Extract the ReturnResponse value
+            const returnResponse = result.applicationXMLresponse.reply[0].ReturnResponse[0];
+
+            // Extract the ApplicationNum value
+            const sfcAppNumber = result.applicationXMLresponse.reply[0].SFCAppNumber[0];
+
+            const resData = { applicationStatus: returnResponse, applicationNumber: sfcAppNumber };
+
+            console.info(resData);
+
+            axios.post('https://hooks.zapier.com/hooks/catch/14791405/3fmz0h0/', { 
+                applicationStatus: returnResponse,
+                merchant: merchantName, 
+                applicantName: `${formData.firstName} ${formData.middleName} ${formData.lastName}`,
+                applicantEmail: formData.email,
+                applicantPhone: formData.phoneNumber
+            });
+
+            // Step 6: Return the extracted value as JSON
+            response.json(resData);
+        });
+    } catch (error) {
+        // console.error('Error submitting form data:', error);
+        throw error;
+
+    }
     // })
 
 });
