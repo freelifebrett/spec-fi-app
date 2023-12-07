@@ -10,7 +10,7 @@ const initialState = {
   address: '',
   averageIncome: '',
   bankName: '',
-  cardBrand: '', // 'Visa', 'MasterCard', etc.
+  cardType: '', // 'Visa', 'MasterCard', etc.
   cardCVV: '',
   cardExpMonth: '',
   cardExpYear: '',
@@ -62,7 +62,7 @@ const initialState = {
 //   address: '123 Main St',
 //   averageIncome: '5000',
 //   bankName: 'Test Bank',
-//   cardBrand: 'Visa', // 'Visa', 'MasterCard', etc.
+//   cardType: 'Visa', // 'Visa', 'MasterCard', etc.
 //   cardCVV: '123',
 //   cardExpMonth: '08',
 //   cardExpYear: '2025',

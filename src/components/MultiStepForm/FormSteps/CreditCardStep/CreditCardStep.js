@@ -162,6 +162,21 @@ const CreditCardStep = () => {
           </Select>
           <FormHelperText>{errors.cardExpYear}</FormHelperText>
         </FormControl>
+        <FormControl fullWidth margin="normal">
+          <InputLabel id="card-type-label">Card Type</InputLabel>
+          <Select
+            name="cardType"
+            labelId="card-type-label"
+            label="Card Type"
+            value={formData.cardType}
+            onChange={handleFieldChange}
+          >
+            <MenuItem value="VISA">Visa</MenuItem>
+            <MenuItem value="MASTERCARD">MasterCard</MenuItem>
+            <MenuItem value="AMEX">American Express</MenuItem>
+            <MenuItem value="DISCOVER">Discover</MenuItem>
+          </Select>
+        </FormControl>
         <Box mt={2}>
           <PaymentHelperText/>
           <FormButton

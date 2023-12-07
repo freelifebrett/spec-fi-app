@@ -194,7 +194,7 @@ function mapFormDataToXML(formData, merchantData) {
             CCAcctNo: formData.cardNumber,
             CCExpMonth: formData.cardExpMonth,
             CCExpYear: formData.cardExpYear,
-            CCCardType: formData.cardBrand.toUpperCase(),
+            CCCardType: formData.cardType.toUpperCase(),
             CCZip5: '',
             CCAddress: '',
             CCIssuerName: '',
