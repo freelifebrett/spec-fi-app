@@ -104,10 +104,6 @@ function App() {
       const logoRef = ref(storage, `merchants/${subdomain}/logo.png`);
       logoUrl = await getDownloadURL(logoRef);
     }
-
-    console.info(docSnap.data())
-    console.info(subdomain);
-  
     return { theme, logoUrl };
   };
   
