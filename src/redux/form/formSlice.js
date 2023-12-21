@@ -56,56 +56,56 @@ const initialState = {
 };
 
 
-// const initialState = {
-//   accountNumber: '123456789',
-//   accountType: 'Checking', // 'Checking' or 'Savings'
-//   address: '123 Main St',
-//   averageIncome: '5000',
-//   bankName: 'Test Bank',
-//   cardType: 'Visa', // 'Visa', 'MasterCard', etc.
-//   cardCVV: '123',
-//   cardExpMonth: '08',
-//   cardExpYear: '2025',
-//   cardNumber: '4111111111111111',
-//   city: 'Testville',
-//   confirmPassword: 'TestPassword123!',
-//   country: 'United States', // Default value set to United States  
-//   dob: '01/01/1980',
-//   email: 'test@example.com',
-//   employerAddress: '456 Second St',
-//   employerCity: 'Testville', // Updated field
-//   employerName: 'Test Employer',
-//   employerPhone: '123-456-7890',
-//   employerState: 'CA', // Updated field
-//   employerZipCode: '90001', // Updated field
-//   employmentLength: '3 years',
-//   firstName: 'John',
-//   housingPayment: '1200',
-//   incomePeriod: 'Monthly',
-//   lastName: 'Doe',
-//   middleName: 'Q',
-//   occupation: 'Developer',
-//   ownOrRent: 'Rent',
-//   password: 'TestPassword123!',
-//   phoneNumber: '1234567890',
-//   reference1FirstName: 'Jane',
-//   reference1LastName: 'Smith',
-//   reference1Phone: '234-567-8901',
-//   reference1Relationship: 'Friend',
-//   reference2FirstName: 'Emily',
-//   reference2LastName: 'Johnson',
-//   reference2Phone: '345-678-9012',
-//   reference2Relationship: 'Colleague',
-//   routingNumber: '987654321',
-//   ssn: '123456789',
-//   state: 'CA', // consider using an abbreviation for states
-//   timeAtAddress: '2 years',
-//   zipCode: '90001',
-//   currentStep: 1,
-//   primaryColor: '#000000',
-//   secondaryColor: '#000000',
-//   logoUrl: FlipSecretsLogo
-// };
+const demoInititalState = {
+  accountNumber: '123456789',
+  accountType: 'Checking', // 'Checking' or 'Savings'
+  address: '123 Main St',
+  averageIncome: '5000',
+  bankName: 'Test Bank',
+  cardType: 'Visa', // 'Visa', 'MasterCard', etc.
+  cardCVV: '123',
+  cardExpMonth: '08',
+  cardExpYear: '2025',
+  cardNumber: '4111111111111111',
+  city: 'Testville',
+  confirmPassword: 'TestPassword123!',
+  country: 'United States', // Default value set to United States  
+  dob: '01/01/1980',
+  email: 'test@example.com',
+  employerAddress: '456 Second St',
+  employerCity: 'Testville', // Updated field
+  employerName: 'Test Employer',
+  employerPhone: '123-456-7890',
+  employerState: 'CA', // Updated field
+  employerZipCode: '90001', // Updated field
+  employmentLength: '3 years',
+  firstName: 'John',
+  housingPayment: '1200',
+  incomePeriod: 'Monthly',
+  lastName: 'Doe',
+  middleName: 'Q',
+  occupation: 'Developer',
+  ownOrRent: 'Rent',
+  password: 'TestPassword123!',
+  phoneNumber: '1234567890',
+  reference1FirstName: 'Jane',
+  reference1LastName: 'Smith',
+  reference1Phone: '234-567-8901',
+  reference1Relationship: 'Friend',
+  reference2FirstName: 'Emily',
+  reference2LastName: 'Johnson',
+  reference2Phone: '345-678-9012',
+  reference2Relationship: 'Colleague',
+  routingNumber: '987654321',
+  ssn: '123456789',
+  state: 'CA', // consider using an abbreviation for states
+  timeAtAddress: '2 years',
+  zipCode: '90001',
+  currentStep: 1,
+  primaryColor: '#000000',
+  secondaryColor: '#000000',
+  logoUrl: FlipSecretsLogo
+};
 
 
 
