@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { TextField, Button, FormControl, InputLabel, Select, MenuItem, Container, Typography, Box } from '@mui/material';
+import { TextField, FormHelperText, FormControl, InputLabel, Select, MenuItem, Container, Typography, Box } from '@mui/material';
 import { updateField, updateCurrentStep } from '../../../../redux/form/formSlice';
 import { useNavigate } from 'react-router-dom';
 import FormButton from '../../../Buttons/FormButton';
@@ -23,6 +23,13 @@ const BankStep = () => {
         break;
       case 'routingNumber':
         if (!/^\d+$/.test(value)) error = 'Routing number must be numeric';
+        break;
+      case 'accountType':
+        if (!value) {
+          error = 'Account type is required';
+        } else if (!['CHECKING', 'SAVINGS'].includes(value)) {
+          error = 'Invalid account type';
+        }
         break;
       default:
         break;
@@ -50,7 +57,7 @@ const BankStep = () => {
     let formIsValid = true;
     let newErrors = {};
 
-    ['bankName', 'accountNumber', 'routingNumber'].forEach(field => {
+    ['bankName', 'accountNumber', 'routingNumber', 'accountType'].forEach(field => {
       const error = validate(field, formData[field]);
       if (error) {
         newErrors[field] = error;
@@ -66,7 +73,7 @@ const BankStep = () => {
   };
 
   const canProceed = Object.values(errors).every(x => x === '') &&
-    ['bankName', 'accountNumber', 'routingNumber']
+    ['bankName', 'accountNumber', 'routingNumber', 'accountType']
       .every(field => formData[field] && String(formData[field]).trim() !== '');
 
   return (
@@ -104,8 +111,23 @@ const BankStep = () => {
           margin="normal"
           type="number"
         />
+        <FormControl fullWidth margin="normal" error={!!errors.accountType}>
+          <InputLabel id="account-type-label">Account Type</InputLabel>
+          <Select
+            labelId="account-type-label"
+            label="Account Type"
+            name="accountType"
+            value={formData.accountType || ''}
+            onChange={handleFieldChange}
+          // Add error and helperText if you implement validation
+          >
+            <MenuItem value="CHECKING">Checking</MenuItem>
+            <MenuItem value="SAVINGS">Savings</MenuItem>
+          </Select>
+          <FormHelperText>{errors.accountType}</FormHelperText>
+        </FormControl>
         <Box mt={2}>
-          <PaymentHelperText/>
+          <PaymentHelperText />
           <FormButton
             onClick={goToPreviousStep}
             text="Back">

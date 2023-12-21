@@ -26,7 +26,6 @@ const MultiStepForm = () => {
     const stepNames = ["Name", "Credit/Debit Card", "Bank", "Contact", "Address", "Housing", "Identity", "Occupation", "Employer", "Reference One", "Reference Two"];
 
     React.useEffect(() => {    
-        console.info("currentStep", currentStep)
         // Assuming step URLs are like '/step-1', '/step-2', etc.
         const pathStepNumber = parseInt(window.location.pathname.split('-')[1]);
         if (pathStepNumber && pathStepNumber !== currentStep) {

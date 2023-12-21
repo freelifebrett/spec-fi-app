@@ -12,6 +12,32 @@ const CreditCardStep = () => {
   const formData = useSelector(state => state.form);
   const [errors, setErrors] = React.useState({});
 
+  const getCardType = (cardNumber) => {
+    const firstDigit = cardNumber[0];
+    const firstTwoDigits = cardNumber.substr(0, 2);
+    const firstThreeDigits = cardNumber.substr(0, 3);
+    const firstFourDigits = cardNumber.substr(0, 4);
+    const firstSixDigits = parseInt(cardNumber.substr(0, 6));
+
+    if (firstDigit === '4') {
+      return 'VISA';
+    }
+
+    if ((firstTwoDigits >= '51' && firstTwoDigits <= '55') || (firstSixDigits >= 222100 && firstSixDigits <= 272099)) {
+      return 'MASTERCARD';
+    }
+
+    if (firstTwoDigits === '34' || firstTwoDigits === '37') {
+      return 'AMEX';
+    }
+
+    if (firstFourDigits === '6011' || (firstSixDigits >= 622126 && firstSixDigits <= 622925) || (firstThreeDigits >= '644' && firstThreeDigits <= '649') || firstTwoDigits === '65') {
+      return 'DISCOVER';
+    }
+
+    return 'Unknown';
+  }
+
   const isValidCardNumber = (number) => {
     let sum = 0;
     for (let i = 0; i < number.length; i++) {
@@ -46,6 +72,13 @@ const CreditCardStep = () => {
       case 'cardExpYear':
         if (!value) error = 'Expiration year is required';
         break;
+      case 'cardType':
+        if (!value) {
+          error = 'Card type is required';
+        } else if (!['AMEX', 'MASTERCARD', 'VISA', 'DISCOVER'].includes(value)) {
+          error = 'Invalid card type';
+        }
+        break;
       default:
         break;
     }
@@ -69,6 +102,7 @@ const CreditCardStep = () => {
     if (name === 'cardNumber') {
       const error = validate(name, value);
       setErrors(prevErrors => ({ ...prevErrors, [name]: error }));
+      dispatch(updateField({ fieldName: 'cardType', fieldValue: getCardType(value) }));
     }
   };
 
@@ -82,7 +116,7 @@ const CreditCardStep = () => {
     let formIsValid = true;
     let newErrors = {};
 
-    ['cardNumber', 'cardCVV', 'cardExpMonth', 'cardExpYear'].forEach(field => {
+    ['cardNumber', 'cardCVV', 'cardExpMonth', 'cardExpYear', 'cardType'].forEach(field => {
       const error = validate(field, formData[field]);
       if (error) {
         newErrors[field] = error;
@@ -98,7 +132,7 @@ const CreditCardStep = () => {
   };
 
   const canProceed = Object.values(errors).every(x => x === '') &&
-    ['cardNumber', 'cardCVV', 'cardExpMonth', 'cardExpYear']
+    ['cardNumber', 'cardCVV', 'cardExpMonth', 'cardExpYear', 'cardType']
       .every(field => formData[field] && String(formData[field]).trim() !== '');
 
   return (
@@ -162,7 +196,7 @@ const CreditCardStep = () => {
           </Select>
           <FormHelperText>{errors.cardExpYear}</FormHelperText>
         </FormControl>
-        <FormControl fullWidth margin="normal">
+        <FormControl fullWidth margin="normal" error={!!errors.cardType}>
           <InputLabel id="card-type-label">Card Type</InputLabel>
           <Select
             name="cardType"
@@ -176,9 +210,10 @@ const CreditCardStep = () => {
             <MenuItem value="AMEX">American Express</MenuItem>
             <MenuItem value="DISCOVER">Discover</MenuItem>
           </Select>
+          <FormHelperText>{errors.cardType}</FormHelperText>
         </FormControl>
         <Box mt={2}>
-          <PaymentHelperText/>
+          <PaymentHelperText />
           <FormButton
             onClick={goToPreviousStep}
             text="Back">
